@@ -12,9 +12,13 @@ function Game() {
 };
 
 
-Game.prototype.drawBackground = function(){}
+Game.prototype.drawBackground = function() {
 
+}
 
+Game.prototype.clearBackgroundCanvas = function() {
+    this.backgroundCtx.clearRect(0, 0, this.backgroundCanvas.width, this.backgroundCanvas.height) //!!! To change to gameCanvas
+}
 
 
 Game.prototype.start = function() {
@@ -179,7 +183,7 @@ Game.prototype.start = function() {
     document.body.addEventListener("keydown", this.handleKeyDown.bind(this))
 
 
-
+    console.log(`The game canvas is ${this.gameCanvas.height}*${this.gameCanvas.width}px`);
     console.log(`The background canvas is ${this.backgroundCanvas.height}*${this.backgroundCanvas.width}px`);
     this.startLoop();
 }
@@ -200,7 +204,7 @@ Game.prototype.start = function() {
 Game.prototype.startLoop = function() {
     setInterval(()=>{
     // var loop = function() {
-        this.backgroundCtx.clearRect(0, 0, this.backgroundCanvas.width, this.backgroundCanvas.height) //!!! To change to gameCanvas
+        this.clearBackgroundCanvas()
 
         this.drawBackground();
         this.bombard.draw();
