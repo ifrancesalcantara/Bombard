@@ -51,36 +51,20 @@ function main(){
                     <img class="lives-head-icon">
                     <p class="number-of-lives">0</p>
                 </div>
-                <div class="background-and-game-wrapper">
-                    <canvas class="background-canvas"></canvas>
-                    <canvas class="game-canvas"></canvas>
-                </div>
+                <canvas class="background-canvas"></canvas>
             </main>
         `);
         document.body.appendChild(gameScreen)
         return gameScreen
     }
 
-
-
-
-
-
-
-
-
     
 
     createSplashScreen();
 
 
-
-
     
 }
-
-
-
 
 
 

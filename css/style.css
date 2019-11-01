@@ -113,24 +113,9 @@ body {
     font-size: 3em;
 }
 
-.background-and-game-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: 2%;
-    left: 14%;
-}
-
 .background-canvas {
+    border: 1px solid black;
     position: absolute;
     z-index: -1;
-    width: 1400px;  /* what is going on here?*/
-    height: 900px;
-}
-
-.game-canvas {
-    border: 1px solid red;
-    width: 1400px;
-    height: 900px;
+    left: 20%;
 }

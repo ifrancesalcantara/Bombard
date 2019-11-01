@@ -1,17 +1,19 @@
 'use strict';
 
-function Bombard(canvas, lives = 3) {
+function Bombard(canvas, game, lives = 3) {
     this.canvas = canvas;
+    console.log(canvas);
     this.ctx = this.canvas.getContext('2d');
+    this.game = game;
     this.lives = lives;
     this.size = 100;
     this.x = 0;
-    this.y = 0;
+    this.y = 100;
 }
 
 Bombard.prototype.draw = function() {
-    const bombard = document.createElement("img")
-    bombard.src='img/player.png'
+    const bombard = new Image()
+    bombard.src='img/player/player.png'
     bombard.onload = function() {
         this.ctx.drawImage(bombard, this.x, this.y, this.size, this.size);
     }.bind(this)
@@ -46,7 +48,16 @@ Bombard.prototype.handleScreenCollision = function() {
     else if (this.x + this.size < screenLeft) {this.x += this.size}
 };
 
+Bombard.prototype.receiveDamage = function (damage) {
+    this.lives -= 1;
+}
 
 
 
 
+
+Bombard.prototype.placeNoteBomb = function(canvas) {
+    var noteBomb = new NoteBomb(canvas, this.x, this.y);   /* timer in loop? */
+    this.game.noteBombs.push(noteBomb);
+    noteBomb.draw();
+}
