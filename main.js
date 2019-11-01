@@ -29,12 +29,10 @@ function main(){
     }
 
 
-
-
-
-
-
-
+    function removeSplashScreen() {
+        // remove() is the DOM element that removes the Node from the page
+        splashScreen.remove();
+    };
 
 
     function startGame() {
@@ -45,12 +43,6 @@ function main(){
         game.start()
     }
 
-    
-
-    function removeSplashScreen() {
-        // remove() is the DOM element that removes the Node from the page
-        splashScreen.remove();
-    };
 
     function createGameScreen() {
         gameScreen = buildDOM(`

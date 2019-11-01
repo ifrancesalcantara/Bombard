@@ -11,15 +11,26 @@ function Game() {
     this.gameIsOver = false;
 };
 
+
+Game.prototype.drawBackground = function(){}
+
+
+
+
 Game.prototype.start = function() {
     this.backgroundCanvas = document.body.querySelector(".background-canvas")
     this.backgroundCtx = this.backgroundCanvas.getContext("2d");
     
+    this.gameCanvas = document.body.querySelector(".game-canvas")
+    this.gameCtx = this.gameCanvas.getContext("2d");
+
+
     this.backgroundWidth = this.backgroundCanvas.offsetWidth
     this.backgroundHeight = this.backgroundCanvas.offsetHeight
     this.backgroundCanvas.setAttribute("width", this.backgroundWidth);
     this.backgroundCanvas.setAttribute("height", this.backgroundHeight);
     
+
     const topLeftCorner = document.createElement("img")
     const top1Till = document.createElement("img")
     const top2Till = document.createElement("img")
@@ -140,14 +151,11 @@ Game.prototype.start = function() {
             }
         }
     }
-    this.gameCanvas = document.body.querySelector(".game-canvas")
-    this.gameCtx = this.gameCanvas.getContext("2d");
 
 
 
 
-
-    this.bombard = new Bombard(this.backgroundCanvas)
+    this.bombard = new Bombard(this.backgroundCanvas)  //!!! Move Bombard to gameCanvas size and position change
     this.bombard.draw()
 
 
@@ -155,19 +163,15 @@ Game.prototype.start = function() {
 
     this.handleKeyDown = function(e) {
         if (e.keyCode === 87) {
-            console.log("Up");
             this.bombard.move("moveUp")        
         } else if (e.keyCode === 83) {
-            console.log("Down");
             this.bombard.move("moveDown")  
         } else if (e.keyCode === 65) {
-            console.log("Left");
             this.bombard.move("moveLeft")  
         } else if (e.keyCode === 68) {
-            console.log("Right");
             this.bombard.move("moveRight")  
         } else if (e.keyCode === 32) {
-            console.log("Bomb");
+            console.log("Bomb placed! (?)");
         } else if (e.keyCode === 81) {
             console.log("Special Move(?)");
         }
@@ -176,9 +180,16 @@ Game.prototype.start = function() {
 
 
 
-
+    console.log(`The background canvas is ${this.backgroundCanvas.height}*${this.backgroundCanvas.width}px`);
     this.startLoop();
 }
+
+
+
+
+
+
+
 
 
 
@@ -190,8 +201,11 @@ Game.prototype.startLoop = function() {
     setInterval(()=>{
     // var loop = function() {
         this.backgroundCtx.clearRect(0, 0, this.backgroundCanvas.width, this.backgroundCanvas.height) //!!! To change to gameCanvas
-        console.log("looping");
+
+        this.drawBackground();
         this.bombard.draw();
+
+        this.bombard.handleScreenCollision();
     }, 500)
     // window.requestAnimationFrame(loop);
 }

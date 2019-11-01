@@ -96,8 +96,8 @@ body {
 }
 
 .bombard-title {
-    font-size: 28em;
-    margin: 300px 0 400px 0;
+    font-size: 20em;
+    margin: 7% 0 10% 0;
 }
 
 .btn-start {
@@ -116,20 +116,21 @@ body {
 .background-and-game-wrapper {
     display: flex;
     justify-content: center;
-    align-items: center
+    align-items: center;
+    position: absolute;
+    top: 2%;
+    left: 14%;
 }
 
 .background-canvas {
-    border: 3px dotted green;
     position: absolute;
     z-index: -1;
-    width: 1400px;
+    width: 1400px;  /* what is going on here?*/
     height: 900px;
-
 }
 
 .game-canvas {
     border: 1px solid red;
-    width: 900px;
+    width: 1400px;
     height: 900px;
 }
