@@ -1,10 +1,20 @@
-function NoteBomb(canvas, x, y) {
+function NoteBomb(canvas, x, y, bombard) {
     this.size=100;
     this.x = x;
     this.y = y;
     this.canvas = canvas;
+    this.ctx = this.canvas.getContext("2d")
     this.stillTicking = true;
-    this.chronometer = 2500;
+    this.chronometer = 2200;
+    this.stillExploding = false;
+    this.fireChronometer = 1500;
+    this.explosionXAxis = null;
+    this.explosionYAxis = null;
+    this.bombard = bombard;
+    this.identifier = Math.random()
+    this.isNoteBomb = true;
+    this.areaofEffectX = {x: null, y: null, xLength: null, yLength: 100}
+    this.areaofEffectY = {x: null, y: null, xLength: 100, yLength: null}
 }
 
 
@@ -13,9 +23,8 @@ NoteBomb.prototype.draw = function() {
         if(this.stillTicking){
             var noteBomPic = new Image();
             noteBomPic.src="img/bomb/music-note-icon.svg"
-            var ctx = this.canvas.getContext("2d");
             noteBomPic.onload = function() {
-                ctx.drawImage(noteBomPic, this.x, this.y, this.size, this.size)
+                this.ctx.drawImage(noteBomPic, this.x, this.y, this.size, this.size)
             }.bind(this)
             this.ticker();
         } else {
@@ -33,8 +42,8 @@ NoteBomb.prototype.ticker = function() {
     } else {
         this.stillTicking = false;
         clearInterval(tickerCountdown);
-        console.log("BOOM");
-        // this.explode()
+        this.stillExploding = true;
+        this.explode()
     }
 }
 
@@ -42,18 +51,40 @@ NoteBomb.prototype.ticker = function() {
 
 // }
 
+NoteBomb.prototype.firetimer = function() {
+    if(this.fireChronometer > 0) {
+        var fireTickerCountdown = setTimeout(()=>{
+            this.fireChronometer -= 100
+        }, 100)
+    } else {
+        this.stillExploding = false;
+        clearInterval(fireTickerCountdown);
+    }
+}
 
-// NoteBomb.prototype.explode = function() {
-
-//     this.drawExplosion() {
-
-//     }
-//     var explosionXAxis = function(){
-//         if(){}
-//     };
-//     var explosionYAxis = ;
-
-//     if(bombard.handleBrun(explosionXAxis, explosionYAxis)){
-//         bombard.receiveDamage(1);
-//     }
-// }
+NoteBomb.prototype.explode = function() {
+    var explosiestalism = setInterval(()=>{
+        if(this.stillExploding) {
+            console.log("printing fire");
+            this.ctx.fillStyle = "red";
+            this.ctx.rect(this.x-200, this.y, this.size+400, this.size);
+            this.ctx.fill();
+    
+            this.ctx.fillStyle = "red";
+            this.ctx.rect(this.x, this.y-200, this.size, this.size+400);
+            this.ctx.fill();
+            this.firetimer();
+            console.log(this.fireChronometer);
+        } else {
+            clearInterval(explosiestalism)
+            console.log("Bomb ended. I tried to clean fire");
+            this.ctx.clearRect(this.x-200, this.y, this.size+400, this.size);
+            this.ctx.clearRect(this.x, this.y-200, this.size, this.size+400);
+            this.bombard.game.noteBombs.forEach((bomb, i)=>{
+                if(bomb.identifier == this.identifier) {
+                    this.bombard.game.noteBombs.splice(i, i+1)
+                }
+            })
+        }
+    }, 100)
+}

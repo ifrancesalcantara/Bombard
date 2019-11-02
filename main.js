@@ -41,15 +41,17 @@ function main(){
         game = new Game();
         game.gameScreen = createGameScreen();
         game.start()
+        game.passOverGameOverCallback(gameOver)
     }
 
 
     function createGameScreen() {
+        game.inGame = true;
         gameScreen = buildDOM(`
-            <main class="game container">
+            <main class="game-container">
                 <div class="player-one-lives">
-                    <img class="lives-head-icon">
                     <p class="number-of-lives">0</p>
+                    <img src="https://media.giphy.com/media/fH6sWTw73YS9tjqPSF/giphy.gif" class="lives-icon">
                 </div>
                 <canvas class="background-canvas"></canvas>
             </main>
@@ -58,7 +60,41 @@ function main(){
         return gameScreen
     }
 
-    
+    function removeGameScreen(){
+        game.inGame = false;
+        gameScreen.remove()
+    }
+
+    function gameOver() {
+        removeGameScreen();
+        createGameOverScreen();
+    }
+
+    function createGameOverScreen() {
+        gameOverScreen = buildDOM(`
+        <main class="game-over-wrapper">
+            <h1 class="game-over-title">YOU WIN!</h1>
+            <button class="restart-button">Play Again</button>
+        </main>
+    `);
+    document.body.appendChild(gameOverScreen)
+    var restartButton = gameOverScreen.querySelector(".restart-button")
+    restartButton.addEventListener("click", ()=>{
+        removeGameOverScreen();
+        createSplashScreen()})
+    return gameOverScreen
+    }
+
+
+    function removeGameOverScreen() {
+        gameOverScreen.remove()
+    }
+
+
+
+
+
+
 
     createSplashScreen();
 

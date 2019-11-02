@@ -88,6 +88,14 @@ body {
     position: relative;
 }
 
+.game-container {
+    background-image: url("/img/background/Bombard\ background\ third\ try.jpg");
+    width: 1920px;
+    height: 1080px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 .splash-screen {
     display: flex;
     flex-direction: column;
@@ -109,13 +117,44 @@ body {
 .player-one-lives {
     position: absolute;
     z-index: 1;
-    left: 20%;
+    display: flex;
+    align-items: center;
+    align-content: space-around;
+    background-color: white;
+    padding: 10px 50px;
+    border-radius: 36px;
+    margin: 40px 70px;
+}
+
+.number-of-lives {
     font-size: 3em;
+    margin: 0 10 0 0;
+}
+
+.lives-icon {
+    height: 40px;
+    margin: 0 0 0 10px;
 }
 
 .background-canvas {
-    border: 1px solid black;
-    position: absolute;
-    z-index: -1;
-    left: 20%;
+    display: block;
+    text-align: center;
+    padding: 87px 0 0 510px;
+}
+
+.game-over-title {
+    font-size: 20em;
+    margin: 7% 0 10% 0;
+}
+
+.game-over-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.restart-button {
+    padding: 30px 50px;
+    font-size: 4em;
 }
