@@ -88,14 +88,6 @@ body {
     position: relative;
 }
 
-.game-container {
-    background-image: url("/img/background/Bombard\ background\ third\ try.jpg");
-    width: 1920px;
-    height: 1080px;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
 .splash-screen {
     display: flex;
     flex-direction: column;
@@ -108,10 +100,85 @@ body {
     margin: 7% 0 10% 0;
 }
 
-.btn-start {
+.player-number-select {
+    display: flex;
+    justify-content: space-between;
+    width: 32%;
+}
+
+.player-number-select > * {
     padding: 30px 50px;
     font-size: 4em;
+    padding: 60px;
+    font-weight: bold;
+    color: white;
+    
 }
+
+.btn-start-one-player{
+    background-color: blue;
+    border: 10px solid darkblue;
+}
+
+.btn-start-two-players {
+    background-color: darkred;
+    border: 10px solid red;
+}
+
+
+
+
+
+
+
+
+
+.btn-shop {
+    position: absolute;
+    top: 10%;
+    left: 90%;
+    padding: 30px 50px;
+    font-size: 4em;
+    border: 20px solid darkgoldenrod;
+    font-weight: bold;
+    background-color: gold;
+}
+
+.level-select-screen {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center
+}
+
+.level-select-title {
+    font-size: 20em;
+    margin: 7% 0 6% 0;
+}
+
+.level-display {
+    width: 2300px;
+    height: 1500px;
+    display: flex;
+    align-items: flex-start;
+    /* justify-content: flex-start; */
+    /* flex-wrap: wrap; */
+}
+
+.level-display > * {
+    margin: 60px;
+    padding: 160px 60px;
+    font-size: 4em;
+    border-radius: 50px;
+    border: 10px solid gray
+}
+
+
+
+
+
+
 
 
 .player-one-lives {
@@ -124,6 +191,7 @@ body {
     padding: 10px 50px;
     border-radius: 36px;
     margin: 40px 70px;
+    border: 5px solid black;
 }
 
 .number-of-lives {
@@ -142,6 +210,22 @@ body {
     padding: 87px 0 0 510px;
 }
 
+.game-container {
+    background-image: url("/img/background/Bombard\ background\ third\ try.jpg");
+    width: 1920px;
+    height: 1080px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
+
+
+
+
+
+
+
 .game-over-title {
     font-size: 20em;
     margin: 7% 0 10% 0;
@@ -158,3 +242,13 @@ body {
     padding: 30px 50px;
     font-size: 4em;
 }
+
+
+
+
+/* 
+<main class="splash-screen">
+<h1 class="level-select-title">Select a Level</h1>
+<div class="level-display">
+    <button class="btn-level-one">One Player <img></button>
+    <button class="btn-level-two">Two Players <img></button> */

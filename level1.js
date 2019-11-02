@@ -6,7 +6,7 @@ function Game() {
     this.brickWalls = null;
     this.blockWalls = [[0,0,0,0,0,0,0,0,0],[0,1,0,1,0,1,0,1,0],[0,0,0,0,0,0,0,0,0],[0,1,0,1,0,1,0,1,0],[0,0,0,0,0,0,0,0,0],[0,1,0,1,0,1,0,1,0],[0,0,0,0,0,0,0,0,0],[0,1,0,1,0,1,0,1,0],[0,0,0,0,0,0,0,0,0]];
     this.blockWallInstances = [];
-    this.brickWalls = [[1,1,1,1,1,1,1,0,0],[1,0,1,0,1,0,1,0,0],[1,1,1,1,1,1,1,1,1],[1,0,1,0,1,0,1,0,1],[1,1,1,1,1,1,1,1,1],[1,0,1,0,1,0,1,0,1],[1,1,1,1,1,1,1,1,1],[0,0,1,0,1,0,1,0,1],[0,0,1,1,1,1,1,1,1]];
+    this.brickWalls = [[1,0,1,0,1,0,1,0,0],[0,0,0,0,0,0,0,0,0],[1,0,1,0,1,0,1,0,1],[0,0,0,0,0,0,0,0,0],[1,0,1,0,1,0,1,0,1],[0,0,0,0,0,0,0,0,0],[1,0,1,0,1,0,1,0,1],[0,0,0,0,0,0,0,0,0],[0,0,1,0,1,0,1,0,1]];
     this.brickWallInstances = [];
     this.gameScreen = null;
     this.bombard = null;
@@ -27,20 +27,24 @@ Game.prototype.start = function() {
     this.backgroundCanvas = document.querySelector(".background-canvas")
     this.backgroundCtx = this.backgroundCanvas.getContext("2d")
 
-    this.backgroundCanvas.width= 900;  /* !!! what is going on here?*/
+    this.backgroundCanvas.width= 900;
     this.backgroundCanvas.height= 900;
 
     this.bombard = new Bombard(this.backgroundCanvas, this, 1)
+
+    this.bombard.getPosition();
     this.bombard.draw()
 
 
     this.handleKeyDown = function(e) {
         if (e.keyCode === 87) {
-            // this.blockWallInstances.forEach(blockwall=>{             // !!! Can't get collisions
+            // this.blockWallInstances.forEach(blockwall=>{ 
+            //     console.log("anybody there?");            // !!! Can't get collisions
             //     if(this.bombard.didCollide(blockwall)) {
-            //     } else {
-                    this.bombard.move("moveUp") 
-                    
+            //         console.log("collision!");
+
+            //     } else { 
+                    this.bombard.move("moveUp")
                 // }       
             // })
         } else if (e.keyCode === 83) {
@@ -71,35 +75,6 @@ Game.prototype.clearBackgroundCanvas = function() {
 
 
 Game.prototype.placeWalls = function () {
-    // this.blockWalls.forEach((blockwallrow)=>{
-    //     blockwallrow.forEach((blockWallerino)=>{
-    //         if(blockWallerino){
-    //             console.log("im goin");
-    //             this.squareBrushX += 100
-    //             blockwalL.onload = function() {
-        //                 console.log(this.squareBrushX);
-        //                 this.backgroundCtx.drawImage(blockwalL, this.squareBrushX, this.squareBrushY, 100, 100);
-        //                 this.backgroundCtx.fill();
-        //             }.bind(this)
-        //             console.log("i printed and increased");
-        //         } else {
-            //             this.squareBrushX += 100
-            //             console.log("passed & x+");
-    //         }
-    //     })
-    //     this.squareBrushX = 0
-    //     console.log("and I cleaned after the row");
-    // })
-    // blockwalL.onload = function() {
-    //     console.log(this.squareBrushX);
-    //     this.backgroundCtx.drawImage(blockwalL, this.squareBrushX, this.squareBrushY, 100, 100);
-    //     this.backgroundCtx.fill();
-    // }.bind(this)
-    // this.blockWallsWithoutMatrix.forEach(function(blockwall){
-    //     const blockwALL = new BLockWall(blockwall[0], blockwall[1])
-    //     blockwALL.draw();
-    // })
-    // for(let i = 0; i < this.blockWalls.length; i++) {
         this.blockWalls.forEach(blockwallrow => {
             blockwallrow.forEach((blockwall, index) =>{
                 if(blockwall) {
@@ -122,13 +97,13 @@ Game.prototype.placeWalls = function () {
 
 Game.prototype.placeBrickWalls = function () {
 
-        this.blockWalls.forEach(blockwallrow => {
-            blockwallrow.forEach((blockwall, index) =>{
-                if(blockwall) {
-                    let blockwallInstance = new BlockWall(this.squareBrushX, this.squareBrushY);
-                    blockwallInstance.getImage();
-                    this.blockWallInstances.push(blockwallInstance);
-                    this.backgroundCtx.drawImage(blockwallInstance.image, this.squareBrushX, this.squareBrushY, 100, 100);
+        this.brickWalls.forEach(brickwallrow => {
+            brickwallrow.forEach((brickwall, index) =>{
+                if(brickwall) {
+                    let brickwallInstance = new BrickWall(this.squareBrushX, this.squareBrushY);
+                    brickwallInstance.getImage();
+                    this.brickWallInstances.push(brickwallInstance);
+                    this.backgroundCtx.drawImage(brickwallInstance.image, this.squareBrushX, this.squareBrushY, 100, 100);
                     this.backgroundCtx.fill();
                 }
                 this.squareBrushX += 100
@@ -136,9 +111,9 @@ Game.prototype.placeBrickWalls = function () {
         this.squareBrushY += 100
         this.squareBrushX = 0
     })
-    this.squareBrushY = 0
+    this.squareBrushY = 0;
 
-    this.blockWallInstances.splice(0, this.blockWallInstances.length)
+    this.brickWallInstances.splice(0, this.brickWallInstances.length);
 }
 
 Game.prototype.updateStats = function(){
@@ -166,7 +141,7 @@ Game.prototype.startLoop = function() {
             
             this.placeWalls();
 
-            // this.placeBrickWalls();
+            this.placeBrickWalls();
     
             this.updateStats();
     

@@ -6,11 +6,26 @@ function Bombard(canvas, game, playerNumber, lives = 1) {
     this.game = game;
     this.lives = lives;
     this.size = 100;
-    this.x = 0;
-    this.y = 100;
+    this.x;
+    this.y;
     this.isWithinInvincibilityFrames = false;
     this.playerNumber = playerNumber
 }
+
+
+
+Bombard.prototype.getPosition = function() {
+    console.log("I am bombard number "+this.playerNumber);
+    if (this.playerNumber = 1){
+        this.x = 0;
+        this.y = 800;
+    } else if (this.playerNumber == 2){
+        console.log("therefore");
+        this.x = 800;
+        this.y = 0;
+    }
+}
+
 
 Bombard.prototype.draw = function() {
     const bombard = new Image()
@@ -19,9 +34,6 @@ Bombard.prototype.draw = function() {
         this.ctx.drawImage(bombard, this.x, this.y, this.size, this.size);
     }.bind(this)
 };
-
-
-
 
 Bombard.prototype.move = function(direction) {
 
@@ -121,8 +133,10 @@ Bombard.prototype.didCollide = function(somethingWithXYandSize) {
 
 
 Bombard.prototype.handleArrivingToGoal = function() {
+
     if(this.playerNumber == 1) {
         if (this.didCollide(this.game.goalForPlayer1)){
+
             this.game.gameOver()
         }
     }

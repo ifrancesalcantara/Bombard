@@ -11,21 +11,29 @@ function buildDOM(htmlString){
 function main(){
     var game;
     var splashScreen;
+    var levelSelect;
     var gameScreen
     var gameOverScreen;
 
     function createSplashScreen() {
+
+
         splashScreen = buildDOM(`
         <main class="splash-screen">
             <h1 class="bombard-title">Bombard</h1>
-            <button class="btn-start">Start</button>
+            <div class="player-number-select">
+                <button class="btn-start-one-player">One Player <img></button>
+                <button class="btn-start-two-players">Two Players <img></button>
+            </div>
         </main>
         `)
 
         document.body.appendChild(splashScreen);
 
-        var startButton = splashScreen.querySelector(".btn-start")
-        startButton.addEventListener("click", startGame)
+        var onePlayerStartButton = splashScreen.querySelector(".btn-start-one-player")
+        var twoPlayersStartButton = splashScreen.querySelector(".btn-start-two-players")
+        onePlayerStartButton.addEventListener("click", createLevelSelect)
+        twoPlayersStartButton.addEventListener("click", startTwoPlayerLevel)
     }
 
 
@@ -35,14 +43,56 @@ function main(){
     };
 
 
-    function startGame() {
+    function createLevelSelect() {
+
         removeSplashScreen();
+
+        levelSelect = buildDOM(`
+        <main class="level-select-screen">
+            <button class="btn-shop">Shop</button>
+            <h1 class="level-select-title">Select a Level</h1>
+            <div class="level-display">
+                <button class="btn-start-level-one">Level One<img></button>
+                <button class="btn-start-level-two">Level Two<img></button>
+                <button class="btn-start-level-three">Level Three<img></button>
+                <button class="btn-start-level-four">Level Four<img></button>
+            </div>
+        </main>
+        `)
+
+        document.body.appendChild(levelSelect);
+
+        var levelOneStartButton = levelSelect.querySelector(".btn-start-level-one")
+
+        levelOneStartButton.addEventListener("click", startLevel1)
+    }
+
+
+    function removeLevelSelect (){
+        levelSelect.remove()
+    }
+
+    function startLevel1() {
+
+        removeLevelSelect();
 
         game = new Game();
         game.gameScreen = createGameScreen();
         game.start()
         game.passOverGameOverCallback(gameOver)
     }
+
+    function startTwoPlayerLevel() {
+        removeSplashScreen();
+
+        game = new TwoPlayerLevel();
+        game.gameScreen = createGameScreen();
+        game.start()
+        game.passOverGameOverCallback(gameOver)
+    }
+
+
+
 
 
     function createGameScreen() {
