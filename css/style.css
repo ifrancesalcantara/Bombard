@@ -103,16 +103,16 @@ body {
 .player-number-select {
     display: flex;
     justify-content: space-between;
-    width: 32%;
+    width: 50%;
 }
 
 .player-number-select > * {
-    padding: 30px 50px;
+    padding: 15px 25px;
     font-size: 4em;
-    padding: 60px;
+    padding: 30px;
     font-weight: bold;
     color: white;
-    
+
 }
 
 .btn-start-one-player{
@@ -133,14 +133,30 @@ body {
 
 
 
-.btn-shop {
+.shop-div {
     position: absolute;
-    top: 10%;
-    left: 90%;
-    padding: 30px 50px;
-    font-size: 4em;
-    border: 20px solid darkgoldenrod;
+    top: 5%;
+    left: 80%;
     font-weight: bold;
+    width: 600px;
+    display: flex;
+    align-items: center;
+}
+
+.number-of-total-coins {
+    font-size: 2.5em;
+}
+
+.spinning-total-coins {
+    margin-right: 80px;
+    height: 50px;
+}
+
+
+.btn-shop {
+    font-size: 2em;
+    padding: 15px 25px;
+    border: 10px solid darkgoldenrod;
     background-color: gold;
 }
 
@@ -153,13 +169,12 @@ body {
 }
 
 .level-select-title {
-    font-size: 20em;
-    margin: 7% 0 6% 0;
+    font-size: 12em;
+    margin: 12% 0 6% 0;
 }
 
 .level-display {
-    width: 2300px;
-    height: 1500px;
+    width: 1200px;
     display: flex;
     align-items: flex-start;
     /* justify-content: flex-start; */
@@ -167,11 +182,42 @@ body {
 }
 
 .level-display > * {
-    margin: 60px;
-    padding: 160px 60px;
-    font-size: 4em;
+    margin: 30px;
+    padding: 80px;
+    font-size: 2em;
     border-radius: 50px;
-    border: 10px solid gray
+    border: 5px solid grey;
+    text-align: center;
+    font-weight: bold;
+    color: white;
+}
+
+.btn-start-level-one {
+    background-image: url("/img/background/Bombard background second try.jpg");
+    background-size: 400px;
+    background-position: center;
+    background-repeat: no-repeat
+}
+
+.btn-start-level-two {
+    background-image: url("/img/background/Bombard background second try.jpg");
+    background-size: 400px;
+    background-position: center;
+    background-repeat: no-repeat
+}
+
+.btn-start-level-three {
+    background-image: url("/img/background/Bombard background second try.jpg");
+    background-size: 400px;
+    background-position: center;
+    background-repeat: no-repeat
+}
+
+.btn-start-level-four {
+    background-image: url("/img/background/Bombard background second try.jpg");
+    background-size: 400px;
+    background-position: center;
+    background-repeat: no-repeat
 }
 
 
@@ -181,10 +227,12 @@ body {
 
 
 
-.player-one-lives {
+
+.player-one-lives-and-coins {
     position: absolute;
     z-index: 1;
     display: flex;
+    flex-direction: column;
     align-items: center;
     align-content: space-around;
     background-color: white;
@@ -192,16 +240,28 @@ body {
     border-radius: 36px;
     margin: 40px 70px;
     border: 5px solid black;
+    font-size: 3em;
+}
+
+.player-one-lives-and-coins > * {
+    display: flex;
+    flex-direction: row;
+}
+
+.number-of-coins {
+    margin: 0 10px 0 0;
+}
+
+.level-coins-icon {
+    height: 50px;
 }
 
 .number-of-lives {
-    font-size: 3em;
-    margin: 0 10 0 0;
+    margin: 0 10px 0 0;
 }
 
 .lives-icon {
     height: 40px;
-    margin: 0 0 0 10px;
 }
 
 .background-canvas {

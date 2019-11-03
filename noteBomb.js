@@ -13,7 +13,7 @@ function NoteBomb(canvas, x, y, bombard) {
     this.bombard = bombard;
     this.identifier = Math.random()
     this.isNoteBomb = true;
-    this.areaofEffectX = {x: null, y: null, xLength: null, yLength: 100}
+    this.areaofEffectX = {x: this.x, y: this.y, size: 97/*xLength: null, yLength: 100*/}
     this.areaofEffectY = {x: null, y: null, xLength: 100, yLength: null}
 }
 
@@ -74,7 +74,6 @@ NoteBomb.prototype.explode = function() {
             this.ctx.rect(this.x, this.y-200, this.size, this.size+400);
             this.ctx.fill();
             this.firetimer();
-            console.log(this.fireChronometer);
         } else {
             clearInterval(explosiestalism)
             console.log("Bomb ended. I tried to clean fire");

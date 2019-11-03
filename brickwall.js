@@ -29,6 +29,12 @@ BrickWall.prototype.getImage = function() {
 
 BrickWall.prototype.breakDown = function() {
     //draw breaking wall in its position
+
+    if(!this.game.isPvP) {                                       //Adds coin to main
+        this.game.passOverAddCoinCallback();
+        this.game.addCoin();
+    }
+
     this.game.brickWallInstances.forEach(brickwall => {
         if (brickwall){
 

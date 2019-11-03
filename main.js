@@ -14,6 +14,7 @@ function main(){
     var levelSelect;
     var gameScreen
     var gameOverScreen;
+    var coins = 0;
 
     function createSplashScreen() {
 
@@ -49,10 +50,14 @@ function main(){
 
         levelSelect = buildDOM(`
         <main class="level-select-screen">
-            <button class="btn-shop">Shop</button>
+            <div class="shop-div">
+                <span class="number-of-total-coins">${coins}</span>
+                <img class="spinning-total-coins" src="img/croppedCoin.gif">
+                <button class="btn-shop">Shop</button>
+            </div>
             <h1 class="level-select-title">Select a Level</h1>
             <div class="level-display">
-                <button class="btn-start-level-one">Level One<img></button>
+                <span class="btn-start-level-one">Level One<img></span>
                 <button class="btn-start-level-two">Level Two<img></button>
                 <button class="btn-start-level-three">Level Three<img></button>
                 <button class="btn-start-level-four">Level Four<img></button>
@@ -80,6 +85,7 @@ function main(){
         game.gameScreen = createGameScreen();
         game.start()
         game.passOverGameOverCallback(gameOver)
+        game.passOverAddCoinCallback(addCoin)
     }
 
     function startTwoPlayerLevel() {
@@ -94,14 +100,19 @@ function main(){
 
 
 
-
     function createGameScreen() {
         game.inGame = true;
         gameScreen = buildDOM(`
             <main class="game-container">
-                <div class="player-one-lives">
-                    <p class="number-of-lives">0</p>
-                    <img src="https://media.giphy.com/media/fH6sWTw73YS9tjqPSF/giphy.gif" class="lives-icon">
+                <div class="player-one-lives-and-coins">
+                    <div>
+                        <p class="number-of-coins">0</p>
+                        <img src="/img/croppedCoin.gif" class="level-coins-icon">
+                    </div>
+                    <div>
+                        <p class="number-of-lives">0</p>
+                        <img src="https://media.giphy.com/media/fH6sWTw73YS9tjqPSF/giphy.gif" class="lives-icon">
+                    </div>
                 </div>
                 <canvas class="background-canvas"></canvas>
             </main>
@@ -123,7 +134,7 @@ function main(){
     function createGameOverScreen() {
         gameOverScreen = buildDOM(`
         <main class="game-over-wrapper">
-            <h1 class="game-over-title">YOU WIN!</h1>
+            <h1 class="game-over-title"><span class="name-for-PvP">YOU</span> WIN<span class="add-s-for-PvP"></span>!</h1>
             <button class="restart-button">Play Again</button>
         </main>
     `);
@@ -140,7 +151,9 @@ function main(){
         gameOverScreen.remove()
     }
 
-
+    function addCoin() {
+        coins++
+    }
 
 
 

@@ -9,6 +9,7 @@ function TwoPlayerLevel() {
     this.brickWalls = [[0,1,0,1,0,1,0,0,0],[1,0,1,0,1,0,1,0,0],[0,1,0,1,0,1,0,1,0],[1,0,1,0,1,0,1,0,1],[0,1,0,1,0,1,0,1,0],[1,0,1,0,1,0,1,0,1],[0,1,0,1,0,1,0,1,0],[0,0,1,0,1,0,1,0,1],[0,0,0,1,0,1,0,1,0]];
     this.brickWallInstances = [];
     this.gameScreen = null;
+    this.bombards =  [];
     this.bombard1 = null;
     this.bombard2 = null;
     this.gameIsOver = false;
@@ -19,8 +20,15 @@ function TwoPlayerLevel() {
         size: 100,
         isGoal: true,
     }
-    this.gameOverFunction
-    this.inGame = false
+    this.goalForPlayer2 = {
+        x: 0,
+        y: 801,
+        size: 98,
+        isGoal: true,
+    }
+    this.gameOverFunction;
+    this.inGame = false;
+    this.isPvP = true;
 };
 
 
@@ -31,14 +39,15 @@ TwoPlayerLevel.prototype.start = function() {
     this.backgroundCanvas.width= 900;
     this.backgroundCanvas.height= 900;
 
-    this.bombard1 = new Bombard(this.backgroundCanvas, this, 1)
-    this.bombard1.getPosition();
-    this.bombard1.draw()
+    this.bombard1 = new Bombard(this.backgroundCanvas, this, 1, "Player 1")
+    this.bombards.push(this.bombard1)
+    this.bombard2 = new Bombard(this.backgroundCanvas, this, 2, "Player 2")
+    this.bombards.push(this.bombard2)
 
-    this.bombard2 = new Bombard(this.backgroundCanvas, this, 2)
-    this.bombard2.getPosition();
-    this.bombard2.draw()
-
+    this.bombards.forEach(bombard=>{
+        bombard.getPosition();
+        bombard.draw()
+    })
 
     this.handleKeyDown = function(e) {
         if (e.keyCode === 87) {
@@ -48,7 +57,11 @@ TwoPlayerLevel.prototype.start = function() {
             //         console.log("collision!");
 
             //     } else { 
+                if(this.bombard1.didCollide(this.bombard2)){ //!!!bombard2 moves to x:0
+                    console.log("Bombard1 collided with Bombard2");
+                } else {
                     this.bombard1.move("moveUp")
+                }
                 // }       
             // })
         } else if (e.keyCode === 83) {
@@ -62,6 +75,14 @@ TwoPlayerLevel.prototype.start = function() {
             console.log(this.noteBombs);
         } else if (e.keyCode === 81) {
             console.log("Special Move(?)");
+        } else if (e.keyCode === 38) {
+            this.bombard2.move("moveUp")  
+        } else if (e.keyCode === 40) {
+            this.bombard2.move("moveDown")  
+        } else if (e.keyCode === 39) {
+            this.bombard2.move("moveRight")  
+        } else if (e.keyCode === 37) {
+            this.bombard2.move("moveLeft")  
         }
     }
     document.body.addEventListener("keydown", this.handleKeyDown.bind(this))
@@ -134,16 +155,25 @@ TwoPlayerLevel.prototype.startLoop = function() {
         if(this.inGame) {
         // var loop = function() {
             this.clearBackgroundCanvas();
-            
-            this.bombard1.draw();
-    
-            this.bombard1.handleScreenCollision();
-    
-            // this.bombard1.handleBurn();
-            
-            this.bombard1.handleArrivingToGoal();
 
-            this.bombard2.draw();
+            this.bombards.forEach(bombard=>{
+                bombard.draw();
+        
+                bombard.handleScreenCollision();
+        
+                bombard.handleBurn();
+                
+                bombard.handleArrivingToGoal();
+            })
+            
+
+            // this.bombard2.draw();
+
+            // this.bombard2.handleScreenCollision();
+    
+            // // this.bombard2.handleBurn();
+            
+            // this.bombard2.handleArrivingToGoal();
             
             this.placeWalls();
 

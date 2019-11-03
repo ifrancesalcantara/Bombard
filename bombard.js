@@ -1,6 +1,6 @@
 'use strict';
 
-function Bombard(canvas, game, playerNumber, lives = 1) {
+function Bombard(canvas, game, playerNumber, name, lives = 1) {
     this.canvas = canvas;
     this.ctx = this.canvas.getContext('2d');
     this.game = game;
@@ -10,17 +10,23 @@ function Bombard(canvas, game, playerNumber, lives = 1) {
     this.y;
     this.isWithinInvincibilityFrames = false;
     this.playerNumber = playerNumber
+    this.name = name;
+    this.isInInvincibilityFrames = false;
 }
 
 
 
+
+Bombard.prototype.getName = function(newName) {
+    this.name = newName
+}
+
+
 Bombard.prototype.getPosition = function() {
-    console.log("I am bombard number "+this.playerNumber);
-    if (this.playerNumber = 1){
+    if (this.playerNumber == 1){
         this.x = 0;
         this.y = 800;
     } else if (this.playerNumber == 2){
-        console.log("therefore");
         this.x = 800;
         this.y = 0;
     }
@@ -132,6 +138,7 @@ Bombard.prototype.didCollide = function(somethingWithXYandSize) {
 }
 
 
+
 Bombard.prototype.handleArrivingToGoal = function() {
 
     if(this.playerNumber == 1) {
@@ -139,15 +146,30 @@ Bombard.prototype.handleArrivingToGoal = function() {
 
             this.game.gameOver()
         }
+    } else if(this.playerNumber == 2) {
+        if (this.didCollide(this.game.goalForPlayer2)){
+
+            this.game.gameOver()
+        }
     }
 }
 
 
-// Bombard.prototype.handleBurn = function() {
-    // if(this.didCollide(notebomb.areaOfEffectY) {
-    //     this.receiveDamage(1);
-    // }
-//  if(this.didCollide(notebomb.areaOfEffectX)) {
-    //     this.receiveDamage(1);
-    // }
-// }
+Bombard.prototype.handleBurn = function() {
+    this.game.bombards.forEach(bombard=>{
+        if(bombard.name == this.name) {
+            this.game.noteBombs.forEach(notebomb=>{
+                if(notebomb.stillExploding) {
+                    console.log(`${bombard.lives}`);
+                    if(bombard.didCollide(notebomb.areaofEffectX) && !bombard.isInInvincibilityFrames) {
+                        bombard.isInInvincibilityFrames = true;
+                        setTimeout(()=>{
+                            bombard.isInInvincibilityFrames = false;
+                        }, 2000)
+                        bombard.lives -= 1
+                    }
+                }
+            })
+        }
+    })
+}

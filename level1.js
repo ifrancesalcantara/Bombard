@@ -9,6 +9,7 @@ function Game() {
     this.brickWalls = [[1,0,1,0,1,0,1,0,0],[0,0,0,0,0,0,0,0,0],[1,0,1,0,1,0,1,0,1],[0,0,0,0,0,0,0,0,0],[1,0,1,0,1,0,1,0,1],[0,0,0,0,0,0,0,0,0],[1,0,1,0,1,0,1,0,1],[0,0,0,0,0,0,0,0,0],[0,0,1,0,1,0,1,0,1]];
     this.brickWallInstances = [];
     this.gameScreen = null;
+    this.bombards = [];
     this.bombard = null;
     this.gameIsOver = false;
     this.noteBombs = [];
@@ -19,7 +20,9 @@ function Game() {
         isGoal: true,
     }
     this.gameOverFunction
+    this.addCoinFunction
     this.inGame = false
+    this.coins = 0;
 };
 
 
@@ -30,7 +33,8 @@ Game.prototype.start = function() {
     this.backgroundCanvas.width= 900;
     this.backgroundCanvas.height= 900;
 
-    this.bombard = new Bombard(this.backgroundCanvas, this, 1)
+    this.bombard = new Bombard(this.backgroundCanvas, this, 1, "Player 1");
+    this.bombards.push(this.bombard)
 
     this.bombard.getPosition();
     this.bombard.draw()
@@ -119,6 +123,8 @@ Game.prototype.placeBrickWalls = function () {
 Game.prototype.updateStats = function(){
     var liveScoreEl = document.querySelector(".number-of-lives");
     liveScoreEl.innerHTML = parseInt(this.bombard.lives)
+    var coinScoreEl = document.querySelector(".number-of-coins")
+    coinScoreEl.innerHTML = this.coins
 }
 
 
@@ -138,6 +144,8 @@ Game.prototype.startLoop = function() {
             // this.bombard.handleBurn();
             
             this.bombard.handleArrivingToGoal();
+
+            this.bombard.handleBurn();
             
             this.placeWalls();
 
@@ -146,7 +154,7 @@ Game.prototype.startLoop = function() {
             this.updateStats();
     
         }
-    }, 500)
+    }, 200)
     // window.requestAnimationFrame(loop);
 }
 
@@ -154,6 +162,15 @@ Game.prototype.startLoop = function() {
 
 Game.prototype.passOverGameOverCallback = function(callback){
     this.gameOverFunction = callback
+}
+
+
+Game.prototype.passOverAddCoinCallback = function(callback) {
+    this.addCoinFunction = callback
+}
+
+Game.prototype.addCoin = function () {
+    this.coins++
 }
 
 
