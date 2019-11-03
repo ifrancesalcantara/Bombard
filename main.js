@@ -81,7 +81,7 @@ function main(){
 
         removeLevelSelect();
 
-        game = new Game();
+        game = new Level2();
         game.gameScreen = createGameScreen();
         game.start()
         game.passOverGameOverCallback(gameOver)
@@ -102,21 +102,41 @@ function main(){
 
     function createGameScreen() {
         game.inGame = true;
-        gameScreen = buildDOM(`
-            <main class="game-container">
-                <div class="player-one-lives-and-coins">
-                    <div>
-                        <p class="number-of-coins">0</p>
-                        <img src="/img/croppedCoin.gif" class="level-coins-icon">
+            if(!game.isPvP){
+                gameScreen = buildDOM(`
+                    <main class="one-player-game-container">
+                        <div class="one-player-lives-and-coins">
+                            <div class="coins-div">
+                                <p class="number-of-coins">0</p>
+                                <img src="/img/croppedCoin.gif" class="level-coins-icon">
+                            </div>
+                            <div>
+                                <p class="number-of-lives">0</p>
+                                <img src="https://media.giphy.com/media/fH6sWTw73YS9tjqPSF/giphy.gif" class="lives-icon">
+                            </div>
+                        </div>
+                        <canvas class="background-canvas"></canvas>
+                    </main>
+                `);
+            } else if(game.isPvP){
+                gameScreen = buildDOM(`
+                    <main class="two-players-game-container">
+                        <div class="player-one-lives">
+                            <div>
+                                <p class="player-one-number-of-lives">0</p>
+                                <img src="https://media.giphy.com/media/fH6sWTw73YS9tjqPSF/giphy.gif" class="lives-icon">
+                            </div>
+                        </div>
+                        <div class="player-two-lives">
+                        <div>
+                            <p class="player-two-number-of-lives">0</p>
+                            <img src="https://media.giphy.com/media/fH6sWTw73YS9tjqPSF/giphy.gif" class="lives-icon">
+                        </div>
                     </div>
-                    <div>
-                        <p class="number-of-lives">0</p>
-                        <img src="https://media.giphy.com/media/fH6sWTw73YS9tjqPSF/giphy.gif" class="lives-icon">
-                    </div>
-                </div>
-                <canvas class="background-canvas"></canvas>
-            </main>
-        `);
+                        <canvas class="background-canvas"></canvas>
+                    </main>
+                `);
+            }
         document.body.appendChild(gameScreen)
         return gameScreen
     }

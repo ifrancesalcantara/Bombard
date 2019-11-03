@@ -13,6 +13,8 @@ function Bombard(canvas, game, playerNumber, name, lives = 1) {
     this.name = name;
     this.enemysName;
     this.isInInvincibilityFrames = false;
+    this.lookingRight = true;
+    // this.canGoUp = true;
 }
 
 
@@ -23,8 +25,7 @@ Bombard.prototype.getName = function(newName) {
 }
 
 Bombard.prototype.getEnemyName = function(){
-    if(this.game.isPvP){
-        console.log(this.game.bombards);
+    if(this.game.isPvP) {
         this.game.bombards.forEach((bombard, index)=>{
             if(bombard.name != this.name) {
                 this.enemysName = bombard.name;
@@ -46,12 +47,28 @@ Bombard.prototype.getPosition = function() {
 
 
 Bombard.prototype.draw = function() {
-    const bombard = new Image()
-    bombard.src='img/player/Bombard3centered.jpg'
-    bombard.onload = function() {
-        this.ctx.drawImage(bombard, this.x, this.y, this.size, this.size);
-    }.bind(this)
+    if(this.lookingRight) {
+        const bombard = new Image()
+        bombard.src='img/player/Bombard_transparent_with_lute.png'
+        bombard.onload = function() {
+            this.ctx.drawImage(bombard, this.x, this.y, this.size, this.size);
+        }.bind(this)
+    } else {
+        const bombard = new Image()
+        bombard.src='img/player/Bombard_trans_looking_left.png'
+        bombard.onload = function() {
+            this.ctx.drawImage(bombard, this.x, this.y, this.size, this.size);
+        }.bind(this)
+    }
 };
+
+Bombard.prototype.changeLookingDirection = function() {
+    if(this.lookingRight) {
+        this.lookingRight = false;
+    } else {
+        this.lookingRight = true;
+    }
+}
 
 Bombard.prototype.move = function(direction) {
 
@@ -94,7 +111,7 @@ Bombard.prototype.placeNoteBomb = function(canvas) {
 }
 
 Bombard.prototype.didCollide = function(somethingWithXYandSize) {
-    if(somethingWithXYandSize.isGoal){
+    // if(somethingWithXYandSize.isGoal){
         var playerLeft = this.x;
         var playerRight = this.x-1 + this.size;
         var playerTop = this.y+1;
@@ -121,34 +138,47 @@ Bombard.prototype.didCollide = function(somethingWithXYandSize) {
         return false;
     // } else if (somethingWithXYandSize.isNoteBomb){
         //check areaOfEffectX and areaOfEffectY
-    } else {
-        var playerLeft = this.x;
-        var playerRight = this.x + this.size;
-        var playerTop = this.y;
-        var playerBottom = this.y + this.size;
+
+
+
+    // } else {
+    //     var playerLeft = this.x;
+    //     var playerRight = this.x + this.size;
+    //     var playerTop = this.y;
+    //     var playerBottom = this.y + this.size;
         
-        var somethingLeft = somethingWithXYandSize.x;
-        var somethingRight = somethingWithXYandSize.x + somethingWithXYandSize.size;
-        var somethingTop = somethingWithXYandSize.y;
-        var somethingBottom = somethingWithXYandSize.y + somethingWithXYandSize.size;
+    //     var somethingLeft = somethingWithXYandSize.x;
+    //     var somethingRight = somethingWithXYandSize.x + somethingWithXYandSize.size;
+    //     var somethingTop = somethingWithXYandSize.y;
+    //     var somethingBottom = somethingWithXYandSize.y + somethingWithXYandSize.size;
         
-        // Check if the somethingWithXYandSize intersects any of the player's sides
-        var crossLeft = somethingLeft <= playerRight && somethingLeft >= playerLeft;
+    //     // Check if the somethingWithXYandSize intersects any of the player's sides
+    //     var crossLeft = somethingLeft <= playerRight && somethingLeft >= playerLeft;
             
-        var crossRight = somethingRight >= playerLeft && somethingRight <= playerRight;
+    //     var crossRight = somethingRight >= playerLeft && somethingRight <= playerRight;
         
-        var crossBottom = somethingBottom >= playerTop && somethingBottom <= playerBottom;
+    //     var crossBottom = somethingBottom >= playerTop && somethingBottom <= playerBottom;
         
-        var crossTop = somethingTop <= playerBottom && somethingTop >= playerTop;
+    //     var crossTop = somethingTop <= playerBottom && somethingTop >= playerTop;
         
-        if ((crossLeft || crossRight) && (crossTop || crossBottom)) {
-            somethingWithXYandSize.x = 0-somethingWithXYandSize.size;
-            return true;
-        }
-        return false;
-    }
+    //     if ((crossLeft || crossRight) && (crossTop || crossBottom)) {
+    //         somethingWithXYandSize.x = 0-somethingWithXYandSize.size;
+    //         return true;
+    //     }
+    //     return false;
+    // }
 }
 
+Bombard.prototype.setMovementAllowance = function() {
+    this.game.blockWallInstances.forEach(blockwall=>{ 
+        if(this.game.bombard.didCollide(blockwall)) {
+            console.log(`collision with blockwall in x:${blockwall.x} y:${blockwall.y}`);
+            return false;
+        } else {
+        }    
+        return true
+    })
+}
 
 
 Bombard.prototype.handleArrivingToGoal = function() {

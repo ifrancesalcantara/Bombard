@@ -38,9 +38,9 @@ TwoPlayerLevel.prototype.start = function() {
     this.backgroundCanvas.width= 900;
     this.backgroundCanvas.height= 900;
 
-    this.bombard1 = new Bombard(this.backgroundCanvas, this, 1, "Player 1")
+    this.bombard1 = new Bombard(this.backgroundCanvas, this, 1, "Player 1", 2)
     this.bombards.push(this.bombard1)
-    this.bombard2 = new Bombard(this.backgroundCanvas, this, 2, "Player 2")
+    this.bombard2 = new Bombard(this.backgroundCanvas, this, 2, "Player 2", 2)
     this.bombards.push(this.bombard2)
 
     this.bombard1.getName("Player 1");
@@ -147,11 +147,17 @@ TwoPlayerLevel.prototype.placeBrickWalls = function () {
 
 TwoPlayerLevel.prototype.updateStats = function(){
     if(!this.gameIsOver) {
-        var liveScoreEl = document.querySelector(".number-of-lives");
-        liveScoreEl.innerHTML = parseInt(this.bombard1.lives);
+        if(!this.isPvP) {
+            var liveScoreEl = document.querySelector(".number-of-lives");
+            liveScoreEl.innerHTML = parseInt(this.bombard1.lives);
+        } else {
+            var player1LiveScoreEl = document.querySelector(".player-one-number-of-lives");
+            player1LiveScoreEl.innerHTML = parseInt(this.bombard1.lives);
+            var player2LiveScoreEl = document.querySelector(".player-two-number-of-lives");
+            player2LiveScoreEl.innerHTML = parseInt(this.bombard2.lives);
+        }
     
         this.bombards.forEach(bombard=>{
-            console.log(`I am ${bombard.name} and I have ${bombard.lives}`);
             if(bombard.lives <= 0) {
                 this.gameIsOver = true;
                 this.gameOver(bombard.enemysName);

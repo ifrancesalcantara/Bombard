@@ -228,8 +228,29 @@ body {
 
 
 
-.player-one-lives-and-coins {
+.one-player-lives-and-coins {
     position: absolute;
+    z-index: 1;
+    display: flex;
+    /* flex-direction: column; */
+    align-items: center;
+    align-content: space-around;
+    background-color: white;
+    padding: 10px 50px;
+    border-radius: 36px;
+    margin: 40px 70px;
+    border: 5px solid black;
+    font-size: 3em;
+}
+
+.one-player-lives-and-coins > * {
+    display: flex;
+    flex-direction: row;
+}
+
+.player-one-lives {
+    position: absolute;
+    top: 95%;
     z-index: 1;
     display: flex;
     flex-direction: column;
@@ -243,17 +264,50 @@ body {
     font-size: 3em;
 }
 
-.player-one-lives-and-coins > * {
+.player-one-lives > * {
     display: flex;
     flex-direction: row;
 }
 
+.player-one-number-of-lives {
+    margin-right: 10px;
+}
+
+.player-two-lives {
+    position: absolute;
+    left: 82%;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: space-around;
+    background-color: white;
+    padding: 10px 50px;
+    border-radius: 36px;
+    margin: 40px 70px;
+    border: 5px solid black;
+    font-size: 3em;
+}
+
+.player-two-lives > * {
+    display: flex;
+    flex-direction: row;
+}
+
+.player-two-number-of-lives {
+    margin-right: 10px;
+}
+
 .number-of-coins {
-    margin: 0 10px 0 0;
+    margin: 0 10px 0px 0;
 }
 
 .level-coins-icon {
     height: 50px;
+}
+
+.coins-div {
+    margin: 0 50px 0 0;
 }
 
 .number-of-lives {
@@ -270,8 +324,16 @@ body {
     padding: 87px 0 0 510px;
 }
 
-.game-container {
-    background-image: url("/img/background/Bombard\ background\ third\ try.jpg");
+.one-player-game-container {
+    background-image: url("/img/background/1Player_with_exit.jpg");
+    width: 1920px;
+    height: 1080px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.two-players-game-container {
+    background-image: url("/img/background/2Player_background.jpg");
     width: 1920px;
     height: 1080px;
     background-repeat: no-repeat;
