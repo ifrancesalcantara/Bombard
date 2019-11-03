@@ -287,8 +287,9 @@ body {
 
 
 .game-over-title {
-    font-size: 20em;
-    margin: 7% 0 10% 0;
+    font-size: 14em;
+    margin: 7% 0 8% 0;
+    text-align: center;
 }
 
 .game-over-wrapper {

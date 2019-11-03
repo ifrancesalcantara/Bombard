@@ -126,15 +126,15 @@ function main(){
         gameScreen.remove()
     }
 
-    function gameOver() {
+    function gameOver(winner) {
         removeGameScreen();
-        createGameOverScreen();
+        createGameOverScreen(winner);
     }
 
-    function createGameOverScreen() {
+    function createGameOverScreen(winner) {
         gameOverScreen = buildDOM(`
         <main class="game-over-wrapper">
-            <h1 class="game-over-title"><span class="name-for-PvP">YOU</span> WIN<span class="add-s-for-PvP"></span>!</h1>
+            <h1 class="game-over-title"><span class="name-for-PvP">YOU</span><br>WIN<span class="add-s-for-PvP"></span>!</h1>
             <button class="restart-button">Play Again</button>
         </main>
     `);
@@ -143,6 +143,12 @@ function main(){
     restartButton.addEventListener("click", ()=>{
         removeGameOverScreen();
         createSplashScreen()})
+        if(winner && game.isPvP) {
+            var winnersName = gameOverScreen.querySelector(".name-for-PvP");
+            winnersName.innerHTML = winner.toUpperCase()
+            var sAfterWIN = gameOverScreen.querySelector(".add-s-for-PvP");
+            sAfterWIN.innerHTML = "S"
+        }
     return gameOverScreen
     }
 

@@ -20,8 +20,7 @@ function Game() {
         isGoal: true,
     }
     this.gameOverFunction
-    this.addCoinFunction
-    this.inGame = false
+    this.addCoinFunction;
     this.coins = 0;
 };
 
@@ -33,10 +32,11 @@ Game.prototype.start = function() {
     this.backgroundCanvas.width= 900;
     this.backgroundCanvas.height= 900;
 
-    this.bombard = new Bombard(this.backgroundCanvas, this, 1, "Player 1");
+    this.bombard = new Bombard(this.backgroundCanvas, this, 1);
     this.bombards.push(this.bombard)
 
     this.bombard.getPosition();
+    this.bombard.getName("Manolito");
     this.bombard.draw()
 
 
@@ -125,6 +125,14 @@ Game.prototype.updateStats = function(){
     liveScoreEl.innerHTML = parseInt(this.bombard.lives)
     var coinScoreEl = document.querySelector(".number-of-coins")
     coinScoreEl.innerHTML = this.coins
+
+    this.bombards.forEach(bombard=>{
+        console.log(`I am ${bombard.name} and I have ${bombard.lives}`);
+        if(bombard.lives <= 0) {
+            this.gameIsOver = true;
+            this.gameOver(bombard.name);
+        }
+    })
 }
 
 
@@ -133,20 +141,20 @@ Game.prototype.updateStats = function(){
 
 Game.prototype.startLoop = function() {
     setInterval(()=>{
-        if(this.inGame) {
+        if(!this.gameIsOver) {
         // var loop = function() {
             this.clearBackgroundCanvas();
     
-            this.bombard.draw();
+            this.bombards.forEach(bombard=>{
+                bombard.draw();
     
-            this.bombard.handleScreenCollision();
-    
-            // this.bombard.handleBurn();
-            
-            this.bombard.handleArrivingToGoal();
+                bombard.handleScreenCollision();
+                
+                bombard.handleBurn();
 
-            this.bombard.handleBurn();
-            
+                bombard.handleArrivingToGoal();
+            })
+
             this.placeWalls();
 
             this.placeBrickWalls();
@@ -175,7 +183,7 @@ Game.prototype.addCoin = function () {
 
 
 
-Game.prototype.gameOver = function(){
+Game.prototype.gameOver = function(winner){
     this.gameIsOver = true;
-    this.gameOverFunction()
+    this.gameOverFunction(winner)
 }

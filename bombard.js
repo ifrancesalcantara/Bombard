@@ -11,6 +11,7 @@ function Bombard(canvas, game, playerNumber, name, lives = 1) {
     this.isWithinInvincibilityFrames = false;
     this.playerNumber = playerNumber
     this.name = name;
+    this.enemysName;
     this.isInInvincibilityFrames = false;
 }
 
@@ -19,6 +20,17 @@ function Bombard(canvas, game, playerNumber, name, lives = 1) {
 
 Bombard.prototype.getName = function(newName) {
     this.name = newName
+}
+
+Bombard.prototype.getEnemyName = function(){
+    if(this.game.isPvP){
+        console.log(this.game.bombards);
+        this.game.bombards.forEach((bombard, index)=>{
+            if(bombard.name != this.name) {
+                this.enemysName = bombard.name;
+            }
+        })
+    }
 }
 
 
@@ -140,18 +152,19 @@ Bombard.prototype.didCollide = function(somethingWithXYandSize) {
 
 
 Bombard.prototype.handleArrivingToGoal = function() {
-
-    if(this.playerNumber == 1) {
-        if (this.didCollide(this.game.goalForPlayer1)){
-
-            this.game.gameOver()
+    setTimeout(()=>{
+        if(this.playerNumber == 1) {
+            if (this.didCollide(this.game.goalForPlayer1)){
+                
+                this.game.gameOver(this.name)
+            }
+        } else if(this.playerNumber == 2) {
+            if (this.didCollide(this.game.goalForPlayer2)){
+    
+                this.game.gameOver(this.name)
+            }
         }
-    } else if(this.playerNumber == 2) {
-        if (this.didCollide(this.game.goalForPlayer2)){
-
-            this.game.gameOver()
-        }
-    }
+    }, 2000)
 }
 
 

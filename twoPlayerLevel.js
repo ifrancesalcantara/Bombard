@@ -27,7 +27,6 @@ function TwoPlayerLevel() {
         isGoal: true,
     }
     this.gameOverFunction;
-    this.inGame = false;
     this.isPvP = true;
 };
 
@@ -43,6 +42,11 @@ TwoPlayerLevel.prototype.start = function() {
     this.bombards.push(this.bombard1)
     this.bombard2 = new Bombard(this.backgroundCanvas, this, 2, "Player 2")
     this.bombards.push(this.bombard2)
+
+    this.bombard1.getName("Player 1");
+    this.bombard2.getName("Player 2");
+    this.bombard1.getEnemyName();
+    this.bombard2.getEnemyName();
 
     this.bombards.forEach(bombard=>{
         bombard.getPosition();
@@ -142,8 +146,18 @@ TwoPlayerLevel.prototype.placeBrickWalls = function () {
 }
 
 TwoPlayerLevel.prototype.updateStats = function(){
-    var liveScoreEl = document.querySelector(".number-of-lives");
-    liveScoreEl.innerHTML = parseInt(this.bombard1.lives)
+    if(!this.gameIsOver) {
+        var liveScoreEl = document.querySelector(".number-of-lives");
+        liveScoreEl.innerHTML = parseInt(this.bombard1.lives);
+    
+        this.bombards.forEach(bombard=>{
+            console.log(`I am ${bombard.name} and I have ${bombard.lives}`);
+            if(bombard.lives <= 0) {
+                this.gameIsOver = true;
+                this.gameOver(bombard.enemysName);
+            }
+        })
+    }
 }
 
 
@@ -152,7 +166,7 @@ TwoPlayerLevel.prototype.updateStats = function(){
 
 TwoPlayerLevel.prototype.startLoop = function() {
     setInterval(()=>{
-        if(this.inGame) {
+        if(!this.gameIsOver) {
         // var loop = function() {
             this.clearBackgroundCanvas();
 
@@ -165,15 +179,6 @@ TwoPlayerLevel.prototype.startLoop = function() {
                 
                 bombard.handleArrivingToGoal();
             })
-            
-
-            // this.bombard2.draw();
-
-            // this.bombard2.handleScreenCollision();
-    
-            // // this.bombard2.handleBurn();
-            
-            // this.bombard2.handleArrivingToGoal();
             
             this.placeWalls();
 
@@ -194,7 +199,7 @@ TwoPlayerLevel.prototype.passOverGameOverCallback = function(callback){
 
 
 
-TwoPlayerLevel.prototype.gameOver = function(){
+TwoPlayerLevel.prototype.gameOver = function(winner){
     this.gameIsOver = true;
-    this.gameOverFunction()
+    this.gameOverFunction(winner)
 }

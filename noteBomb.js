@@ -65,15 +65,17 @@ NoteBomb.prototype.firetimer = function() {
 NoteBomb.prototype.explode = function() {
     var explosiestalism = setInterval(()=>{
         if(this.stillExploding) {
-            console.log("printing fire");
-            this.ctx.fillStyle = "red";
-            this.ctx.rect(this.x-200, this.y, this.size+400, this.size);
-            this.ctx.fill();
-    
-            this.ctx.fillStyle = "red";
-            this.ctx.rect(this.x, this.y-200, this.size, this.size+400);
-            this.ctx.fill();
-            this.firetimer();
+            if(this.bombard.game.inGame){
+                console.log("printing fire");
+                this.ctx.fillStyle = "red";
+                this.ctx.rect(this.x-200, this.y, this.size+400, this.size);
+                this.ctx.fill();
+        
+                this.ctx.fillStyle = "red";
+                this.ctx.rect(this.x, this.y-200, this.size, this.size+400);
+                this.ctx.fill();
+                this.firetimer();
+            }
         } else {
             clearInterval(explosiestalism)
             console.log("Bomb ended. I tried to clean fire");
