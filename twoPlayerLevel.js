@@ -14,18 +14,6 @@ function TwoPlayerLevel() {
     this.bombard2 = null;
     this.gameIsOver = false;
     this.noteBombs = [];
-    this.goalForPlayer1 = {
-        x: 800,
-        y: 0,
-        size: 100,
-        isGoal: true,
-    }
-    this.goalForPlayer2 = {
-        x: 0,
-        y: 801,
-        size: 98,
-        isGoal: true,
-    }
     this.gameOverFunction;
     this.isPvP = true;
 };

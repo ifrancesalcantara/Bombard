@@ -9,8 +9,12 @@ function Dog(canvas, x, y, movingAxis, game) {
     this.image;
     this.maximumX = x+100;
     this.minimumX = x-100;
+    this.maximumY = y+100;
+    this.minimumY = y-100;
     this.movingAxis = movingAxis
     this.game = game
+    this.identifier;
+    this.isInInvulnerabilityFrames = false;
 }
 
 
@@ -59,42 +63,46 @@ Dog.prototype.move = function() {
             }
         }
     } else if(this.movingAxis == "y") {
-        if(this.y < this.maximumY) {
-            this.y += 100;
-            this.game.brickWallInstances.forEach(brickwall=>{
-                if(this.didCollide(brickwall)) {
-                    this.y -= 100;
-                }
-                else {
-                    this.goingRight = false;
-                    this.lookingRight = false;
-                    this.getImage();
-                }
-            })       
-        } else {
-            // this.goingRight = false;
-            // this.lookingRight = false;
-            // this.getImage();
-        }      
-    } else if(!this.goingRight && !this.handleScreenCollision()) {
-        if(this.y > this.minimumY){
-            this.y -= 100;
-            this.game.brickWallInstances.forEach(brickwall=>{
-                if(this.didCollide(brickwall)) {
-                    this.y += 100;
-                }
-                else {
-                    this.goingRight = true;
-                    this.lookingRight = true;
-                    this.getImage();
-                }
-            })
-        } else {
-            // this.goingRight = true;
-            // this.lookingRight = true;
-            // this.getImage();
+
+        if(this.goingRight && !this.handleScreenCollision()) {
+            console.log("tryna move");
+            console.log(this.y, this.maximumY);
+            if(this.y < this.maximumY) {
+                this.y += 100;
+                this.game.brickWallInstances.forEach(brickwall=>{
+                    if(this.didCollide(brickwall)) {
+                        this.y -= 100;
+                    }
+                    else {
+                        this.goingRight = false;
+                        // this.lookingRight = false;
+                        // this.getImage();
+                    }
+                })       
+            } else {
+                // this.goingRight = false;
+                // this.lookingRight = false;
+                // this.getImage();
+            }      
+        } else if(!this.goingRight && !this.handleScreenCollision()) {
+            if(this.y > this.minimumY){
+                this.y -= 100;
+                this.game.brickWallInstances.forEach(brickwall=>{
+                    if(this.didCollide(brickwall)) {
+                        this.y += 100;
+                    }
+                    else {
+                        this.goingRight = true;
+                        // this.lookingRight = true;
+                        // this.getImage();
+                    }
+                })
+            } else {
+                // this.goingRight = true;
+                // this.lookingRight = true;
+                // this.getImage();
+            }
         }
-    
     }
 }
 
@@ -148,4 +156,14 @@ Dog.prototype.didCollide = function(somethingWithXYandSize) {
         return true;
     }
     return false;
+}
+
+Dog.prototype.die = function() {
+    this.game.listOfAllEnemies.forEach(dog=>{
+        if(dog.identifier == this.identifier){
+            console.log(this.game.listOfAllEnemies.indexOf(dog));
+            this.game.listOfAllEnemies.splice(this.game.listOfAllEnemies.indexOf(dog), this.game.listOfAllEnemies.indexOf(dog)+1)
+        }
+    })
+
 }

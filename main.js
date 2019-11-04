@@ -70,8 +70,10 @@ function main(){
 
         var levelOneStartButton = levelSelect.querySelector(".btn-start-level-one")
         levelOneStartButton.addEventListener("click", startLevel1)
-        var levelOneStartButton = levelSelect.querySelector(".btn-start-level-two")
-        levelOneStartButton.addEventListener("click", startLevel2)
+        var levelTwoStartButton = levelSelect.querySelector(".btn-start-level-two")
+        levelTwoStartButton.addEventListener("click", startLevel2)
+        var levelThreeStartButton = levelSelect.querySelector(".btn-start-level-three")
+        levelThreeStartButton.addEventListener("click", startLevel3)
     }
 
 
@@ -95,6 +97,18 @@ function main(){
         removeLevelSelect();
 
         game = new Level2();
+        game.gameScreen = createGameScreen();
+        game.start()
+        game.passOverGameOverCallback(gameOver)
+        game.passOverVameOverWinCallback(gameOverWin)
+        game.passOverAddCoinCallback(addCoin)
+    }
+
+    function startLevel3() {
+
+        removeLevelSelect();
+
+        game = new Level3();
         game.gameScreen = createGameScreen();
         game.start()
         game.passOverGameOverCallback(gameOver)

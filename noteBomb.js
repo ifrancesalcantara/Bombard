@@ -15,11 +15,8 @@ function NoteBomb(canvas, x, y, bombard) {
     this.identifier = Math.random()
     this.isNoteBomb = true;
     this.correctAreaOfEffectX;
-    this.areaofEffectFullX = {x: this.x-200, y: this.y, sizeX: this.size+400, sizeY: this.size};
-    this.areaofEffectPlusOneMinusOne = {x: this.x-100, y: this.y, sizeX: this.size+300, sizeY: this.size};
-    this.areaofEffectMinusTwoToCenter = {x: this.x-200, y: this.y, sizeX: this.size+200, sizeY: this.size};
-    this.areaofEffectMinusOneToCenter = {x: this.x-100, y: this.y, sizeX: this.size+100, sizeY: this.size};
-    this.areaofEffectXcenter = {x: this.x, y: this.y, sizeX: this.size, sizeY: this.size};
+    this.areaofEffectX = {x: this.x-200, y: this.y, sizeX: this.x+300, sizeY: this.y+100, isX:true, sizeXForPrint: 500, sizeYForPrint: 100};
+    this.areaofEffectY = {x: this.x, y: this.y-200, sizeX: this.x+100, sizeY: this.y+300, isX:false, sizeXForPrint: 100, sizeYForPrint: 500};
 }
 
 
@@ -66,66 +63,52 @@ NoteBomb.prototype.firetimer = function() {
 NoteBomb.prototype.explode = function() {
     var explosiestalism = setInterval(()=>{
         if(this.stillExploding) {
-
-            // Print obstacles again to have them
             this.game.placeWalls();
             this.game.placeBrickWalls();
-            // Check if maximum range collides, and if id to, check another size. set correct size to one that doesn't collide 
             this.game.brickWallInstances.forEach(brickwall=>{
-                // console.log(brickwall.x, brickwall.y, brickwall.size);
-                // console.log(this.areaofEffectFullX.x, this.areaofEffectFullX.y, this.areaofEffectFullX.sizeX, this.areaofEffectFullX.sizeY);
-                if(this.didCollide(this.areaofEffectFullX, brickwall)){
-                    console.log("Collided!!!");
-                } else {
-                    this.correctAreaOfEffectX = this.areaofEffectXcenter
+                if(this.didCollide(this.areaofEffectX, brickwall)) {
+                    for(i=1; i <3; i++) {
+                        this.game.brickWalls[this.getBlockY(brickwall.y)][this.x/100-i] = 0;
+                    }
+                    for(i=1; i <3; i++) {
+                        this.game.brickWalls[this.getBlockY(brickwall.y)][this.x/100+i] = 0;
+                    }
+                } else if(this.didCollide(this.areaofEffectY, brickwall)) {
+                    for(i=1; i <3; i++) {
+                        this.game.brickWalls[this.y/100-i][this.getBlockY(brickwall.x)] = 0;
+                    }
+                    for(i=1; i <3; i++) {
+                        this.game.brickWalls[this.y/100+i][this.getBlockY(brickwall.x)] = 0;
+                    }
                 }
-                // if(this.didCollide(this.areaofEffectMinusOneToCenter, brickwall) && this.didCollide(this.areaofEffectPlusOneToCenter, brickwall)) {
-                //     console.log("SOME COLLISION!!!");
-                //     this.correctAreaOfEffectX = this.areaofEffectXcenter
-                // }
-                // else if(this.didCollide(this.areaofEffectMinusOneToCenter, brickwall)) {
-                //     console.log("passed small right fire");
-                //     this.correctAreaOfEffectX = this.areaofEffectPlusOneToCenter;
-                // }
-                // else if(this.didCollide(this.areaofEffectPlusOneMinusOne, brickwall)) {
-                //     console.log("passed small left fire");
-                //     this.correctAreaOfEffectX = this.areaofEffectMinusOneToCenter;
-                // }
-                // else if(this.didCollide(this.areaofEffectMinusTwoToCenter, brickwall)) {
-                //     console.log(" ");
-                //     this.correctAreaOfEffectX = this.areaofEffectMinusTwoToCenter;
-                // }
-                // else if(this.didCollide(this.areaofEffectMinusTwoToCenter, brickwall)) {
-                //     console.log(" ");
-                //     this.correctAreaOfEffectX = this.areaofEffectMinusTwoToCenter;
-                // }
-                // else if(this.didCollide(this.areaofEffectMinusOneToCenter, brickwall)) {                        //If every X possibility Collides, CorrectX is that possibility
-                //     console.log(" ");
-                //     this.correctAreaOfEffectX = this.areaofEffectMinusOneToCenter;
-                // } else {
-                    // console.log("No collision.");
-                //     console.log("X Axis didn't collide with brickwall at x: ", brickwall.x, " y: ", brickwall.y);
-                //     this.correctAreaOfEffectX = this.areaofEffectFullX;
-                // }
             })
-            // this.game.blockWallInstances.forEach(blockwall=>{
-            //     console.log("blockwall");
-            //     if(!this.didCollide(this.areaofEffectPlusOneMinusOne, blockwall)) {
-            //         console.log("passed medium fire");
-            //         this.correctAreaOfEffectX = this.areaofEffectPlusOneMinusOne;
-            //     }
-            //     else if(this.didCollide(this.areaofEffectMinusTwoToCenter, blockwall)) {
-            //         console.log("passed left max");
-            //         this.correctAreaOfEffectX = this.areaofEffectMinusTwoToCenter;
-            //     }
-            //     else if(this.didCollide(this.areaofEffectMinusOneToCenter, blockwall)) {                        //If every X possibility Collides, CorrectX is that possibility
-            //         console.log("passed left one");
-            //         this.correctAreaOfEffectX = this.areaofEffectMinusOneToCenter;
-            //     } else {
-            //         console.log("default X area");
-            //         this.correctAreaOfEffectX = this.areaofEffectXcenter
-            //     }
-            // })
+            this.game.blockWallInstances.forEach(blockwall=>{
+                if(this.didCollide(this.areaofEffectX, blockwall)) {
+                    this.areaofEffectX = {}
+                } else if(this.didCollide(this.areaofEffectY, blockwall)) {
+                    this.areaofEffectY = {}
+                }
+            })
+
+            this.game.bombards.forEach(bombard=>{
+                if(this.didCollide(this.areaofEffectX, bombard)) {
+                    bombard.receiveDamage();
+                } else if(this.didCollide(this.areaofEffectY, bombard)) {
+                    bombard.receiveDamage();
+                }
+            })
+
+            this.game.listOfAllEnemies.forEach((enemy, index)=>{
+                if(this.didCollide(this.areaofEffectX, enemy)) {
+                    console.log(`Dog at ${enemy.x} ${enemy.y} was deleted due to X axis`);
+                    enemy.die()
+                    // this.game.listOfAllEnemies.splice(index, index+1)
+                } else if(this.didCollide(this.areaofEffectY, enemy)) {
+                    console.log(`Dog at ${enemy.x} ${enemy.y} was deleted due to Y axis`);
+                    enemy.die()
+                    // this.game.listOfAllEnemies.splice(index, index+1)
+                }
+            })
 
 
             //DRAW according to the correct size
@@ -141,9 +124,9 @@ NoteBomb.prototype.explode = function() {
 
                 // this.ctx.drawImage(fireX, this.x-200, this.y, this.size+400, this.size)
 
-                this.ctx.drawImage(fireX, this.correctAreaOfEffectX.x, this.correctAreaOfEffectX.y, this.correctAreaOfEffectX.sizeX, this.correctAreaOfEffectX.sizeY)
+                this.ctx.drawImage(fireX, this.areaofEffectX.x, this.areaofEffectX.y, this.areaofEffectX.sizeXForPrint, this.areaofEffectX.sizeYForPrint)
                 this.ctx.fill();
-                this.ctx.drawImage(fireY, this.x, this.y-200, this.size, this.size+400)
+                this.ctx.drawImage(fireY, this.areaofEffectY.x, this.areaofEffectY.y, this.areaofEffectY.sizeXForPrint, this.areaofEffectY.sizeYForPrint)
                 this.ctx.fill();
                 this.ctx.drawImage(firecenter, this.x, this.y, this.size, this.size)
                 this.ctx.fill();
@@ -164,45 +147,113 @@ NoteBomb.prototype.explode = function() {
 }
 
 
-NoteBomb.prototype.didCollide = function(somethingWithXYandSizeXandSizeY, blockWithXYandSize) {
-    
-    var fireLeft = somethingWithXYandSizeXandSizeY.x;
-    var fireRight = somethingWithXYandSizeXandSizeY.sizeX;
-    var fireTop = somethingWithXYandSizeXandSizeY.y;
-    var fireBottom = somethingWithXYandSizeXandSizeY.sizeY;
-    
-    var blockLeft = blockWithXYandSize.x;
-    var blockRight = blockWithXYandSize.x + blockWithXYandSize.size;
-    var blockTop = blockWithXYandSize.y;
-    var blockBottom = blockWithXYandSize.y + blockWithXYandSize.size;
-    
-    var crossRight = blockRight<=fireRight && blockRight >= fireLeft;
-
-    var crossBottom = blockBottom <= fireBottom && blockBottom >= fireBottom;
-
-    var crossLeft = blockLeft >= fireLeft && blockLeft <= fireRight;
-
-    var crossTop = blockTop >= fireTop && blockTop <= fireBottom
-
-    // var crossRight = blockRight >= fireLeft && blockRight <= fireRight;
-
-    // var crossLeft = blockLeft <= fireRight && blockLeft >= fireLeft;
+NoteBomb.prototype.didCollide = function(fire, block) {
+    if(fire.isX) {
+        var fireLeft = fire.x;
+        var fireRight = fire.sizeX;
+        var fireTop = fire.y;
+        var fireBottom = fire.sizeY;
         
-    // var crossBottom = blockBottom >= fireTop && blockBottom <= fireBottom;
+        var blockLeft = block.x;
+        var blockRight = block.x + block.size;
+        var blockTop = block.y+2;
+        var blockBottom = block.y + block.size-2;
+        
+        var crossRight = blockRight<=fireRight && blockRight >= fireLeft;
     
-    // var crossTop = blockTop <= fireBottom && blockTop >= fireTop;
+        var crossBottom = blockBottom <= fireBottom && blockBottom >= fireTop;
     
-    if (crossRight && crossLeft && crossTop) {
-        return true;
-    } else {
-        console.log("Didn't collide");
-        return false 
+        var crossLeft = blockLeft >= fireLeft && blockLeft <= fireRight;
+    
+        var crossTop = blockTop >= fireTop && blockTop <= fireBottom
+    
+        // var crossRight = blockRight >= fireLeft && blockRight <= fireRight;
+    
+        // var crossLeft = blockLeft <= fireRight && blockLeft >= fireLeft;
+            
+        // var crossBottom = blockBottom >= fireTop && blockBottom <= fireBottom;
+        
+        // var crossTop = blockTop <= fireBottom && blockTop >= fireTop;
+        
+        if (crossRight && crossLeft && (/*crossTop */crossBottom)) {
+            // console.log("collided with brick at "+block.x, " ", block.y);
+            return true;
+        } else {
+            // console.log(`${blockBottom <= fireBottom} b:${blockBottom}, ${fireBottom} ${blockBottom >= fireTop}, fireLeft: ${fireLeft}, fireRight: ${fireRight}, fireTop: ${fireTop}, fireBottom: ${fireBottom} didn't collide with block at ${block.x}, ${block.y}`)
+            // var blockLeft = block.x;
+            // var blockRight = block.x + block.size;
+            // var blockTop = block.y;
+            // var blockBottom = block.y + block.size;
+            // console.log(`Didn't collide because for block at ${block.x}, ${block.y} XAxis crossedRight: ${crossRight}, crossedLeft: ${crossLeft} but crossTop: ${crossTop}`);
+            return false 
+        }
+        // console.log("fire: ", fireLeft, fireRight, fireTop, fireBottom);
+        // console.log("brickwall: ", somethingLeft, somethingRight, somethingTop, somethingBottom);
     }
-    // console.log("fire: ", fireLeft, fireRight, fireTop, fireBottom);
-    // console.log("brickwall: ", somethingLeft, somethingRight, somethingTop, somethingBottom);
+    else {
+        var fireLeft = fire.x;
+        var fireRight = fire.sizeX;
+        var fireTop = fire.y;
+        var fireBottom = fire.sizeY-1;
+        
+        var blockLeft = block.x+2;
+        var blockRight = block.x + block.size-2;
+        var blockTop = block.y;
+        var blockBottom = block.y + block.size;
+        
+        var crossRight = blockRight<=fireRight && blockRight >= fireLeft;
+    
+        var crossBottom = blockBottom <= fireBottom && blockBottom >= fireTop;
+    
+        var crossLeft = blockLeft >= fireLeft && blockLeft <= fireRight;
+    
+        var crossTop = blockTop >= fireTop && blockTop <= fireBottom
+    
+        // var crossRight = blockRight >= fireLeft && blockRight <= fireRight;
+    
+        // var crossLeft = blockLeft <= fireRight && blockLeft >= fireLeft;
+            
+        // var crossBottom = blockBottom >= fireTop && blockBottom <= fireBottom;
+        
+        // var crossTop = blockTop <= fireBottom && blockTop >= fireTop;
+        
+        if (crossTop && crossLeft /*&& crossBottom*/) {
+            // console.log("collided with brick at "+block.x, " ", block.y);
+            // console.log(`because crossTop: ${crossTop}. blockTop ${blockTop} >= fireTop ${fireTop} && blockTop ${blockTop} <= fireBottom ${fireBottom}`);
+            // console.log(`${blockBottom <= fireBottom} b:${blockBottom}, ${fireBottom} ${blockBottom >= fireTop}, fireLeft: ${fireLeft}, fireRight: ${fireRight}, fireTop: ${fireTop}, fireBottom: ${fireBottom} didn't collide with block at ${block.x}, ${block.y}`)
+            return true;
+        } else {
+            // console.log(`because crossLeft: ${crossLeft}. blockLeft ${blockLeft} >= fireLeft ${fireLeft} && blockLeft ${blockLeft} <= fireRight ${fireRight}`);
+            // var blockLeft = block.x;
+            // var blockRight = block.x + block.size;
+            // var blockTop = block.y;
+            // var blockBottom = block.y + block.size;
+            // console.log(`Didn't collide because for block at ${block.x}, ${block.y} XAxis crossedRight: ${crossRight}, crossedLeft: ${crossLeft} but crossTop: ${crossTop}`);
+            return false 
+        }
+        // console.log("fire: ", fireLeft, fireRight, fireTop, fireBottom);
+        // console.log("brickwall: ", somethingLeft, somethingRight, somethingTop, somethingBottom);
+    }
 }
 
 
 NoteBomb.prototype.getTheGameYouNeed = function(game) {
     this.game = game
+}
+
+NoteBomb.prototype.getBlockY = function(num) {
+    if(num == 0) {
+        return 0;
+    } else {
+        return num/100
+    }
+}
+
+NoteBomb.prototype.getBlockX = function(num) {
+    let numCorrected = num-100;
+    if(numCorrected <= 0) {
+        return 0;
+    } else {
+        return numCorrected/100
+    }
 }

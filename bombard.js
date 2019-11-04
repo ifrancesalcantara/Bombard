@@ -159,7 +159,6 @@ Bombard.prototype.handleDogBite = function() {
         if(bombard.identifier == this.identifier) {
             this.game.listOfAllEnemies.forEach(enemy=>{
                 if(bombard.didCollide(enemy)){
-                    console.log("dogBite!");
                     if(!bombard.isInInvincibilityFrames) {
                         bombard.isInInvincibilityFrames = true;
                         setTimeout(()=>{
@@ -175,7 +174,15 @@ Bombard.prototype.handleDogBite = function() {
 
 
 Bombard.prototype.receiveDamage = function (damage) {
-    this.lives -= damage;
+    this.game.bombards.forEach(bombard=>{
+        if(!bombard.isInInvincibilityFrames) {
+            bombard.isInInvincibilityFrames = true;
+            setTimeout(()=>{
+                bombard.isInInvincibilityFrames = false;
+            }, 2000)
+            bombard.lives -= 1;
+        }
+    })
 }
 
 
