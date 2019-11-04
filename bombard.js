@@ -147,7 +147,6 @@ Bombard.prototype.handleBlockWallCollision = function() {
                     this.y -= this.size;
                     }
                 } else if (bombard.isMovingLeft) {
-                    console.log("im moving left");
                     if(bombard.didCollide(blockwall)) {
                     this.x += this.size;
                     }
@@ -187,8 +186,11 @@ Bombard.prototype.receiveDamage = function (damage) {
 
 
 Bombard.prototype.placeNoteBomb = function(canvas) {
-    var noteBomb = new NoteBomb(canvas, this.x, this.y, this);   /* timer in loop? */
+    var noteBomb = new NoteBomb(canvas, this.x, this.y, this);
     this.game.noteBombs.push(noteBomb);
+    // this.game.placeWalls();
+    // this.game.placeBrickWalls();
+    noteBomb.getTheGameYouNeed(this.game);
     noteBomb.draw();
 }
 
@@ -214,7 +216,7 @@ Bombard.prototype.didCollide = function(somethingWithXYandSize) {
         
         if (crossLeft && crossRight && crossTop && crossBottom) {
             // somethingWithXYandSize.x = 0-somethingWithXYandSize.size;
-            console.log(`Colided when trying to move up! with brickwall at ${somethingWithXYandSize.x} ${somethingWithXYandSize.y}`);
+            // console.log(`Colided when trying to move up! with brickwall at ${somethingWithXYandSize.x} ${somethingWithXYandSize.y}`);
             return true;
         }
         return false;
@@ -272,16 +274,9 @@ Bombard.prototype.resetDirection = function() {
 
 Bombard.prototype.handleArrivingToGoal = function() {               //!!! collides with square to the left of goal
     setTimeout(()=>{
-        if(this.playerNumber == 1) {
-            if (this.didCollide(this.game.goalForPlayer1)){
-                
-                this.game.gameOver(this.name)
-            }
-        } else if(this.playerNumber == 2) {
-            if (this.didCollide(this.game.goalForPlayer2)){
-    
-                this.game.gameOver(this.name)
-            }
+        if (this.didCollide(this.game.goalForPlayer1)){
+            this.game.isOver = true;
+            this.game.gameOverWin()
         }
     }, 2000)
 }
@@ -303,4 +298,8 @@ Bombard.prototype.handleBurn = function() {
             })
         }
     })
+}
+
+Bombard.prototype.die = function() {
+    this.lives = 0;
 }

@@ -23,7 +23,8 @@ function Level2() {
         size: 100,
         isGoal: true,
     }
-    this.gameOverFunction
+    this.gameOverFunction;
+    this.gameOverWinFunction;
     this.addCoinFunction;
     this.coins = 0;
 };
@@ -246,7 +247,11 @@ Level2.prototype.startLoop = function() {
 
 
 Level2.prototype.passOverGameOverCallback = function(callback){
-    this.gameOverFunction = callback
+    this.gameOverFunction = callback;
+}
+
+Level2.prototype.passOverVameOverWinCallback = function(callback) {
+    this.gameOverWinFunction = callback;
 }
 
 
@@ -264,6 +269,27 @@ Level2.prototype.gameOver = function(winner){
     this.gameIsOver = true;
     this.gameOverFunction(winner)
 }
+
+Level2.prototype.gameOverWin = function() {
+    this.gameIsOver = true;
+    this.gameOverWinFunction();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

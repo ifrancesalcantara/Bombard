@@ -14,6 +14,7 @@ function main(){
     var levelSelect;
     var gameScreen
     var gameOverScreen;
+    var gameOverWinScreen;
     var coins = 0;
 
     function createSplashScreen() {
@@ -97,6 +98,7 @@ function main(){
         game.gameScreen = createGameScreen();
         game.start()
         game.passOverGameOverCallback(gameOver)
+        game.passOverVameOverWinCallback(gameOverWin)
         game.passOverAddCoinCallback(addCoin)
     }
 
@@ -163,10 +165,15 @@ function main(){
         createGameOverScreen(winner);
     }
 
+    function gameOverWin() {
+        removeGameScreen();
+        createGameOverWinScreen();
+    }
+
     function createGameOverScreen(winner) {
         gameOverScreen = buildDOM(`
         <main class="game-over-wrapper">
-            <h1 class="game-over-title"><span class="name-for-PvP">YOU</span><br>WIN<span class="add-s-for-PvP"></span>!</h1>
+            <h1 class="game-over-title"><span class="name-for-PvP">YOU</span><br>LOSE<span class="add-s-for-PvP"></span>!</h1>
             <button class="restart-button">Play Again</button>
         </main>
     `);
@@ -184,9 +191,35 @@ function main(){
     return gameOverScreen
     }
 
+    function createGameOverWinScreen() {
+        gameOverWinScreen = buildDOM(`
+        <main class="game-over-wrapper">
+            <h1 class="game-over-title"><span class="name-for-PvP">YOU</span><br>WIN<span class="add-s-for-PvP"></span>!</h1>
+            <button class="restart-button">Play Again</button>
+        </main>
+    `);
+    if(!game.isOver){
+
+        document.body.appendChild(gameOverWinScreen)
+    }
+    var restartButton = gameOverWinScreen.querySelector(".restart-button")
+    restartButton.addEventListener("click", ()=>{
+        removeGameOverWinScreen();
+        createSplashScreen()})
+        if(winner && game.isPvP) {
+            var winnersName = gameOverWinScreen.querySelector(".name-for-PvP");
+            winnersName.innerHTML = winner.toUpperCase()
+            var sAfterWIN = gameOverWinScreen.querySelector(".add-s-for-PvP");
+            sAfterWIN.innerHTML = "S"
+        }
+    return gameOverScreen
+    }
 
     function removeGameOverScreen() {
         gameOverScreen.remove()
+    }
+    function removeGameOverWinScreen(){
+        gameOverWinScreen.remove()
     }
 
     function addCoin() {
