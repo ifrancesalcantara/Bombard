@@ -190,7 +190,7 @@ NoteBomb.prototype.didCollide = function(somethingWithXYandSizeXandSizeY, blockW
     
     // var crossTop = blockTop <= fireBottom && blockTop >= fireTop;
     
-    if (crossRight && crossLeft && crossTop) {
+    if (!crossRight && !crossLeft /*&& crossTop*/) {
         console.log(`Collided with block at ${blockWithXYandSize.x} ${blockWithXYandSize.y}`);
         return true;
     } else {

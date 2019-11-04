@@ -14,7 +14,6 @@ function Bombard(canvas, game, playerNumber, name, lives = 1) {
     this.enemysName;
     this.isInInvincibilityFrames = false;
     this.lookingRight = true;
-    // this.canGoUp = true;
     this.identifier = Math.random();
     this.isMovingUp = false;
     this.isMovingDown = false;
@@ -104,11 +103,9 @@ Bombard.prototype.handleScreenCollision = function() {
 Bombard.prototype.handleBrickWallCollision = function() {
     this.game.bombards.forEach(bombard=>{
         if(bombard.identifier == this.identifier) {
-            // console.log(this.game.brickWallInstances)
             this.game.brickWallInstances.forEach(brickwall=>{
                 if(bombard.isMovingUp) {
                     if(bombard.didCollide(brickwall)) {
-                        // console.log(`${bombard.name} collided with brickwall at ${brickwall.x} ${brickwall.y}`);
                         this.y += this.size;
                     }
                 } else if (bombard.isMovingRight) {
@@ -188,82 +185,37 @@ Bombard.prototype.receiveDamage = function (damage) {
 Bombard.prototype.placeNoteBomb = function(canvas) {
     var noteBomb = new NoteBomb(canvas, this.x, this.y, this);
     this.game.noteBombs.push(noteBomb);
-    // this.game.placeWalls();
-    // this.game.placeBrickWalls();
     noteBomb.getTheGameYouNeed(this.game);
     noteBomb.draw();
 }
 
 Bombard.prototype.didCollide = function(somethingWithXYandSize) {
-        var playerLeft = this.x;
-        var playerRight = this.x + this.size;
-        var playerTop = this.y;
-        var playerBottom = this.y + this.size;
-        
-        var somethingLeft = somethingWithXYandSize.x;
-        var somethingRight = somethingWithXYandSize.x + somethingWithXYandSize.size;
-        var somethingTop = somethingWithXYandSize.y;
-        var somethingBottom = somethingWithXYandSize.y + somethingWithXYandSize.size;
-        
-        // Check if the somethingWithXYandSize intersects any of the player's sides
-        var crossLeft = somethingLeft <= playerRight && somethingLeft >= playerLeft;
-            
-        var crossRight = somethingRight >= playerLeft && somethingRight <= playerRight;
-        
-        var crossBottom = somethingBottom >= playerTop && somethingBottom <= playerBottom;
-        
-        var crossTop = somethingTop <= playerBottom && somethingTop >= playerTop;
-        
-        if (crossLeft && crossRight && crossTop && crossBottom) {
-            // somethingWithXYandSize.x = 0-somethingWithXYandSize.size;
-            // console.log(`Colided when trying to move up! with brickwall at ${somethingWithXYandSize.x} ${somethingWithXYandSize.y}`);
-            return true;
-        }
-        return false;
+    var playerLeft = this.x;
+    var playerRight = this.x + this.size;
+    var playerTop = this.y;
+    var playerBottom = this.y + this.size;
     
-    // } else if (somethingWithXYandSize.isNoteBomb){
-        //check areaOfEffectX and areaOfEffectY
-
-
-
-    // } else {
-    //     var playerLeft = this.x;
-    //     var playerRight = this.x + this.size;
-    //     var playerTop = this.y;
-    //     var playerBottom = this.y + this.size;
+    var somethingLeft = somethingWithXYandSize.x;
+    var somethingRight = somethingWithXYandSize.x + somethingWithXYandSize.size;
+    var somethingTop = somethingWithXYandSize.y;
+    var somethingBottom = somethingWithXYandSize.y + somethingWithXYandSize.size;
+    
+    
+    var crossLeft = somethingLeft <= playerRight && somethingLeft >= playerLeft;
         
-    //     var somethingLeft = somethingWithXYandSize.x;
-    //     var somethingRight = somethingWithXYandSize.x + somethingWithXYandSize.size;
-    //     var somethingTop = somethingWithXYandSize.y;
-    //     var somethingBottom = somethingWithXYandSize.y + somethingWithXYandSize.size;
-        
-    //     // Check if the somethingWithXYandSize intersects any of the player's sides
-    //     var crossLeft = somethingLeft <= playerRight && somethingLeft >= playerLeft;
-            
-    //     var crossRight = somethingRight >= playerLeft && somethingRight <= playerRight;
-        
-    //     var crossBottom = somethingBottom >= playerTop && somethingBottom <= playerBottom;
-        
-    //     var crossTop = somethingTop <= playerBottom && somethingTop >= playerTop;
-        
-    //     if ((crossLeft || crossRight) && (crossTop || crossBottom)) {
-    //         somethingWithXYandSize.x = 0-somethingWithXYandSize.size;
-    //         return true;
-    //     }
-    //     return false;
-    // }
+    var crossRight = somethingRight >= playerLeft && somethingRight <= playerRight;
+    
+    var crossBottom = somethingBottom >= playerTop && somethingBottom <= playerBottom;
+    
+    var crossTop = somethingTop <= playerBottom && somethingTop >= playerTop;
+    
+    if (crossLeft && crossRight && crossTop && crossBottom) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
-// Bombard.prototype.setMovementAllowance = function() {
-//     this.game.blockWallInstances.forEach(blockwall=>{ 
-//         if(this.game.bombard.didCollide(blockwall)) {
-//             console.log(`collision with blockwall in x:${blockwall.x} y:${blockwall.y}`);
-//             return false;
-//         } else {
-//         }    
-//         return true
-//     })
-// }
 Bombard.prototype.resetDirection = function() {
     this.isMovingUp = false;
     this.isMovingRight = false;
@@ -273,33 +225,7 @@ Bombard.prototype.resetDirection = function() {
 
 
 Bombard.prototype.handleArrivingToGoal = function() {               //!!! collides with square to the left of goal
-    setTimeout(()=>{
-        if (this.didCollide(this.game.goalForPlayer1)){
-            this.game.isOver = true;
-            this.game.gameOverWin()
-        }
-    }, 2000)
-}
-
-
-Bombard.prototype.handleBurn = function() {
-    this.game.bombards.forEach(bombard=>{
-        if(bombard.name == this.name) {
-            this.game.noteBombs.forEach(notebomb=>{
-                if(notebomb.stillExploding) {
-                    if(bombard.didCollide(notebomb.areaofEffectX) || bombard.didCollide(notebomb.areaofEffectY) && !bombard.isInInvincibilityFrames) {
-                        bombard.isInInvincibilityFrames = true;
-                        setTimeout(()=>{
-                            bombard.isInInvincibilityFrames = false;
-                        }, 2000)
-                        bombard.lives -= 1
-                    }
-                }
-            })
-        }
-    })
-}
-
-Bombard.prototype.die = function() {
-    this.lives = 0;
+    if (this.didCollide(this.game.goalForPlayer1)){
+        this.game.gameOverWin();
+    }
 }

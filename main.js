@@ -206,12 +206,6 @@ function main(){
     restartButton.addEventListener("click", ()=>{
         removeGameOverWinScreen();
         createSplashScreen()})
-        if(winner && game.isPvP) {
-            var winnersName = gameOverWinScreen.querySelector(".name-for-PvP");
-            winnersName.innerHTML = winner.toUpperCase()
-            var sAfterWIN = gameOverWinScreen.querySelector(".add-s-for-PvP");
-            sAfterWIN.innerHTML = "S"
-        }
     return gameOverScreen
     }
 
