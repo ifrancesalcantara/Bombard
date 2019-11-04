@@ -76,6 +76,8 @@ NoteBomb.prototype.explode = function() {
                 // console.log(this.areaofEffectFullX.x, this.areaofEffectFullX.y, this.areaofEffectFullX.sizeX, this.areaofEffectFullX.sizeY);
                 if(this.didCollide(this.areaofEffectFullX, brickwall)){
                     console.log("Collided!!!");
+                } else {
+                    this.correctAreaOfEffectX = this.areaofEffectXcenter
                 }
                 // if(this.didCollide(this.areaofEffectMinusOneToCenter, brickwall) && this.didCollide(this.areaofEffectPlusOneToCenter, brickwall)) {
                 //     console.log("SOME COLLISION!!!");
@@ -139,7 +141,7 @@ NoteBomb.prototype.explode = function() {
 
                 // this.ctx.drawImage(fireX, this.x-200, this.y, this.size+400, this.size)
 
-                // this.ctx.drawImage(fireX, this.correctAreaOfEffectX.x, this.correctAreaOfEffectX.y, this.correctAreaOfEffectX.sizeX, this.correctAreaOfEffectX.sizeY)
+                this.ctx.drawImage(fireX, this.correctAreaOfEffectX.x, this.correctAreaOfEffectX.y, this.correctAreaOfEffectX.sizeX, this.correctAreaOfEffectX.sizeY)
                 this.ctx.fill();
                 this.ctx.drawImage(fireY, this.x, this.y-200, this.size, this.size+400)
                 this.ctx.fill();
@@ -190,8 +192,7 @@ NoteBomb.prototype.didCollide = function(somethingWithXYandSizeXandSizeY, blockW
     
     // var crossTop = blockTop <= fireBottom && blockTop >= fireTop;
     
-    if (!crossRight && !crossLeft /*&& crossTop*/) {
-        console.log(`Collided with block at ${blockWithXYandSize.x} ${blockWithXYandSize.y}`);
+    if (crossRight && crossLeft && crossTop) {
         return true;
     } else {
         console.log("Didn't collide");
