@@ -87,6 +87,8 @@ TwoPlayerLevel.prototype.start = function() {
             this.bombard2.move("moveRight")  
         } else if (e.keyCode === 37) {
             this.bombard2.move("moveLeft")  
+        } else if (e.keyCode === 13) {
+            this.bombard2.placeNoteBomb(this.backgroundCanvas) 
         }
     }
     document.body.addEventListener("keydown", this.handleKeyDown.bind(this))

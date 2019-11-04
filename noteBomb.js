@@ -13,7 +13,9 @@ function NoteBomb(canvas, x, y, bombard) {
     this.bombard = bombard;
     this.identifier = Math.random()
     this.isNoteBomb = true;
-    this.areaofEffectX = {x: this.x, y: this.y, size: 97/*xLength: null, yLength: 100*/}
+    this.areaofEffectXcenter = {x: this.x-200, y: this.y, sizeX: this.size+400, sizeY: this.size, isFire: true};
+    this.areaofEffectMinusOneToCenter = {x: this.x-100, y: this.y, sizeX: this.size+100, sizeY: this.size, isFire: true};
+    this.areaofEffectMinusTwoToCenter = {x: this.x-200, y: this.y, sizeX: this.size+200, sizeY: this.size, isFire: true};
     this.areaofEffectY = {x: null, y: null, xLength: 100, yLength: null}
 }
 
@@ -47,10 +49,6 @@ NoteBomb.prototype.ticker = function() {
     }
 }
 
-// NoteBomb.prototype.drawExplosion() {
-
-// }
-
 NoteBomb.prototype.firetimer = function() {
     if(this.fireChronometer > 0) {
         var fireTickerCountdown = setTimeout(()=>{
@@ -65,15 +63,26 @@ NoteBomb.prototype.firetimer = function() {
 NoteBomb.prototype.explode = function() {
     var explosiestalism = setInterval(()=>{
         if(this.stillExploding) {
+            if("a"){                        //If every X possibility Collides, CorrectX is that possibility
+
+            }
             if(this.bombard.game.inGame){
                 console.log("printing fire");
-                this.ctx.fillStyle = "red";
-                this.ctx.rect(this.x-200, this.y, this.size+400, this.size);
+                let fireX = new Image();
+                let fireY = new Image();
+                let firecenter = new Image();
+
+                fireX.src = "/img/bomb/Fire_tile_X.png";
+                fireY.src = "/img/bomb/Fire_tile_Y.png";
+                firecenter.src="/img/bomb/fire_center.png"
+
+                this.ctx.drawImage(fireX, this.x-200, this.y, this.size+400, this.size)
                 this.ctx.fill();
-        
-                this.ctx.fillStyle = "red";
-                this.ctx.rect(this.x, this.y-200, this.size, this.size+400);
+                this.ctx.drawImage(fireY, this.x, this.y-200, this.size, this.size+400)
                 this.ctx.fill();
+                this.ctx.drawImage(firecenter, this.x, this.y, this.size, this.size)
+                this.ctx.fill();
+
                 this.firetimer();
             }
         } else {

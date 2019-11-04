@@ -50,17 +50,17 @@ function main(){
 
         levelSelect = buildDOM(`
         <main class="level-select-screen">
-            <div class="shop-div">
+            <!-- <div class="shop-div">
                 <span class="number-of-total-coins">${coins}</span>
                 <img class="spinning-total-coins" src="img/croppedCoin.gif">
-                <button class="btn-shop">Shop</button>
+                <button class="btn-shop">Shop</button> -->
             </div>
             <h1 class="level-select-title">Select a Level</h1>
             <div class="level-display">
-                <span class="btn-start-level-one">Level One<img></span>
-                <button class="btn-start-level-two">Level Two<img></button>
-                <button class="btn-start-level-three">Level Three<img></button>
-                <button class="btn-start-level-four">Level Four<img></button>
+                <span class="btn-start-level-one"><img></span>
+                <button class="btn-start-level-two"><img></button>
+                <button class="btn-start-level-three"><img></button>
+                <button class="btn-start-level-four"><img></button>
             </div>
         </main>
         `)
@@ -68,8 +68,9 @@ function main(){
         document.body.appendChild(levelSelect);
 
         var levelOneStartButton = levelSelect.querySelector(".btn-start-level-one")
-
         levelOneStartButton.addEventListener("click", startLevel1)
+        var levelOneStartButton = levelSelect.querySelector(".btn-start-level-two")
+        levelOneStartButton.addEventListener("click", startLevel2)
     }
 
 
@@ -78,6 +79,17 @@ function main(){
     }
 
     function startLevel1() {
+
+        removeLevelSelect();
+
+        game = new Level1();
+        game.gameScreen = createGameScreen();
+        game.start()
+        game.passOverGameOverCallback(gameOver)
+        game.passOverAddCoinCallback(addCoin)
+    }
+
+    function startLevel2() {
 
         removeLevelSelect();
 

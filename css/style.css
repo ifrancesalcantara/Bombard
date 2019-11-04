@@ -82,6 +82,9 @@ html, body {
     height: 100%;
     margin:0;
     padding:0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 body {
@@ -97,19 +100,17 @@ body {
 
 .bombard-title {
     font-size: 20em;
-    margin: 7% 0 10% 0;
+    margin: 0% 0 15% 0;
 }
 
 .player-number-select {
     display: flex;
     justify-content: space-between;
-    width: 50%;
 }
 
 .player-number-select > * {
-    padding: 15px 25px;
-    font-size: 4em;
-    padding: 30px;
+    padding: 30px 65px;
+    font-size: 2em;
     font-weight: bold;
     color: white;
 
@@ -118,6 +119,7 @@ body {
 .btn-start-one-player{
     background-color: blue;
     border: 10px solid darkblue;
+    margin-right: 200px;
 }
 
 .btn-start-two-players {
@@ -133,8 +135,8 @@ body {
 
 
 
-.shop-div {
-    position: absolute;
+/* .shop-div {
+    /* position: absolute;
     top: 5%;
     left: 80%;
     font-weight: bold;
@@ -150,7 +152,7 @@ body {
 .spinning-total-coins {
     margin-right: 80px;
     height: 50px;
-}
+} */
 
 
 .btn-shop {
@@ -170,20 +172,17 @@ body {
 
 .level-select-title {
     font-size: 12em;
-    margin: 12% 0 6% 0;
+    margin: 6% 0 12% 0;
 }
 
 .level-display {
     width: 1200px;
     display: flex;
-    align-items: flex-start;
-    /* justify-content: flex-start; */
-    /* flex-wrap: wrap; */
 }
 
 .level-display > * {
     margin: 30px;
-    padding: 80px;
+    width: 25%;
     font-size: 2em;
     border-radius: 50px;
     border: 5px solid grey;
@@ -196,14 +195,18 @@ body {
     background-image: url("/img/background/Bombard background second try.jpg");
     background-size: 400px;
     background-position: center;
-    background-repeat: no-repeat
+    background-repeat: no-repeat;
+    height: 230px;
+    width: 293px;
 }
 
 .btn-start-level-two {
     background-image: url("/img/background/Bombard background second try.jpg");
     background-size: 400px;
     background-position: center;
-    background-repeat: no-repeat
+    background-repeat: no-repeat;
+
+    height: 240px;
 }
 
 .btn-start-level-three {
@@ -250,7 +253,7 @@ body {
 
 .player-one-lives {
     position: absolute;
-    top: 95%;
+    top: 85%;
     z-index: 1;
     display: flex;
     flex-direction: column;
@@ -316,6 +319,7 @@ body {
 
 .lives-icon {
     height: 40px;
+    margin-top: 2px;
 }
 
 .background-canvas {
