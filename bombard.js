@@ -8,7 +8,6 @@ function Bombard(canvas, game, playerNumber, name, lives = 1) {
     this.size = 100;
     this.x;
     this.y;
-    this.isWithinInvincibilityFrames = false;
     this.playerNumber = playerNumber
     this.name = name;
     this.enemysName;
@@ -52,17 +51,34 @@ Bombard.prototype.getPosition = function() {
 
 Bombard.prototype.draw = function() {
     if(this.lookingRight) {
-        const bombard = new Image()
-        bombard.src='img/player/Bombard_transparent_with_lute.png'
-        bombard.onload = function() {
-            this.ctx.drawImage(bombard, this.x, this.y, this.size, this.size);
-        }.bind(this)
+        if(!this.isInInvincibilityFrames) {
+            const bombard = new Image()
+            bombard.src='img/player/Bombard_transparent_with_lute.png'
+            bombard.onload = function() {
+                this.ctx.drawImage(bombard, this.x, this.y, this.size, this.size);
+            }.bind(this)
+        } else {
+            const bombard = new Image()
+            bombard.src='img/player/Bombard_invulnerable_right.png'
+            bombard.onload = function() {
+                this.ctx.drawImage(bombard, this.x, this.y, this.size, this.size);
+            }.bind(this)
+
+        }
     } else {
-        const bombard = new Image()
-        bombard.src='img/player/Bombard_trans_looking_left.png'
-        bombard.onload = function() {
-            this.ctx.drawImage(bombard, this.x, this.y, this.size, this.size);
-        }.bind(this)
+        if(!this.isInInvincibilityFrames) {
+            const bombard = new Image()
+            bombard.src='img/player/Bombard_trans_looking_left.png'
+            bombard.onload = function() {
+                this.ctx.drawImage(bombard, this.x, this.y, this.size, this.size);
+            }.bind(this)
+        } else {
+            const bombard = new Image()
+            bombard.src='img/player/Bombard_invulnerable_left.png'
+            bombard.onload = function() {
+                this.ctx.drawImage(bombard, this.x, this.y, this.size, this.size);
+            }.bind(this)
+        }
     }
 };
 
@@ -174,15 +190,17 @@ Bombard.prototype.handleDogBite = function() {
 
 
 Bombard.prototype.receiveDamage = function (damage) {
-    this.game.bombards.forEach(bombard=>{
-        if(!bombard.isInInvincibilityFrames) {
-            bombard.isInInvincibilityFrames = true;
+        if(!this.isInInvincibilityFrames) {
+            this.isInInvincibilityFrames = true;
             setTimeout(()=>{
-                bombard.isInInvincibilityFrames = false;
+                this.isInInvincibilityFrames = false;
             }, 2000)
-            bombard.lives -= 1;
+            this.lives -= 1;
+
+            var damageSound = document.querySelector(".damage-sound")
+            damageSound.play();
         }
-    })
+    
 }
 
 

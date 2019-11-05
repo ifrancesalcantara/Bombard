@@ -45,6 +45,10 @@ NoteBomb.prototype.ticker = function() {
         this.stillTicking = false;
         clearInterval(tickerCountdown);
         this.stillExploding = true;
+
+        var explosionSound = document.querySelector(".explosion")
+        explosionSound.play();
+
         this.explode()
     }
 }
@@ -113,6 +117,20 @@ NoteBomb.prototype.explode = function() {
                     }
                 })
 
+                this.game.noteBombs.forEach(noteBomb=>{
+                    if(this.didCollide(this.areaofEffectX, noteBomb)) {
+                        if(noteBomb.identifier != this.identifier) {
+                            if(!noteBomb.stillExploding) {
+                                noteBomb.chronometer = 0;
+                            }
+                        }
+                    } else if(this.didCollide(this.areaofEffectY, noteBomb)) {
+                        if(!noteBomb.stillExploding){
+                            noteBomb.explode();
+                        }
+                    }
+                })
+
                 // if(!this.game.isPvP){
                 //     this.game.listOfAllEnemies.forEach((enemy, index)=>{
                 //         if(this.didCollide(this.areaofEffectX, enemy)) {
@@ -154,6 +172,7 @@ NoteBomb.prototype.explode = function() {
                 }
             } else {
                 clearInterval(explosiestalism)
+
                 this.ctx.clearRect(this.x-200, this.y, this.size+400, this.size);
                 this.ctx.clearRect(this.x, this.y-200, this.size, this.size+400);
                 this.bombard.game.noteBombs.forEach((bomb, i)=>{

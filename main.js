@@ -22,23 +22,20 @@ function main(){
 
         splashScreen = buildDOM(`
         <main class="splash-screen">
-            <h1 class="bombard-title">Bombard</h1>
+            <h1 class="bombard-title"><span class="title-a">A</span><br><span class="title-song">Song</span><br><span class="title-of">of</span><br><span class="title-bombard">Bombard</span></h1>
             <div class="player-number-select">
                 <button class="btn-start-one-player">Play<img></button>
-            </div>
-            <!-- <div class="player-number-select">
-                <button class="btn-start-one-player">One Player <img></button>
                 <button class="btn-start-two-players">Two Players <img></button>
-            </div> -->
+            </div>
         </main>
         `)
 
         document.body.appendChild(splashScreen);
 
         var onePlayerStartButton = splashScreen.querySelector(".btn-start-one-player")
-        // var twoPlayersStartButton = splashScreen.querySelector(".btn-start-two-players")
+        var twoPlayersStartButton = splashScreen.querySelector(".btn-start-two-players")
         onePlayerStartButton.addEventListener("click", createLevelSelect)
-        // twoPlayersStartButton.addEventListener("click", startTwoPlayerLevel)
+        twoPlayersStartButton.addEventListener("click", startTwoPlayerLevel)
     }
 
 
@@ -107,7 +104,6 @@ function main(){
         game.start()
         game.passOverGameOverCallback(gameOver)
         game.passOverVameOverWinCallback(gameOverWin)
-        game.passOverAddCoinCallback(addCoin)
     }
 
     function startLevel3() {
@@ -119,7 +115,6 @@ function main(){
         game.start()
         game.passOverGameOverCallback(gameOver)
         game.passOverVameOverWinCallback(gameOverWin)
-        game.passOverAddCoinCallback(addCoin)
     }
 
     function startLevel4() {
@@ -131,7 +126,6 @@ function main(){
         game.start()
         game.passOverGameOverCallback(gameOver)
         game.passOverVameOverWinCallback(gameOverWin)
-        game.passOverAddCoinCallback(addCoin)
     }
 
     function startTwoPlayerLevel() {
@@ -141,6 +135,7 @@ function main(){
         game.gameScreen = createGameScreen();
         game.start()
         game.passOverGameOverCallback(gameOver)
+        game.passOverDrawCallback(draw)
     }
 
 
@@ -202,45 +197,97 @@ function main(){
         createGameOverWinScreen();
     }
 
+    function draw() {
+        removeGameScreen();
+        createGameDrawScreen();
+    }
+
     function createGameOverScreen(winner) {
-        gameOverScreen = buildDOM(`
-        <main class="game-over-lose-wrapper">
-            <h1 class="game-over-title"><span class="name-for-PvP">YOU </span>LOSE<span class="add-s-for-PvP"></span>...</h1>
-            <img class="dead-lute" src="https://media.giphy.com/media/63LXoINI3JXUkMACV4/giphy.gif">
-            <button class="restart-button">Try Again</button>
-        </main>
-    `);
-    document.body.appendChild(gameOverScreen)
-    var restartButton = gameOverScreen.querySelector(".restart-button")
-    restartButton.addEventListener("click", ()=>{
-        removeGameOverScreen();
-        createSplashScreen()})
-        if(winner && game.isPvP) {
+        if(!game.isPvP){
+            gameOverScreen = buildDOM(`
+                <main class="game-over-lose-wrapper">
+                    <h1 class="game-over-title">YOU LOSE...</h1>
+                    <img class="dead-lute" src="https://media.giphy.com/media/63LXoINI3JXUkMACV4/giphy.gif">
+                    <button class="restart-button">Try Again</button>
+                </main>
+            `);
+            document.body.appendChild(gameOverScreen)
+            
+            setTimeout(()=>{
+                var endSong = document.querySelector(".end-song");
+                endSong.play()
+            }, 600)
+            var restartButton = gameOverScreen.querySelector(".restart-button")
+            restartButton.addEventListener("click", ()=>{
+                removeGameOverScreen();
+                createSplashScreen();
+                var endSong = document.querySelector(".end-song");
+                endSong.pause();
+            })
+
+            return gameOverScreen
+        } else {
+            
+            gameOverScreen = buildDOM(`
+                <main class="game-over-lose-wrapper">
+                    <h1 class="game-over-title"><span class="name-for-PvP"></span><br>WINS🤘!</h1>
+                    <img class="finn-luter" src="/img/ezgif.com-crop.gif">
+                    <button class="restart-button">Play Again</button>
+                </main>
+            `);
+
+            document.body.appendChild(gameOverScreen)
+
+
             var winnersName = gameOverScreen.querySelector(".name-for-PvP");
             winnersName.innerHTML = winner.toUpperCase()
-            var sAfterWIN = gameOverScreen.querySelector(".add-s-for-PvP");
-            sAfterWIN.innerHTML = "S"
+
+            var restartButton = gameOverScreen.querySelector(".restart-button")
+            restartButton.addEventListener("click", ()=>{
+                    removeGameOverScreen();
+                    createSplashScreen();
+            })
+
+            return gameOverScreen
         }
-    return gameOverScreen
     }
 
     function createGameOverWinScreen() {
         gameOverWinScreen = buildDOM(`
         <main class="game-over-wrapper">
-            <h1 class="game-over-win-title"><span class="name-for-PvP">YOU</span> WIN🤘<span class="add-s-for-PvP"></span>!</h1>
+            <h1 class="game-over-win-title">YOU WIN🤘!</h1>
             <img class="lute-solo" src="https://media.giphy.com/media/xT5LMPTgqchZZ7QlrO/giphy.gif">
             <button class="restart-button">Play Again</button>
         </main>
-    `);
-    if(!game.isOver){
+        `);
+        if(!game.isOver){
 
-        document.body.appendChild(gameOverWinScreen)
+            document.body.appendChild(gameOverWinScreen)
+        }
+        var restartButton = gameOverWinScreen.querySelector(".restart-button")
+        restartButton.addEventListener("click", ()=>{
+            removeGameOverWinScreen();
+            createSplashScreen()})
+        return gameOverScreen
     }
-    var restartButton = gameOverWinScreen.querySelector(".restart-button")
-    restartButton.addEventListener("click", ()=>{
-        removeGameOverWinScreen();
-        createSplashScreen()})
-    return gameOverScreen
+
+    function createGameDrawScreen() {
+        gameOverWinScreen = buildDOM(`
+        <main class="game-over-wrapper">
+            <h1 class="game-over-win-title">It's a TIE!</h1>
+            <img class="lute-solo" src="https://media.giphy.com/media/xT5LMPTgqchZZ7QlrO/giphy.gif">
+            <button class="restart-button">Play Again</button>
+        </main>
+        `);
+        if(!game.isOver){
+
+            document.body.appendChild(gameOverWinScreen)
+        }
+        var restartButton = gameOverWinScreen.querySelector(".restart-button")
+        restartButton.addEventListener("click", ()=>{
+            removeGameOverWinScreen();
+            createSplashScreen()})
+        return gameOverScreen
     }
 
     function removeGameOverScreen() {

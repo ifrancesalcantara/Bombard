@@ -15,6 +15,7 @@ function TwoPlayerLevel() {
     this.gameIsOver = false;
     this.noteBombs = [];
     this.gameOverFunction;
+    this.gameDrawFunction;
     this.isPvP = true;
 };
 
@@ -70,10 +71,10 @@ TwoPlayerLevel.prototype.start = function() {
             this.bombard2.move("moveDown")  
         } else if (e.keyCode === 39) {
             this.bombard2.isMovingLeft = true;
-            if(this.bombard2.lookingRight){
+            if(!this.bombard2.lookingRight){
                 this.bombard2.changeLookingDirection();
             }
-            this.bombard2.move("moveLeft")
+            this.bombard2.move("moveRight")
         } else if (e.keyCode === 37) {
             this.bombard2.isMovingLeft = true;
             if(this.bombard2.lookingRight) {
@@ -99,7 +100,7 @@ TwoPlayerLevel.prototype.clearBackgroundCanvas = function() {
 
 TwoPlayerLevel.prototype.placeWalls = function () {
         this.blockWalls.forEach(blockwallrow => {
-            blockwallrow.forEach((blockwall, index) =>{
+            blockwallrow.forEach(blockwall =>{
                 if(blockwall) {
                     let blockwallInstance = new BlockWall(this.squareBrushX, this.squareBrushY);
                     blockwallInstance.getImage();
@@ -115,14 +116,33 @@ TwoPlayerLevel.prototype.placeWalls = function () {
     this.squareBrushY = 0
 }
 
+TwoPlayerLevel.prototype.placeCards = function () {
+    if(Math.random()>0.85){
+        this.blockWalls.forEach(blockwallrow => {
+            blockwallrow.forEach(blockwall =>{
+                if(!blockwall) {
+                    let cardInstance = new Heart(this.squareBrushX, this.squareBrushY);
+                    cardInstance.getImage();
+                    this.cardInstances.push(cardInstance);
+                    this.backgroundCtx.drawImage(cardInstance.image, this.squareBrushX, this.squareBrushY, 100, 100);
+                    this.backgroundCtx.fill();
+                }
+                this.squareBrushX += 100
+            })
+            this.squareBrushY += 100
+            this.squareBrushX = 0
+        })
+        this.squareBrushY = 0
+    }
+}
+
 TwoPlayerLevel.prototype.removeBlockWalls = function() {
     this.blockWallInstances.splice(0, this.blockWallInstances.length)
 }
 
 TwoPlayerLevel.prototype.placeBrickWalls = function () {
-
         this.brickWalls.forEach(brickwallrow => {
-            brickwallrow.forEach((brickwall, index) =>{
+            brickwallrow.forEach(brickwall =>{
                 if(brickwall) {
                     let brickwallInstance = new BrickWall(this.squareBrushX, this.squareBrushY);
                     brickwallInstance.getImage();
@@ -145,29 +165,35 @@ TwoPlayerLevel.prototype.removeBrickWalls = function() {
 
 TwoPlayerLevel.prototype.updateStats = function(){
     if(!this.gameIsOver) {
-
-            var player1LiveScoreEl = document.querySelector(".player-one-number-of-lives");
-            player1LiveScoreEl.innerHTML = parseInt(this.bombard1.lives);
-            var player2LiveScoreEl = document.querySelector(".player-two-number-of-lives");
-            player2LiveScoreEl.innerHTML = parseInt(this.bombard2.lives);
+        var player1LiveScoreEl = document.querySelector(".player-one-number-of-lives");
+        player1LiveScoreEl.innerHTML = parseInt(this.bombard1.lives);
+        var player2LiveScoreEl = document.querySelector(".player-two-number-of-lives");
+        player2LiveScoreEl.innerHTML = parseInt(this.bombard2.lives);
         
-            // if(bombard1.lives <= 0) {
-            //     this.gameIsOver = true;
-            //     this.gameOver(bombard1.enemysName);
-            // } else {
-            //     this.gameIsOver = true;
-            //     this.gameOver(bombard.enemysName);
-            // }
-        this.bombards.forEach(bombard=>{
-            if(bombard.lives <= 0) {
-                this.gameIsOver = true;
-                this.gameOver(bombard.enemysName);
-            }
-        })
+        if(this.checkDraw(this.bombards)){
+            this.gameIsOver = true;
+            this.drawScreen();
+        }
+        if(!this.gameIsOver){
+            this.bombards.forEach(bombard=>{
+                if(bombard.lives <= 0) {
+                    this.gameIsOver = true;
+                    this.gameOver(bombard.enemysName);
+                }
+            })
+        }
     }
 }
 
-
+TwoPlayerLevel.prototype.checkDraw = function (arrayOfBombards) {
+    var resultArr =[]
+    this.bombards.forEach(bombard=>{
+        if(bombard.lives <= 0) {
+            resultArr.push(true)
+        }
+    })
+    return resultArr[0] && resultArr[1]
+}
 
 
 
@@ -209,9 +235,17 @@ TwoPlayerLevel.prototype.passOverGameOverCallback = function(callback){
     this.gameOverFunction = callback
 }
 
+TwoPlayerLevel.prototype.passOverDrawCallback = function(callback){
+    this.gameDrawFunction = callback
+}
 
 
 TwoPlayerLevel.prototype.gameOver = function(winner){
     this.gameIsOver = true;
     this.gameOverFunction(winner)
+}
+
+TwoPlayerLevel.prototype.drawScreen = function(){
+    this.gameIsOver = true;
+    this.gameDrawFunction()
 }

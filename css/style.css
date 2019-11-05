@@ -104,9 +104,24 @@ body {
 }
 
 .bombard-title {
-    font-size: 20em;
-    margin: 0% 0 15% 0;
     font-family: "McLaren";
+    text-align: center;
+    margin-bottom: 10%;
+}
+
+.title-a {
+    font-size: 4em;
+}
+.title-song {
+    font-size: 8em;
+}
+
+.title-of {
+    font-size: 3em;
+}
+
+.title-bombard {
+    font-size: 14em;
 }
 
 .player-number-select {
@@ -118,7 +133,7 @@ body {
     font-family: "McLaren";
     font-weight: bold;
     color: black;
-    padding: 40px 125px;
+    padding: 30px 125px;
     font-size: 4em;
     background-color: gold;
     border: 10px solid darkgoldenrod;
