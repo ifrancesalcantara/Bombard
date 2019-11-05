@@ -18,6 +18,9 @@ function Bombard(canvas, game, playerNumber, name, lives = 1) {
     this.isMovingDown = false;
     this.isMovingRight = false;
     this.isMovingLeft = false;
+    this.canPlaceBomb = true;
+    this.bombPlaceAllowanceTicker = 1500;
+    this.hasIllimitedBombs = false;
 }
 
 
@@ -47,6 +50,17 @@ Bombard.prototype.getPosition = function() {
         this.y = 0;
     }
 }
+
+Bombard.prototype.placeBombTicker = function () {
+    if(this.bombPlaceAllowanceTicker <= 0){
+        this.bombPlaceAllowanceTicker = 1500
+        this.canPlaceBomb = true;
+    }
+    else {
+        this.bombPlaceAllowanceTicker -= 100
+    }   
+}
+
 
 
 Bombard.prototype.draw = function() {
@@ -80,7 +94,9 @@ Bombard.prototype.draw = function() {
             }.bind(this)
         }
     }
+    this.placeBombTicker()
 };
+
 
 Bombard.prototype.changeLookingDirection = function() {
     if(this.lookingRight) {
@@ -103,6 +119,19 @@ Bombard.prototype.move = function(direction) {
     }
 };
 
+
+Bombard.prototype.cardCollision = function() {
+    this.game.bombards.forEach(bombard=>{
+        if(bombard.identifier == this.identifier) {
+            this.game.cardInstances.forEach(card=>{
+                if(bombard.didCollide(card)) {
+                    card.effect(this)
+                    card.deleteYourself();
+                }
+            })
+        }
+    })
+}
 
 
 Bombard.prototype.handleScreenCollision = function() {
@@ -208,10 +237,21 @@ Bombard.prototype.receiveDamage = function (damage) {
 
 
 Bombard.prototype.placeNoteBomb = function(canvas) {
-    var noteBomb = new NoteBomb(canvas, this.x, this.y, this);
-    this.game.noteBombs.push(noteBomb);
-    noteBomb.getTheGameYouNeed(this.game);
-    noteBomb.draw();
+    if(!this.hasIllimitedBombs){
+        if(this.canPlaceBomb){
+            var noteBomb = new NoteBomb(canvas, this.x, this.y, this);
+            this.game.noteBombs.push(noteBomb);
+            noteBomb.getTheGameYouNeed(this.game);
+            noteBomb.draw();
+            this.canPlaceBomb = false;
+        }
+    } else {
+        var noteBomb = new NoteBomb(canvas, this.x, this.y, this);
+        this.game.noteBombs.push(noteBomb);
+        noteBomb.getTheGameYouNeed(this.game);
+        noteBomb.draw();
+        this.canPlaceBomb = false;
+    }
 }
 
 Bombard.prototype.didCollide = function(somethingWithXYandSize) {

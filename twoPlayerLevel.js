@@ -8,6 +8,7 @@ function TwoPlayerLevel() {
     this.blockWallInstances = [];
     this.brickWalls = [[0,1,0,1,0,1,0,0,0],[1,0,1,0,1,0,1,0,0],[0,1,0,1,0,1,0,1,0],[1,0,1,0,1,0,1,0,1],[0,1,0,1,0,1,0,1,0],[1,0,1,0,1,0,1,0,1],[0,1,0,1,0,1,0,1,0],[0,0,1,0,1,0,1,0,1],[0,0,0,1,0,1,0,1,0]];
     this.brickWallInstances = [];
+    this.cardInstances = [];
     this.gameScreen = null;
     this.bombards =  [];
     this.bombard1 = null;
@@ -117,23 +118,29 @@ TwoPlayerLevel.prototype.placeWalls = function () {
 }
 
 TwoPlayerLevel.prototype.placeCards = function () {
-    if(Math.random()>0.85){
-        this.blockWalls.forEach(blockwallrow => {
-            blockwallrow.forEach(blockwall =>{
-                if(!blockwall) {
-                    let cardInstance = new Heart(this.squareBrushX, this.squareBrushY);
+    this.blockWalls.forEach(blockwallrow => {
+        blockwallrow.forEach(blockwall =>{
+            if(!blockwall) {
+                if(Math.random()>0.9999) {
+                    let cardInstance = new Heart(this.squareBrushX, this.squareBrushY, this);
+                    cardInstance.getImage();
+                    this.cardInstances.push(cardInstance);
+                    this.backgroundCtx.drawImage(cardInstance.image, this.squareBrushX, this.squareBrushY, 100, 100);
+                    this.backgroundCtx.fill();
+                } else if (Math.random()>0.99968) {
+                    let cardInstance = new IllimitedBombs(this.squareBrushX, this.squareBrushY, this);
                     cardInstance.getImage();
                     this.cardInstances.push(cardInstance);
                     this.backgroundCtx.drawImage(cardInstance.image, this.squareBrushX, this.squareBrushY, 100, 100);
                     this.backgroundCtx.fill();
                 }
-                this.squareBrushX += 100
-            })
-            this.squareBrushY += 100
-            this.squareBrushX = 0
+            }
+            this.squareBrushX += 100
         })
-        this.squareBrushY = 0
-    }
+        this.squareBrushY += 100
+        this.squareBrushX = 0
+    })
+    this.squareBrushY = 0
 }
 
 TwoPlayerLevel.prototype.removeBlockWalls = function() {
@@ -213,14 +220,22 @@ TwoPlayerLevel.prototype.startLoop = function() {
 
                 bombard.handleBrickWallCollision();
 
+                bombard.cardCollision();
+
                 bombard.handleBlockWallCollision();
 
                 bombard.resetDirection();
             })
+
+            this.placeCards();
     
             this.removeBrickWalls();
 
             this.removeBlockWalls();
+
+            this.cardInstances.forEach(card=>{
+                card.draw();
+            })
 
             this.updateStats();
     

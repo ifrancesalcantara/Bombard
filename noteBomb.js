@@ -131,6 +131,14 @@ NoteBomb.prototype.explode = function() {
                     }
                 })
 
+                this.game.cardInstances.forEach(card=>{
+                    if(this.didCollide(this.areaofEffectX, card)) {
+                        this.game.cardInstances.splice(this.game.cardInstances.indexOf(card), 1)
+                    } else if(this.didCollide(this.areaofEffectY, card)) {
+                        this.game.cardInstances.splice(this.game.cardInstances.indexOf(card), 1)
+                    }
+                })
+
                 // if(!this.game.isPvP){
                 //     this.game.listOfAllEnemies.forEach((enemy, index)=>{
                 //         if(this.didCollide(this.areaofEffectX, enemy)) {
