@@ -11,7 +11,7 @@ function Level3() {
     this.bombards = [];
     this.bombard = null;
     this.enemyXDogs = [[0,0,0,0,0,1,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0]]
-    this.enemyYDogs = [[0,0,0,1,0,1,0,0,1],[0,0,0,0,0,0,0,0,1],[0,0,1,0,0,0,0,0,1],[0,0,0,0,0,0,1,0,0],[0,0,0,0,0,0,0,0,1],[0,0,1,0,0,0,0,0,0],[0,0,0,0,1,0,0,0,1],[0,0,0,0,0,0,1,0,0],[0,0,0,0,0,0,0,0,0]]
+    this.enemyYDogs = [[0,0,0,1,0,0,0,0,1],[0,0,0,0,0,0,0,0,1],[0,0,1,0,0,0,0,0,1],[0,0,0,0,0,0,1,0,0],[0,0,0,0,0,0,0,0,1],[0,0,1,0,0,0,0,0,0],[0,0,0,0,1,0,0,0,1],[0,0,0,0,0,0,1,0,0],[0,0,0,0,0,0,0,0,0]]
     // this.enemyDogs = [[0,1,0,0,0,0,0,1,0],[0,0,0,0,0,0,1,0,0],[0,0,0,1,0,0,0,0,0],[0,0,0,0,1,0,0,0,1],[0,1,0,0,0,0,0,0,0],[1,0,0,0,0,0,1,0,0],[0,0,0,0,0,1,0,0,0],[0,0,1,0,0,0,0,0,0],[0,0,0,1,0,0,0,1,0]]
     this.listOfAllEnemies = []
     this.gameIsOver = false;
@@ -163,14 +163,16 @@ this.squareBrushY = 0;
 
 
 
-Level3.prototype.updateStats = function(){
-    var liveScoreEl = document.querySelector(".number-of-lives");
-    liveScoreEl.innerHTML = parseInt(this.bombard.lives)
-
-
-    if(this.bombard.lives <= 0) {
-        this.gameIsOver = true;
-        this.gameOver(this.bombard.name);
+Level3.prototype.updateStats = function() {
+    if(!this.gameIsOver){
+        var liveScoreEl = document.querySelector(".number-of-lives");
+        liveScoreEl.innerHTML = parseInt(this.bombard.lives)
+    
+    
+        if(this.bombard.lives <= 0) {
+            this.gameIsOver = true;
+            this.gameOver(this.bombard.name);
+        }
     }
 }
 

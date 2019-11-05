@@ -204,9 +204,10 @@ function main(){
 
     function createGameOverScreen(winner) {
         gameOverScreen = buildDOM(`
-        <main class="game-over-wrapper">
-            <h1 class="game-over-title"><span class="name-for-PvP">YOU</span><br>LOSE<span class="add-s-for-PvP"></span>!</h1>
-            <button class="restart-button">Play Again</button>
+        <main class="game-over-lose-wrapper">
+            <h1 class="game-over-title"><span class="name-for-PvP">YOU </span>LOSE<span class="add-s-for-PvP"></span>...</h1>
+            <img class="dead-lute" src="https://media.giphy.com/media/63LXoINI3JXUkMACV4/giphy.gif">
+            <button class="restart-button">Try Again</button>
         </main>
     `);
     document.body.appendChild(gameOverScreen)
@@ -226,7 +227,8 @@ function main(){
     function createGameOverWinScreen() {
         gameOverWinScreen = buildDOM(`
         <main class="game-over-wrapper">
-            <h1 class="game-over-title"><span class="name-for-PvP">YOU</span><br>WIN<span class="add-s-for-PvP"></span>!</h1>
+            <h1 class="game-over-win-title"><span class="name-for-PvP">YOU</span> WIN🤘<span class="add-s-for-PvP"></span>!</h1>
+            <img class="lute-solo" src="https://media.giphy.com/media/xT5LMPTgqchZZ7QlrO/giphy.gif">
             <button class="restart-button">Play Again</button>
         </main>
     `);

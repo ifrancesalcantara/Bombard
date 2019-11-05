@@ -31,19 +31,21 @@ Dog.prototype.move = function() {
                 if(this.x <= this.maximumX-100) {
                     this.x += 100;
                     this.handleScreenCollision()
-                    this.game.blockWallInstances.forEach(blockwall =>{
-                        this.game.brickWallInstances.forEach(brickwall=>{
-                            if(this.didCollide(brickwall) || this.didCollide(blockwall)) {
-                                this.x -= 100;
-                                this.goingRight = false;
-                            }
-                            else {
-                                // this.goingRight = false;
-                                // this.lookingRight = false;
-                                // this.getImage();
-                            }
-                        })       
-                    })
+                    // this.game.listOfAllEnemies.forEach(dog=>{
+                        this.game.blockWallInstances.forEach(blockwall =>{
+                            this.game.brickWallInstances.forEach(brickwall=>{
+                                if(this.didCollide(brickwall) || this.didCollide(blockwall)/* || this.didCollide(dog)*/) {
+                                    this.x -= 100;
+                                    this.goingRight = false;
+                                }
+                                else {
+                                    // this.goingRight = false;
+                                    // this.lookingRight = false;
+                                    // this.getImage();
+                                }
+                            })       
+                        })
+                    // })
                 } else {
                     this.goingRight = false;
                     // this.lookingRight = false;
@@ -53,19 +55,21 @@ Dog.prototype.move = function() {
                 if(this.x >= this.minimumX){
                     this.x -= 100;
                     this.handleScreenCollision()
-                    this.game.blockWallInstances.forEach(blockwall =>{
-                        this.game.brickWallInstances.forEach(brickwall=>{
-                            if(this.didCollide(brickwall) || this.didCollide(blockwall)) {
-                            this.x += 100;
-                            this.goingRight = true;
-                            }
-                            else {
-                                // this.goingRight = true;
-                                // this.lookingRight = true;
-                                // this.getImage();
-                            }
+                    // this.game.listOfAllEnemies.forEach(dog=>{
+                        this.game.blockWallInstances.forEach(blockwall =>{
+                            this.game.brickWallInstances.forEach(brickwall=>{
+                                if(this.didCollide(brickwall) || this.didCollide(blockwall)/* || this.didCollide(dog)*/) {
+                                this.x += 100;
+                                this.goingRight = true;
+                                }
+                                else {
+                                    // this.goingRight = true;
+                                    // this.lookingRight = true;
+                                    // this.getImage();
+                                }
+                            })
                         })
-                    })
+                    // })
                 } else {
                     this.goingRight = true;
                     // this.lookingRight = true;
@@ -78,19 +82,20 @@ Dog.prototype.move = function() {
                 if(this.y <= this.maximumY) {
                     this.y += 100;
                     this.handleScreenCollision()
-                    
-                    this.game.blockWallInstances.forEach(blockwall =>{
-                        this.game.brickWallInstances.forEach(brickwall=>{
-                            if(this.didCollide(brickwall) || this.didCollide(blockwall)) {
-                                this.y -= 100;
-                                this.goingRight = false;
-                            }
-                            else {
-                                // this.lookingRight = false;
-                                // this.getImage();
-                            }
-                        })
-                    })       
+                    // this.game.listOfAllEnemies.forEach(dog=>{
+                        this.game.blockWallInstances.forEach(blockwall =>{
+                            this.game.brickWallInstances.forEach(brickwall=>{
+                                if(this.didCollide(brickwall) || this.didCollide(blockwall)/* || this.didCollide(dog)*/) {
+                                    this.y -= 100;
+                                    this.goingRight = false;
+                                }
+                                else {
+                                    // this.lookingRight = false;
+                                    // this.getImage();
+                                }
+                            })
+                        })   
+                    // })    
                 } else {
                     this.goingRight = false;
                     // this.lookingRight = false;
@@ -100,18 +105,20 @@ Dog.prototype.move = function() {
                 if(this.y >= this.minimumY){
                     this.y -= 100;
                     this.handleScreenCollision()
-                    this.game.blockWallInstances.forEach(blockwall =>{
-                        this.game.brickWallInstances.forEach(brickwall=>{
-                            if(this.didCollide(brickwall) || this.didCollide(blockwall)) {
-                                this.y += 100;
-                                this.goingRight = true;
-                            }
-                            else {
-                                // this.lookingRight = true;
-                                // this.getImage();
-                            }
+                    // this.game.listOfAllEnemies.forEach(dog=>{
+                        this.game.blockWallInstances.forEach(blockwall =>{
+                            this.game.brickWallInstances.forEach(brickwall=>{
+                                if(this.didCollide(brickwall) || this.didCollide(blockwall)/* || this.didCollide(dog)*/) {
+                                    this.y += 100;
+                                    this.goingRight = true;
+                                }
+                                else {
+                                    // this.lookingRight = true;
+                                    // this.getImage();
+                                }
+                            })
                         })
-                    })
+                    // })
                 } else {
                     this.goingRight = true;
                     // this.lookingRight = true;

@@ -106,6 +106,7 @@ body {
 .bombard-title {
     font-size: 20em;
     margin: 0% 0 15% 0;
+    font-family: "McLaren";
 }
 
 .player-number-select {
@@ -114,12 +115,18 @@ body {
 }
 
 .btn-start-one-player{
+    font-family: "McLaren";
     font-weight: bold;
-    color: white;
-    padding: 50px 125px;
-    font-size: 6em;
+    color: black;
+    padding: 40px 125px;
+    font-size: 4em;
     background-color: gold;
     border: 10px solid darkgoldenrod;
+}
+
+.btn-start-one-player:focus, .restart-button:focus {
+    background-color: darkgoldenrod;
+    border: 10px solid gold;
 }
 
 .btn-start-two-players {
@@ -166,7 +173,7 @@ body {
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     background-image: url("/img/background/splashScreen/Under_tree_filter.jpg");
     width: 1920px;
@@ -177,12 +184,15 @@ body {
 
 .level-select-title {
     font-size: 12em;
-    margin: 6% 0 6% 0;
+    margin: 6% 0 8% 0;
+    font-family: "McLaren";
+    font-weight: bold;
 }
 
 .level-display {
     width: 1200px;
     display: flex;
+    margin-bottom: 150px
 }
 
 .level-display > * {
@@ -197,8 +207,9 @@ body {
 }
 
 .btn-start-level-one {
-    background-image: url("/img/background/Bombard background second try.jpg");
-    background-size: 400px;
+    border: 5px solid black;
+    background-image: url("/img/background/lvl1-noplayer-img.jpg");
+    background-size: 410px;
     background-position: center;
     background-repeat: no-repeat;
     height: 230px;
@@ -206,24 +217,27 @@ body {
 }
 
 .btn-start-level-two {
-    background-image: url("/img/background/Bombard background second try.jpg");
-    background-size: 400px;
+    border: 5px solid black;
+    background-image: url("/img/background/lvl2-noplayer-img.jpg");
+    background-size: 410px;
     background-position: center;
     background-repeat: no-repeat;
 
-    height: 240px;
+    /* height: 240px; */
 }
 
 .btn-start-level-three {
-    background-image: url("/img/background/Bombard background second try.jpg");
-    background-size: 400px;
+    border: 5px solid black;
+    background-image: url("/img/background/lvl3-noplayer-img.jpg");
+    background-size: 410px;
     background-position: center;
     background-repeat: no-repeat
 }
 
 .btn-start-level-four {
-    background-image: url("/img/background/Bombard background second try.jpg");
-    background-size: 400px;
+    border: 5px solid black;
+    background-image: url("/img/background/lvl4-noplayer-img.jpg");
+    background-size: 410px;
     background-position: center;
     background-repeat: no-repeat
 }
@@ -358,10 +372,18 @@ body {
 
 
 .game-over-title {
+    margin: 0 0 5% 0;
     font-size: 14em;
-    margin: 0 0 3% 0;
     text-align: center;
-    
+    font-family: "McLaren";
+    font-weight: bold;     
+}
+.game-over-win-title {
+    margin: 4% 0 0 0;
+    font-size: 14em;
+    text-align: center;
+    font-family: "McLaren";
+    font-weight: bold;  
 }
 
 .game-over-wrapper {
@@ -390,12 +412,23 @@ body {
 }
 
 .restart-button {
+    font-family: "McLaren";
     padding: 30px 50px;
     font-size: 4em;
+    background-color: gold;
+    border: 10px solid darkgoldenrod;
 }
 
+.lute-solo {
+    height: 300px;
+    width: 400px;
+}
 
-
+.dead-lute {
+    height: 250px;
+    width: 450px;
+    margin-bottom: 3%
+}
 
 /* 
 <main class="splash-screen">
