@@ -62,33 +62,47 @@ NoteBomb.prototype.firetimer = function() {
 
 NoteBomb.prototype.explode = function() {
     var explosiestalism = setInterval(()=>{
-        if(this.stillExploding) {
-            this.game.placeWalls();
+        if(this.stillExploding && !this.game.isOver) {
             this.game.placeBrickWalls();
-            this.game.brickWallInstances.forEach(brickwall=>{
-                if(this.didCollide(this.areaofEffectX, brickwall)) {
-                    for(i=1; i <3; i++) {
-                        this.game.brickWalls[this.getBlockY(brickwall.y)][this.x/100-i] = 0;
+            this.game.placeWalls();
+
+            if(!this.didCollideAny(this.areaofEffectX, this.game.blockWallInstances)) {
+                this.game.brickWallInstances.forEach(brickwall=>{
+                    if(this.didCollide(this.areaofEffectX, brickwall)) {
+                        for(i=1; i <3; i++) {
+                            if(this.x/100-i > -1) {
+                                this.game.brickWalls[this.getBlockY(brickwall.y)][this.x/100-i] = 0;
+                            }
+                        }
+                        for(i=1; i <3; i++) {
+                            if(this.x/100+i < 9){
+                                this.game.brickWalls[this.getBlockY(brickwall.y)][this.x/100+i] = 0;
+                            }
+                        }
                     }
-                    for(i=1; i <3; i++) {
-                        this.game.brickWalls[this.getBlockY(brickwall.y)][this.x/100+i] = 0;
+                }) 
+            } else {
+                this.areaofEffectX = {x: this.x, y: this.y, sizeX: this.x+100, sizeY: this.y+100, isX:true, sizeXForPrint: 100, sizeYForPrint: 100};
+            }
+            if(!this.didCollideAny(this.areaofEffectY, this.game.blockWallInstances)) {
+                this.game.brickWallInstances.forEach(brickwall=>{
+                    if(this.didCollide(this.areaofEffectY, brickwall)) {
+                        for(i=1; i <3; i++) {
+                            if(this.y/100-i > -1){
+                                this.game.brickWalls[this.y/100-i][this.getBlockY(brickwall.x)] = 0;
+                            }
+                        }
+                        for(i=1; i <3; i++) {
+                            if(this.y/100+i < 9){
+                                this.game.brickWalls[this.y/100+i][this.getBlockY(brickwall.x)] = 0;
+                            }
+                        }
                     }
-                } else if(this.didCollide(this.areaofEffectY, brickwall)) {
-                    for(i=1; i <3; i++) {
-                        this.game.brickWalls[this.y/100-i][this.getBlockY(brickwall.x)] = 0;
-                    }
-                    for(i=1; i <3; i++) {
-                        this.game.brickWalls[this.y/100+i][this.getBlockY(brickwall.x)] = 0;
-                    }
-                }
-            })
-            this.game.blockWallInstances.forEach(blockwall=>{
-                if(this.didCollide(this.areaofEffectX, blockwall)) {
-                    this.areaofEffectX = {}
-                } else if(this.didCollide(this.areaofEffectY, blockwall)) {
-                    this.areaofEffectY = {}
-                }
-            })
+                })
+            } else {
+                this.areaofEffectY = {x: this.x, y: this.y, sizeX: this.x+100, sizeY: this.y+100, isX:true, sizeXForPrint: 100, sizeYForPrint: 100};
+            }
+            
 
             this.game.bombards.forEach(bombard=>{
                 if(this.didCollide(this.areaofEffectX, bombard)) {
@@ -98,17 +112,21 @@ NoteBomb.prototype.explode = function() {
                 }
             })
 
-            this.game.listOfAllEnemies.forEach((enemy, index)=>{
-                if(this.didCollide(this.areaofEffectX, enemy)) {
-                    console.log(`Dog at ${enemy.x} ${enemy.y} was deleted due to X axis`);
-                    enemy.die()
-                    // this.game.listOfAllEnemies.splice(index, index+1)
-                } else if(this.didCollide(this.areaofEffectY, enemy)) {
-                    console.log(`Dog at ${enemy.x} ${enemy.y} was deleted due to Y axis`);
-                    enemy.die()
-                    // this.game.listOfAllEnemies.splice(index, index+1)
-                }
-            })
+            // if(!this.game.isPvP){
+            //     this.game.listOfAllEnemies.forEach((enemy, index)=>{
+            //         if(this.didCollide(this.areaofEffectX, enemy)) {
+            //             console.log(`Dog at ${enemy.x} ${enemy.y} was deleted due to X axis`);
+            //             enemy.die()
+            //             // this.game.listOfAllEnemies.splice(index, index+1)
+            //         } else if(this.didCollide(this.areaofEffectY, enemy)) {
+            //             console.log(`Dog at ${enemy.x} ${enemy.y} was deleted due to Y axis`);
+            //             enemy.die()
+            //             // this.game.listOfAllEnemies.splice(index, index+1)
+                    
+            //         }
+            //     })
+            // }
+
 
 
             //DRAW according to the correct size
@@ -151,6 +169,7 @@ NoteBomb.prototype.didCollide = function(fire, block) {
     if(fire.isX) {
         var fireLeft = fire.x;
         var fireRight = fire.sizeX;
+        console.log("fireRight: ", fireRight);
         var fireTop = fire.y;
         var fireBottom = fire.sizeY;
         
@@ -166,29 +185,15 @@ NoteBomb.prototype.didCollide = function(fire, block) {
         var crossLeft = blockLeft >= fireLeft && blockLeft <= fireRight;
     
         var crossTop = blockTop >= fireTop && blockTop <= fireBottom
-    
-        // var crossRight = blockRight >= fireLeft && blockRight <= fireRight;
-    
-        // var crossLeft = blockLeft <= fireRight && blockLeft >= fireLeft;
-            
-        // var crossBottom = blockBottom >= fireTop && blockBottom <= fireBottom;
-        
-        // var crossTop = blockTop <= fireBottom && blockTop >= fireTop;
         
         if (crossRight && crossLeft && (/*crossTop */crossBottom)) {
-            // console.log("collided with brick at "+block.x, " ", block.y);
             return true;
         } else {
-            // console.log(`${blockBottom <= fireBottom} b:${blockBottom}, ${fireBottom} ${blockBottom >= fireTop}, fireLeft: ${fireLeft}, fireRight: ${fireRight}, fireTop: ${fireTop}, fireBottom: ${fireBottom} didn't collide with block at ${block.x}, ${block.y}`)
-            // var blockLeft = block.x;
-            // var blockRight = block.x + block.size;
-            // var blockTop = block.y;
-            // var blockBottom = block.y + block.size;
-            // console.log(`Didn't collide because for block at ${block.x}, ${block.y} XAxis crossedRight: ${crossRight}, crossedLeft: ${crossLeft} but crossTop: ${crossTop}`);
+            console.log("didn't collide with brick at "+block.x, " ", block.y);
+            console.log(`because crossLeft: ${crossLeft}. blockLeft ${blockLeft} >= fireLeft ${fireLeft} && blockLeft ${blockLeft} <= fireRight ${fireRight}`);
+            console.log(`Didn't collide because for block at ${block.x}, ${block.y} XAxis crossedRight: ${crossRight}, crossedLeft: ${crossLeft} but crossTop: ${crossTop}`);
             return false 
         }
-        // console.log("fire: ", fireLeft, fireRight, fireTop, fireBottom);
-        // console.log("brickwall: ", somethingLeft, somethingRight, somethingTop, somethingBottom);
     }
     else {
         var fireLeft = fire.x;
@@ -208,27 +213,12 @@ NoteBomb.prototype.didCollide = function(fire, block) {
         var crossLeft = blockLeft >= fireLeft && blockLeft <= fireRight;
     
         var crossTop = blockTop >= fireTop && blockTop <= fireBottom
-    
-        // var crossRight = blockRight >= fireLeft && blockRight <= fireRight;
-    
-        // var crossLeft = blockLeft <= fireRight && blockLeft >= fireLeft;
-            
-        // var crossBottom = blockBottom >= fireTop && blockBottom <= fireBottom;
-        
-        // var crossTop = blockTop <= fireBottom && blockTop >= fireTop;
         
         if (crossTop && crossLeft /*&& crossBottom*/) {
-            // console.log("collided with brick at "+block.x, " ", block.y);
             // console.log(`because crossTop: ${crossTop}. blockTop ${blockTop} >= fireTop ${fireTop} && blockTop ${blockTop} <= fireBottom ${fireBottom}`);
             // console.log(`${blockBottom <= fireBottom} b:${blockBottom}, ${fireBottom} ${blockBottom >= fireTop}, fireLeft: ${fireLeft}, fireRight: ${fireRight}, fireTop: ${fireTop}, fireBottom: ${fireBottom} didn't collide with block at ${block.x}, ${block.y}`)
             return true;
         } else {
-            // console.log(`because crossLeft: ${crossLeft}. blockLeft ${blockLeft} >= fireLeft ${fireLeft} && blockLeft ${blockLeft} <= fireRight ${fireRight}`);
-            // var blockLeft = block.x;
-            // var blockRight = block.x + block.size;
-            // var blockTop = block.y;
-            // var blockBottom = block.y + block.size;
-            // console.log(`Didn't collide because for block at ${block.x}, ${block.y} XAxis crossedRight: ${crossRight}, crossedLeft: ${crossLeft} but crossTop: ${crossTop}`);
             return false 
         }
         // console.log("fire: ", fireLeft, fireRight, fireTop, fireBottom);
@@ -236,6 +226,58 @@ NoteBomb.prototype.didCollide = function(fire, block) {
     }
 }
 
+NoteBomb.prototype.didCollideAny = function(fire, listOfBlocks) {
+    var result = false
+    listOfBlocks.forEach(block=>{
+        if(fire.isX) {
+            var fireLeft = fire.x;
+            var fireRight = fire.sizeX;
+            var fireTop = fire.y;
+            var fireBottom = fire.sizeY;
+            
+            var blockLeft = block.x;
+            var blockRight = block.x + block.size;
+            var blockTop = block.y+2;
+            var blockBottom = block.y + block.size-2;
+            
+            var crossRight = blockRight<=fireRight && blockRight >= fireLeft;
+        
+            var crossBottom = blockBottom <= fireBottom && blockBottom >= fireTop;
+        
+            var crossLeft = blockLeft >= fireLeft && blockLeft <= fireRight;
+        
+            var crossTop = blockTop >= fireTop && blockTop <= fireBottom
+            
+            if (crossRight && crossLeft && (/*crossTop */crossBottom)) {
+                result = true;
+            }
+        }
+        else {
+            var fireLeft = fire.x;
+            var fireRight = fire.sizeX;
+            var fireTop = fire.y;
+            var fireBottom = fire.sizeY-1;
+            
+            var blockLeft = block.x+2;
+            var blockRight = block.x + block.size-2;
+            var blockTop = block.y;
+            var blockBottom = block.y + block.size;
+            
+            var crossRight = blockRight<=fireRight && blockRight >= fireLeft;
+        
+            var crossBottom = blockBottom <= fireBottom && blockBottom >= fireTop;
+        
+            var crossLeft = blockLeft >= fireLeft && blockLeft <= fireRight;
+        
+            var crossTop = blockTop >= fireTop && blockTop <= fireBottom
+            
+            if (crossTop && crossLeft) {
+                result = true;
+            }
+        }
+    })
+    return result
+}
 
 NoteBomb.prototype.getTheGameYouNeed = function(game) {
     this.game = game

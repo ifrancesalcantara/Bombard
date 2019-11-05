@@ -3,16 +3,16 @@ function Level3() {
     this.squareBrushY = 0;
     this.backgroundCanvas = null;
     this.backgroundCtx = null;
-    this.brickWalls = null;
-    this.blockWalls = [[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0]];
+    this.blockWalls = [[0,0,0,0,0,0,0,0,0],[0,1,0,1,0,1,0,1,0],[0,0,0,0,0,0,0,0,0],[0,1,0,1,0,1,0,1,0],[0,0,0,0,0,0,0,0,0],[0,1,0,1,0,1,0,1,0],[0,0,0,0,0,0,0,0,0],[0,1,0,1,0,1,0,1,0],[0,0,0,0,0,0,0,0,0]];
     this.blockWallInstances = [];
-    this.brickWalls = [[1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1],[1,0,1,1,1,1,1,1,1],[1,0,1,1,1,1,1,1,1],[1,0,1,1,1,1,1,1,1],[1,0,1,1,1,1,1,1,1],[1,0,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,0,0],[0,0,0/**/,0,0,0,0,0,0]];
+    this.brickWalls = [[1,0,1,0,1,0,1,0,0],[0,0,0,0,0,0,0,0,0],[1,0,1,0,1,0,1,0,1],[0,0,0,0,0,0,0,0,0],[1,0,1,0,1,0,1,0,1],[0,0,0,0,0,0,0,0,0],[1,0,1,0,1,0,1,0,1],[0,0,0,0,0,0,0,0,0],[0,0,0/**/,0,1,0,1,0,1]];
     this.brickWallInstances = [];
     this.gameScreen = null;
     this.bombards = [];
     this.bombard = null;
-    this.enemyXDogs = []//[[0,1,0,0,0,0,0,1,0],[0,0,0,0,0,0,0,0,0],[0,0,0,1,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,1,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,1,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,1,0,0,0,1,0]]
-    this.enemyYDogs = []//[[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,1,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,1,0,0,0,1],[0,0,0,0,0,0,0,0,0],[1,0,0,0,0,0,1,0,0],[0,0,0,0,0,0,0,0,0],[0,0,1,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0]]
+    this.enemyXDogs = [[0,1,0,0,0,0,0,1,0],[0,0,0,0,0,0,0,0,0],[0,0,0,1,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,1,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,1,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,1,0,0,0,1,0]]
+    this.enemyYDogs = [[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,1,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,1,0,0,0,1],[0,0,0,0,0,0,0,0,0],[1,0,0,0,0,0,1,0,0],[0,0,0,0,0,0,0,0,0],[0,0,1,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0]]
+    // this.enemyDogs = [[0,1,0,0,0,0,0,1,0],[0,0,0,0,0,0,1,0,0],[0,0,0,1,0,0,0,0,0],[0,0,0,0,1,0,0,0,1],[0,1,0,0,0,0,0,0,0],[1,0,0,0,0,0,1,0,0],[0,0,0,0,0,1,0,0,0],[0,0,1,0,0,0,0,0,0],[0,0,0,1,0,0,0,1,0]]
     this.listOfAllEnemies = []
     this.gameIsOver = false;
     this.noteBombs = [];
@@ -36,7 +36,7 @@ Level3.prototype.start = function() {
     this.backgroundCanvas.width= 900;
     this.backgroundCanvas.height= 900;
 
-    this.bombard = new Bombard(this.backgroundCanvas, this, 1, "Player1", 2);
+    this.bombard = new Bombard(this.backgroundCanvas, this, 1, "Player1", 200);
     this.bombards.push(this.bombard)
 
     this.bombard.getPosition();
@@ -67,13 +67,10 @@ Level3.prototype.start = function() {
             this.bombard.move("moveRight")  
         } else if (e.keyCode === 32) {
             this.bombard.placeNoteBomb(this.backgroundCanvas)
-        } else if (e.keyCode === 81) {
-            console.log("Special Move(?)");
         }
     }
     document.body.addEventListener("keydown", this.handleKeyDown.bind(this))
 
-    
     this.startLoop();
 }
 
@@ -101,11 +98,6 @@ Level3.prototype.placeWalls = function () {
         this.squareBrushX = 0
     })
     this.squareBrushY = 0
-
-    // this.bombards.forEach(bombard=>{        
-    //     bombard.setMovementAllowance();
-    //     console.log(this.blockWallInstances)        //!!! here array full, but when jump to bombard's function, it's empty as if line 120 already ran
-    // })
 }
 
 Level3.prototype.removeBlockWalls = function() {
@@ -174,15 +166,12 @@ this.squareBrushY = 0;
 Level3.prototype.updateStats = function(){
     var liveScoreEl = document.querySelector(".number-of-lives");
     liveScoreEl.innerHTML = parseInt(this.bombard.lives)
-    var coinScoreEl = document.querySelector(".number-of-coins")
-    coinScoreEl.innerHTML = this.coins
 
-    this.bombards.forEach(bombard=>{
-        if(bombard.lives <= 0) {
-            this.gameIsOver = true;
-            this.gameOver(bombard.name);
-        }
-    })
+
+    if(this.bombard.lives <= 0) {
+        this.gameIsOver = true;
+        this.gameOver(this.bombard.name);
+    }
 }
 
 
@@ -192,7 +181,6 @@ Level3.prototype.updateStats = function(){
 Level3.prototype.startLoop = function() {
     setInterval(()=>{
         if(!this.gameIsOver) {
-        // var loop = function() {
             this.clearBackgroundCanvas();
 
             this.placeBrickWalls();
@@ -212,8 +200,6 @@ Level3.prototype.startLoop = function() {
                 bombard.handleBlockWallCollision();
 
                 bombard.handleDogBite();
-                
-                // bombard.handleBurn();
 
                 bombard.handleArrivingToGoal();
 

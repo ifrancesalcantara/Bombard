@@ -1,18 +1,18 @@
-function Level1() {
+function Level4() {
     this.squareBrushX = 0;
     this.squareBrushY = 0;
     this.backgroundCanvas = null;
     this.backgroundCtx = null;
-    this.brickWalls = null;
     this.blockWalls = [[0,0,0,0,0,0,0,0,0],[0,1,0,1,0,1,0,1,0],[0,0,0,0,0,0,0,0,0],[0,1,0,1,0,1,0,1,0],[0,0,0,0,0,0,0,0,0],[0,1,0,1,0,1,0,1,0],[0,0,0,0,0,0,0,0,0],[0,1,0,1,0,1,0,1,0],[0,0,0,0,0,0,0,0,0]];
     this.blockWallInstances = [];
-    this.brickWalls = [[1,0,1,0,1,0,1,0,0],[0,0,0,0,0,0,0,0,0],[1,0,1,0,1,0,1,0,1],[0,0,0,0,0,0,0,0,0],[1,0,1,0,1,0,1,0,1],[0,0,0,0,0,0,0,0,0],[1,0,1,0,1,0,1,0,1],[0,0,0,0,0,0,0,0,0],[0,0,1,0,1,0,1,0,1]];
+    this.brickWalls = [[1,0,1,0,1,0,1,0,0],[0,0,0,0,0,0,0,0,0],[1,0,1,0,1,0,1,0,1],[0,0,0,0,0,0,0,0,0],[1,0,1,0,1,0,1,0,1],[0,0,0,0,0,0,0,0,0],[1,0,1,0,1,0,1,0,1],[0,0,0,0,0,0,0,0,0],[0,0,0/**/,0,1,0,1,0,1]];
     this.brickWallInstances = [];
     this.gameScreen = null;
     this.bombards = [];
     this.bombard = null;
-    this.enemyXDogs = []//[[0,1,0,0,0,0,0,1,0],[0,0,0,0,0,0,0,0,0],[0,0,0,1,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,1,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,1,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,1,0,0,0,1,0]]
-    this.enemyYDogs = []//[[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,1,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,1,0,0,0,1],[0,0,0,0,0,0,0,0,0],[1,0,0,0,0,0,1,0,0],[0,0,0,0,0,0,0,0,0],[0,0,1,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0]]
+    this.enemyXDogs = [[0,1,0,0,0,0,0,1,0],[0,0,0,0,0,0,0,0,0],[0,0,0,1,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,1,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,1,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,1,0,0,0,1,0]]
+    this.enemyYDogs = [[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,1,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,1,0,0,0,1],[0,0,0,0,0,0,0,0,0],[1,0,0,0,0,0,1,0,0],[0,0,0,0,0,0,0,0,0],[0,0,1,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0]]
+    // this.enemyDogs = [[0,1,0,0,0,0,0,1,0],[0,0,0,0,0,0,1,0,0],[0,0,0,1,0,0,0,0,0],[0,0,0,0,1,0,0,0,1],[0,1,0,0,0,0,0,0,0],[1,0,0,0,0,0,1,0,0],[0,0,0,0,0,1,0,0,0],[0,0,1,0,0,0,0,0,0],[0,0,0,1,0,0,0,1,0]]
     this.listOfAllEnemies = []
     this.gameIsOver = false;
     this.noteBombs = [];
@@ -29,7 +29,7 @@ function Level1() {
 };
 
 
-Level1.prototype.start = function() {
+Level4.prototype.start = function() {
     this.backgroundCanvas = document.querySelector(".background-canvas")
     this.backgroundCtx = this.backgroundCanvas.getContext("2d")
 
@@ -77,12 +77,12 @@ Level1.prototype.start = function() {
 
 
 
-Level1.prototype.clearBackgroundCanvas = function() {
+Level4.prototype.clearBackgroundCanvas = function() {
     this.backgroundCtx.clearRect(0, 0, this.backgroundCanvas.width, this.backgroundCanvas.height) //!!! To change to gameCanvas
 }
 
 
-Level1.prototype.placeWalls = function () {
+Level4.prototype.placeWalls = function () {
         this.blockWalls.forEach(blockwallrow => {
             blockwallrow.forEach(blockwall =>{
                 if(blockwall) {
@@ -100,12 +100,12 @@ Level1.prototype.placeWalls = function () {
     this.squareBrushY = 0
 }
 
-Level1.prototype.removeBlockWalls = function() {
+Level4.prototype.removeBlockWalls = function() {
     this.blockWallInstances.splice(0, this.blockWallInstances.length)
 }
 
 
-Level1.prototype.placeBrickWalls = function () {
+Level4.prototype.placeBrickWalls = function () {
         this.brickWalls.forEach(brickwallrow => {
             brickwallrow.forEach(brickwall =>{
                 if(brickwall) {
@@ -123,11 +123,11 @@ Level1.prototype.placeBrickWalls = function () {
     this.squareBrushY = 0;
 }
 
-Level1.prototype.removeBrickWalls = function() {
+Level4.prototype.removeBrickWalls = function() {
     this.brickWallInstances.splice(0, this.brickWallInstances.length);
 }
 
-Level1.prototype.placeDogs =  function() {
+Level4.prototype.placeDogs =  function() {
     this.enemyXDogs.forEach(enemyDogRow => {
         enemyDogRow.forEach(dog =>{
             if(dog) {
@@ -163,16 +163,14 @@ this.squareBrushY = 0;
 
 
 
-Level1.prototype.updateStats = function(){
-    if(!this.gameIsOver){
-        var liveScoreEl = document.querySelector(".number-of-lives");
-        liveScoreEl.innerHTML = parseInt(this.bombard.lives)
-    
-    
-        if(this.bombard.lives <= 0) {
-            this.gameIsOver = true;
-            this.gameOver(this.bombard.name);
-        }
+Level4.prototype.updateStats = function(){
+    var liveScoreEl = document.querySelector(".number-of-lives");
+    liveScoreEl.innerHTML = parseInt(this.bombard.lives)
+
+
+    if(this.bombard.lives <= 0) {
+        this.gameIsOver = true;
+        this.gameOver(this.bombard.name);
     }
 }
 
@@ -180,7 +178,7 @@ Level1.prototype.updateStats = function(){
 
 
 
-Level1.prototype.startLoop = function() {
+Level4.prototype.startLoop = function() {
     setInterval(()=>{
         if(!this.gameIsOver) {
             this.clearBackgroundCanvas();
@@ -227,31 +225,31 @@ Level1.prototype.startLoop = function() {
 
 
 
-Level1.prototype.passOverGameOverCallback = function(callback){
+Level4.prototype.passOverGameOverCallback = function(callback){
     this.gameOverFunction = callback;
 }
 
-Level1.prototype.passOverVameOverWinCallback = function(callback) {
+Level4.prototype.passOverVameOverWinCallback = function(callback) {
     this.gameOverWinFunction = callback;
 }
 
 
-Level1.prototype.passOverAddCoinCallback = function(callback) {
+Level4.prototype.passOverAddCoinCallback = function(callback) {
     this.addCoinFunction = callback
 }
 
-Level1.prototype.addCoin = function () {
+Level4.prototype.addCoin = function () {
     this.coins++
 }
 
 
 
-Level1.prototype.gameOver = function(winner){
+Level4.prototype.gameOver = function(winner){
     this.gameIsOver = true;
     this.gameOverFunction(winner)
 }
 
-Level1.prototype.gameOverWin = function() {
+Level4.prototype.gameOverWin = function() {
     this.gameIsOver = true;
     this.gameOverWinFunction();
 }

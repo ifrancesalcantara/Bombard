@@ -37,7 +37,7 @@ Level2.prototype.start = function() {
     this.backgroundCanvas.width= 900;
     this.backgroundCanvas.height= 900;
 
-    this.bombard = new Bombard(this.backgroundCanvas, this, 1, "Player1", 2);
+    this.bombard = new Bombard(this.backgroundCanvas, this, 1, "Player1", 200);
     this.bombards.push(this.bombard)
 
     this.bombard.getPosition();
@@ -175,8 +175,6 @@ this.squareBrushY = 0;
 Level2.prototype.updateStats = function(){
     var liveScoreEl = document.querySelector(".number-of-lives");
     liveScoreEl.innerHTML = parseInt(this.bombard.lives)
-    var coinScoreEl = document.querySelector(".number-of-coins")
-    coinScoreEl.innerHTML = this.coins
 
     this.bombards.forEach(bombard=>{
         if(bombard.lives <= 0) {

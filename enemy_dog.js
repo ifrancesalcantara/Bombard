@@ -7,14 +7,15 @@ function Dog(canvas, x, y, movingAxis, game) {
     this.lookingRight = true;
     this.goingRight = true;
     this.image;
-    this.maximumX = x+100;
-    this.minimumX = x-100;
-    this.maximumY = y+100;
-    this.minimumY = y-100;
+    this.maximumX = this.x+200;
+    this.minimumX = this.x-100;
+    this.maximumY = this.y+200;
+    this.minimumY = this.y-100;
     this.movingAxis = movingAxis
     this.game = game
     this.identifier;
     this.isInInvulnerabilityFrames = false;
+    this.canMove = false;
 }
 
 
@@ -24,85 +25,99 @@ Dog.prototype.draw = function() {
 };
 
 Dog.prototype.move = function() {
-    if(this.movingAxis == "x") {
-        if(this.goingRight && !this.handleScreenCollision()) {
-            if(this.x < this.maximumX) {
-                this.x += 100;
-                this.game.brickWallInstances.forEach(brickwall=>{
-                    if(this.didCollide(brickwall)) {
-                        this.x -= 100;
-                    }
-                    else {
-                        this.goingRight = false;
-                        // this.lookingRight = false;
-                        // this.getImage();
-                    }
-                })       
-            } else {
-                // this.goingRight = false;
-                // this.lookingRight = false;
-                // this.getImage();
-            }      
-        } else if(!this.goingRight && !this.handleScreenCollision()) {
-            if(this.x > this.minimumX){
-                this.x -= 100;
-                this.game.brickWallInstances.forEach(brickwall=>{
-                    if(this.didCollide(brickwall)) {
-                        this.x += 100;
-                    }
-                    else {
-                        this.goingRight = true;
-                        // this.lookingRight = true;
-                        // this.getImage();
-                    }
-                })
-            } else {
-                // this.goingRight = true;
-                // this.lookingRight = true;
-                // this.getImage();
+    if(this.canMove) {
+        if(this.movingAxis == "x") {
+            if(this.goingRight) {
+                if(this.x <= this.maximumX-100) {
+                    this.x += 100;
+                    this.handleScreenCollision()
+                    this.game.brickWallInstances.forEach(brickwall=>{
+                        if(this.didCollide(brickwall)) {
+                            this.x -= 100;
+                            this.goingRight = false;
+                        }
+                        else {
+                            // this.goingRight = false;
+                            // this.lookingRight = false;
+                            // this.getImage();
+                        }
+                    })       
+                } else {
+                    this.goingRight = false;
+                    // this.lookingRight = false;
+                    // this.getImage();
+                }      
+            } else if(!this.goingRight) {
+                if(this.x >= this.minimumX){
+                    this.x -= 100;
+                    this.handleScreenCollision()
+                    this.game.brickWallInstances.forEach(brickwall=>{
+                        if(this.didCollide(brickwall)) {
+                            this.x += 100;
+                            this.goingRight = true;
+                        }
+                        else {
+                            // this.goingRight = true;
+                            // this.lookingRight = true;
+                            // this.getImage();
+                        }
+                    })
+                } else {
+                    this.goingRight = true;
+                    // this.lookingRight = true;
+                    // this.getImage();
+                }
             }
-        }
-    } else if(this.movingAxis == "y") {
+        } else if(this.movingAxis == "y") {
+    
+            if(this.goingRight) {
+                if(this.y <= this.maximumY) {
+                    this.y += 100;
+                    this.handleScreenCollision()
+                    this.game.brickWallInstances.forEach(brickwall=>{
+                        if(this.didCollide(brickwall)) {
+                            this.y -= 100;
+                            this.goingRight = false;
+                        }
+                        else {
+                            // this.lookingRight = false;
+                            // this.getImage();
+                        }
+                    })       
+                } else {
+                    this.goingRight = false;
+                    // this.lookingRight = false;
+                    // this.getImage();
+                }      
+            } else if(!this.goingRight) {
+                if(this.y >= this.minimumY){
+                    this.y -= 100;
+                    this.handleScreenCollision()
+                    this.game.brickWallInstances.forEach(brickwall=>{
+                        if(this.didCollide(brickwall)) {
+                            this.y += 100;
+                            this.goingRight = true;
+                        }
+                        else {
+                            // this.lookingRight = true;
+                            // this.getImage();
+                        }
+                    })
+                } else {
+                    this.goingRight = true;
+                    // this.lookingRight = true;
+                    // this.getImage();
+                }
+            }
 
-        if(this.goingRight && !this.handleScreenCollision()) {
-            console.log("tryna move");
-            console.log(this.y, this.maximumY);
-            if(this.y < this.maximumY) {
-                this.y += 100;
-                this.game.brickWallInstances.forEach(brickwall=>{
-                    if(this.didCollide(brickwall)) {
-                        this.y -= 100;
-                    }
-                    else {
-                        this.goingRight = false;
-                        // this.lookingRight = false;
-                        // this.getImage();
-                    }
-                })       
-            } else {
-                // this.goingRight = false;
-                // this.lookingRight = false;
-                // this.getImage();
-            }      
-        } else if(!this.goingRight && !this.handleScreenCollision()) {
-            if(this.y > this.minimumY){
-                this.y -= 100;
-                this.game.brickWallInstances.forEach(brickwall=>{
-                    if(this.didCollide(brickwall)) {
-                        this.y += 100;
-                    }
-                    else {
-                        this.goingRight = true;
-                        // this.lookingRight = true;
-                        // this.getImage();
-                    }
-                })
-            } else {
-                // this.goingRight = true;
-                // this.lookingRight = true;
-                // this.getImage();
-            }
         }
+        setTimeout(()=>{
+            this.canMove = false;
+        }, 300)
+    } else {
+        setTimeout(()=>{
+            this.canMove = true;
+        }, 400)
     }
 }
 
@@ -119,14 +134,39 @@ Dog.prototype.getImage = function() {
 }
 
 Dog.prototype.handleScreenCollision = function() {
-    var screenTop = 1;                         //!!! I have to put +1?
-    var screenBottom = this.canvas.height-1;    //!!! I have to put -1?
-    var screenLeft = 1;                         //!!! I have to put +1?
-    var screenRight = this.canvas.width-1;
-    if (this.y > screenBottom) {this.y -= this.size}
-    else if (this.y + this.size < screenTop) {this.y += this.size}
-    else if (this.x > screenRight) {this.x -= this.size}
-    else if (this.x + this.size < screenLeft) {this.x += this.size}
+    var screenTop = 0                         //!!! I have to put +1?
+    var screenBottom = this.canvas.height;    //!!! I have to put -1?
+    var screenLeft = 0                         //!!! I have to put +1?
+    var screenRight = this.canvas.width;
+    if (this.y + this.size > screenBottom) {
+        if(this.goingRight) {
+            this.goingRight=false;
+        } else {
+            this.goingRight = true;
+        }
+        this.y -= this.size}
+    else if (this.y < screenTop) {
+        if(this.goingRight) {
+            this.goingRight=false;
+        } else {
+            this.goingRight = true;
+        }
+        this.y += this.size}
+    else if (this.x + this.size > screenRight) {
+        if(this.goingRight) {
+            this.goingRight=false;
+        } else {
+            this.goingRight = true;
+        }
+        this.x -= this.size}
+    else if (this.x < screenLeft) {
+        if(this.goingRight) {
+            this.goingRight=false;
+        } else {
+            this.goingRight = true;
+        }
+        this.x += this.size
+    }
 };
 
 

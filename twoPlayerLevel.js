@@ -42,38 +42,43 @@ TwoPlayerLevel.prototype.start = function() {
     })
 
     this.handleKeyDown = function(e) {
-        if (e.keyCode === 87) {
-            // this.blockWallInstances.forEach(blockwall=>{ 
-            //     console.log("anybody there?");            // !!! Can't get collisions
-            //     if(this.bombard1.didCollide(blockwall)) {
-            //         console.log("collision!");
-
-            //     } else { 
-                if(this.bombard1.didCollide(this.bombard2)){ //!!!bombard2 moves to x:0
-                    console.log("Bombard1 collided with Bombard2");
-                } else {
-                    this.bombard1.move("moveUp")
-                }
-                // }       
-            // })
+        if (e.keyCode === 87) {            
+            this.bombard1.isMovingUp = true;
+            this.bombard1.move("moveUp");
         } else if (e.keyCode === 83) {
+            this.bombard1.isMovingDown = true;
             this.bombard1.move("moveDown")  
         } else if (e.keyCode === 65) {
+            this.bombard1.isMovingLeft = true;
+            if(this.bombard1.lookingRight){
+                this.bombard1.changeLookingDirection();
+            }
             this.bombard1.move("moveLeft")  
         } else if (e.keyCode === 68) {
-            this.bombard1.move("moveRight")  
+            this.bombard1.isMovingRight = true;
+            if(!this.bombard1.lookingRight){
+                this.bombard1.changeLookingDirection();
+            }
+            this.bombard1.move("moveRight")    
         } else if (e.keyCode === 32) {
             this.bombard1.placeNoteBomb(this.backgroundCanvas)
-            console.log(this.noteBombs);
-        } else if (e.keyCode === 81) {
-            console.log("Special Move(?)");
         } else if (e.keyCode === 38) {
+            this.bombard2.isMovingUp = true;
             this.bombard2.move("moveUp")  
         } else if (e.keyCode === 40) {
+            this.bombard2.isMovingDown = true;
             this.bombard2.move("moveDown")  
         } else if (e.keyCode === 39) {
-            this.bombard2.move("moveRight")  
+            this.bombard2.isMovingLeft = true;
+            if(this.bombard2.lookingRight){
+                this.bombard2.changeLookingDirection();
+            }
+            this.bombard2.move("moveLeft")
         } else if (e.keyCode === 37) {
+            this.bombard2.isMovingLeft = true;
+            if(this.bombard2.lookingRight) {
+                this.bombard2.changeLookingDirection();
+            }
             this.bombard2.move("moveLeft")  
         } else if (e.keyCode === 13) {
             this.bombard2.placeNoteBomb(this.backgroundCanvas) 
@@ -81,7 +86,6 @@ TwoPlayerLevel.prototype.start = function() {
     }
     document.body.addEventListener("keydown", this.handleKeyDown.bind(this))
 
-    
     this.startLoop();
 }
 
@@ -109,10 +113,11 @@ TwoPlayerLevel.prototype.placeWalls = function () {
         this.squareBrushX = 0
     })
     this.squareBrushY = 0
-
-    this.blockWallInstances.splice(0, this.blockWallInstances.length)
 }
 
+TwoPlayerLevel.prototype.removeBlockWalls = function() {
+    this.blockWallInstances.splice(0, this.blockWallInstances.length)
+}
 
 TwoPlayerLevel.prototype.placeBrickWalls = function () {
 
@@ -131,22 +136,28 @@ TwoPlayerLevel.prototype.placeBrickWalls = function () {
         this.squareBrushX = 0
     })
     this.squareBrushY = 0;
+}
 
+
+TwoPlayerLevel.prototype.removeBrickWalls = function() {
     this.brickWallInstances.splice(0, this.brickWallInstances.length);
 }
 
 TwoPlayerLevel.prototype.updateStats = function(){
     if(!this.gameIsOver) {
-        if(!this.isPvP) {
-            var liveScoreEl = document.querySelector(".number-of-lives");
-            liveScoreEl.innerHTML = parseInt(this.bombard1.lives);
-        } else {
+
             var player1LiveScoreEl = document.querySelector(".player-one-number-of-lives");
             player1LiveScoreEl.innerHTML = parseInt(this.bombard1.lives);
             var player2LiveScoreEl = document.querySelector(".player-two-number-of-lives");
             player2LiveScoreEl.innerHTML = parseInt(this.bombard2.lives);
-        }
-    
+        
+            // if(bombard1.lives <= 0) {
+            //     this.gameIsOver = true;
+            //     this.gameOver(bombard1.enemysName);
+            // } else {
+            //     this.gameIsOver = true;
+            //     this.gameOver(bombard.enemysName);
+            // }
         this.bombards.forEach(bombard=>{
             if(bombard.lives <= 0) {
                 this.gameIsOver = true;
@@ -163,27 +174,32 @@ TwoPlayerLevel.prototype.updateStats = function(){
 TwoPlayerLevel.prototype.startLoop = function() {
     setInterval(()=>{
         if(!this.gameIsOver) {
-        // var loop = function() {
             this.clearBackgroundCanvas();
+            
+            this.placeBrickWalls();
+
+            this.placeWalls();
 
             this.bombards.forEach(bombard=>{
                 bombard.draw();
         
                 bombard.handleScreenCollision();
-        
-                bombard.handleBurn();
-                
-                bombard.handleArrivingToGoal();
-            })
-            
-            this.placeWalls();
 
-            this.placeBrickWalls();
+                bombard.handleBrickWallCollision();
+
+                bombard.handleBlockWallCollision();
+
+                bombard.resetDirection();
+            })
     
+            this.removeBrickWalls();
+
+            this.removeBlockWalls();
+
             this.updateStats();
     
         }
-    }, 500)
+    }, 200)
     // window.requestAnimationFrame(loop);
 }
 

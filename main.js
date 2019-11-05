@@ -24,18 +24,21 @@ function main(){
         <main class="splash-screen">
             <h1 class="bombard-title">Bombard</h1>
             <div class="player-number-select">
+                <button class="btn-start-one-player">Play<img></button>
+            </div>
+            <!-- <div class="player-number-select">
                 <button class="btn-start-one-player">One Player <img></button>
                 <button class="btn-start-two-players">Two Players <img></button>
-            </div>
+            </div> -->
         </main>
         `)
 
         document.body.appendChild(splashScreen);
 
         var onePlayerStartButton = splashScreen.querySelector(".btn-start-one-player")
-        var twoPlayersStartButton = splashScreen.querySelector(".btn-start-two-players")
+        // var twoPlayersStartButton = splashScreen.querySelector(".btn-start-two-players")
         onePlayerStartButton.addEventListener("click", createLevelSelect)
-        twoPlayersStartButton.addEventListener("click", startTwoPlayerLevel)
+        // twoPlayersStartButton.addEventListener("click", startTwoPlayerLevel)
     }
 
 
@@ -74,6 +77,8 @@ function main(){
         levelTwoStartButton.addEventListener("click", startLevel2)
         var levelThreeStartButton = levelSelect.querySelector(".btn-start-level-three")
         levelThreeStartButton.addEventListener("click", startLevel3)
+        var levelThreeStartButton = levelSelect.querySelector(".btn-start-level-four")
+        levelThreeStartButton.addEventListener("click", startLevel4)
     }
 
 
@@ -89,6 +94,7 @@ function main(){
         game.gameScreen = createGameScreen();
         game.start()
         game.passOverGameOverCallback(gameOver)
+        game.passOverVameOverWinCallback(gameOverWin)
         game.passOverAddCoinCallback(addCoin)
     }
 
@@ -116,6 +122,18 @@ function main(){
         game.passOverAddCoinCallback(addCoin)
     }
 
+    function startLevel4() {
+
+        removeLevelSelect();
+
+        game = new Level4();
+        game.gameScreen = createGameScreen();
+        game.start()
+        game.passOverGameOverCallback(gameOver)
+        game.passOverVameOverWinCallback(gameOverWin)
+        game.passOverAddCoinCallback(addCoin)
+    }
+
     function startTwoPlayerLevel() {
         removeSplashScreen();
 
@@ -134,10 +152,10 @@ function main(){
                 gameScreen = buildDOM(`
                     <main class="one-player-game-container">
                         <div class="one-player-lives-and-coins">
-                            <div class="coins-div">
+                            <!-- <div class="coins-div">
                                 <p class="number-of-coins">0</p>
                                 <img src="/img/croppedCoin.gif" class="level-coins-icon">
-                            </div>
+                            </div> -->
                             <div>
                                 <p class="number-of-lives">0</p>
                                 <img src="https://media.giphy.com/media/fH6sWTw73YS9tjqPSF/giphy.gif" class="lives-icon">

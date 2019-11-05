@@ -113,18 +113,13 @@ body {
     justify-content: space-between;
 }
 
-.player-number-select > * {
-    padding: 30px 65px;
-    font-size: 2em;
+.btn-start-one-player{
     font-weight: bold;
     color: white;
-
-}
-
-.btn-start-one-player{
-    background-color: blue;
-    border: 10px solid darkblue;
-    margin-right: 200px;
+    padding: 50px 125px;
+    font-size: 6em;
+    background-color: gold;
+    border: 10px solid darkgoldenrod;
 }
 
 .btn-start-two-players {
