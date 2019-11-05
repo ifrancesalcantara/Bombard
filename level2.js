@@ -6,13 +6,13 @@ function Level2() {
     this.brickWalls = null;
     this.blockWalls = [[0,0,0,0,0,0,0,0,0],[0,1,0,1,0,1,0,1,0],[0,0,0,0,0,0,0,0,0],[0,1,0,1,0,1,0,1,0],[0,0,0,0,0,0,0,0,0],[0,1,0,1,0,1,0,1,0],[0,0,0,0,0,0,0,0,0],[0,1,0,1,0,1,0,1,0],[0,0,0,0,0,0,0,0,0]];
     this.blockWallInstances = [];
-    this.brickWalls = [[1,0,1,0,1,0,1,0,0],[0,0,0,0,0,0,0,0,0],[1,0,1,0,1,0,1,0,1],[0,0,0,0,0,0,0,0,0],[1,0,1,0,1,0,1,0,1],[0,0,0,0,0,0,0,0,0],[1,0,1,0,1,0,1,0,1],[0,0,0,0,0,0,0,0,0],[0,0,0/**/,0,1,0,1,0,1]];
+    this.brickWalls = [[1,0,0,1,1,0,1,0,0],[0,0,1,0,1,0,1,0,1],[1,0,0,1,0,1,0,1,0],[1,0,1,0,1,0,1,0,1],[0,1,0,1,0,1,0,1,0],[1,0,0,0,1,0,0,0,1],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0]];
     this.brickWallInstances = [];
     this.gameScreen = null;
     this.bombards = [];
     this.bombard = null;
-    this.enemyXDogs = [[0,1,0,0,0,0,0,1,0],[0,0,0,0,0,0,0,0,0],[0,0,0,1,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,1,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,1,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,1,0,0,0,1,0]]
-    this.enemyYDogs = [[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,1,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,1,0,0,0,1],[0,0,0,0,0,0,0,0,0],[1,0,0,0,0,0,1,0,0],[0,0,0,0,0,0,0,0,0],[0,0,1,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0]]
+    this.enemyXDogs = [[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,1,0,1,0,1],[0,0,0,0,0,0,0,0,0],[1,0,0,0,1,0,0,0,1],[0,0,0,0,0,0,0,0,0],[0,0,1,0,0,0,1,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0]]
+    this.enemyYDogs = []//[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,1,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,1,0,0,0,1],[0,0,0,0,0,0,0,0,0],[1,0,0,0,0,0,1,0,0],[0,0,0,0,0,0,0,0,0],[0,0,1,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0]]
     // this.enemyDogs = [[0,1,0,0,0,0,0,1,0],[0,0,0,0,0,0,1,0,0],[0,0,0,1,0,0,0,0,0],[0,0,0,0,1,0,0,0,1],[0,1,0,0,0,0,0,0,0],[1,0,0,0,0,0,1,0,0],[0,0,0,0,0,1,0,0,0],[0,0,1,0,0,0,0,0,0],[0,0,0,1,0,0,0,1,0]]
     this.listOfAllEnemies = []
     this.gameIsOver = false;
@@ -37,7 +37,7 @@ Level2.prototype.start = function() {
     this.backgroundCanvas.width= 900;
     this.backgroundCanvas.height= 900;
 
-    this.bombard = new Bombard(this.backgroundCanvas, this, 1, "Player1", 200);
+    this.bombard = new Bombard(this.backgroundCanvas, this, 1, "Player1", 1);
     this.bombards.push(this.bombard)
 
     this.bombard.getPosition();
@@ -173,15 +173,17 @@ this.squareBrushY = 0;
 
 
 Level2.prototype.updateStats = function(){
-    var liveScoreEl = document.querySelector(".number-of-lives");
-    liveScoreEl.innerHTML = parseInt(this.bombard.lives)
-
-    this.bombards.forEach(bombard=>{
-        if(bombard.lives <= 0) {
-            this.gameIsOver = true;
-            this.gameOver(bombard.name);
-        }
-    })
+    if(!this.gameIsOver){
+        var liveScoreEl = document.querySelector(".number-of-lives");
+        liveScoreEl.innerHTML = parseInt(this.bombard.lives)
+    
+        this.bombards.forEach(bombard=>{
+            if(bombard.lives <= 0) {
+                this.gameIsOver = true;
+                this.gameOver(bombard.name);
+            }
+        })
+    }
 }
 
 

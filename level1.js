@@ -36,7 +36,7 @@ Level1.prototype.start = function() {
     this.backgroundCanvas.width= 900;
     this.backgroundCanvas.height= 900;
 
-    this.bombard = new Bombard(this.backgroundCanvas, this, 1, "Player1", 200);
+    this.bombard = new Bombard(this.backgroundCanvas, this, 1, "Player1", 1);
     this.bombards.push(this.bombard)
 
     this.bombard.getPosition();
