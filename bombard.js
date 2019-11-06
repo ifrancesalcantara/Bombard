@@ -127,6 +127,9 @@ Bombard.prototype.cardCollision = function() {
                 if(bombard.didCollide(card)) {
                     card.effect(this)
                     card.deleteYourself();
+
+                    let cardpickSound = document.querySelector(".pickup-sound")
+                    cardpickSound.play()
                 }
             })
         }
@@ -237,20 +240,73 @@ Bombard.prototype.receiveDamage = function (damage) {
 
 
 Bombard.prototype.placeNoteBomb = function(canvas) {
-    if(!this.hasIllimitedBombs){
-        if(this.canPlaceBomb){
+    if(!this.game.gameIsOver){
+        if(!this.hasIllimitedBombs){
+            if(this.canPlaceBomb){
+                var noteBomb = new NoteBomb(canvas, this.x, this.y, this);
+                this.game.noteBombs.push(noteBomb);
+                noteBomb.getTheGameYouNeed(this.game);
+                noteBomb.draw();
+                this.canPlaceBomb = false;
+    
+                let noteDecider = Math.floor((Math.random()*16)+1)
+                if(noteDecider == 1){
+                    let sound = document.querySelector(".note-1")
+                    sound.play()
+                } else if(noteDecider == 3){
+                    let sound = document.querySelector(".note-2")
+                    sound.play()
+                } else if(noteDecider == 4){
+                    let sound = document.querySelector(".note-3")
+                    sound.play()
+                } else if(noteDecider == 5){
+                    let sound = document.querySelector(".note-4")
+                    sound.play()
+                } else if(noteDecider == 6){
+                    let sound = document.querySelector(".note-5")
+                    sound.play()
+                } else if(noteDecider == 7){
+                    let sound = document.querySelector(".note-6")
+                    sound.play()
+                } else if(noteDecider == 8){
+                    let sound = document.querySelector(".note-7")
+                    sound.play()
+                } else if(noteDecider == 9){
+                    let sound = document.querySelector(".note-8")
+                    sound.play()
+                } else if(noteDecider == 10){
+                    let sound = document.querySelector(".note-9")
+                    sound.play()
+                } else if(noteDecider == 11){
+                    let sound = document.querySelector(".note-10")
+                    sound.play()
+                } else if(noteDecider == 12){
+                    let sound = document.querySelector(".note-11")
+                    sound.play()
+                } else if(noteDecider == 13){
+                    let sound = document.querySelector(".note-12")
+                    sound.play()
+                } else if(noteDecider == 14){
+                    let sound = document.querySelector(".note-13")
+                    sound.play()
+                } else if(noteDecider == 15){
+                    let sound = document.querySelector(".note-14")
+                    sound.play()
+                } else if(noteDecider == 16){
+                    let sound = document.querySelector(".note-15")
+                    sound.play()
+                } else if(noteDecider == 17){
+                    let sound = document.querySelector(".note-16")
+                    sound.play()
+                }
+            }
+        } else {
             var noteBomb = new NoteBomb(canvas, this.x, this.y, this);
             this.game.noteBombs.push(noteBomb);
             noteBomb.getTheGameYouNeed(this.game);
             noteBomb.draw();
             this.canPlaceBomb = false;
         }
-    } else {
-        var noteBomb = new NoteBomb(canvas, this.x, this.y, this);
-        this.game.noteBombs.push(noteBomb);
-        noteBomb.getTheGameYouNeed(this.game);
-        noteBomb.draw();
-        this.canPlaceBomb = false;
     }
 }
 
