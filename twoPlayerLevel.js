@@ -129,14 +129,20 @@ TwoPlayerLevel.prototype.placeCards = function () {
                     this.cardInstances.push(cardInstance);
                     this.backgroundCtx.drawImage(cardInstance.image, this.squareBrushX, this.squareBrushY, 100, 100);
                     this.backgroundCtx.fill();
-                } else if (Math.random()>0.9997) {
+                } else if (Math.random()>0.9995) {
                     let cardInstance = new IllimitedBombs(this.squareBrushX, this.squareBrushY, this);
                     cardInstance.getImage();
                     this.cardInstances.push(cardInstance);
                     this.backgroundCtx.drawImage(cardInstance.image, this.squareBrushX, this.squareBrushY, 100, 100);
                     this.backgroundCtx.fill();
-                } else if (Math.random()>0.9997) {
+                } else if (Math.random()>0.9995) {
                     let cardInstance = new InvulnerabilityCard(this.squareBrushX, this.squareBrushY, this);
+                    cardInstance.getImage();
+                    this.cardInstances.push(cardInstance);
+                    this.backgroundCtx.drawImage(cardInstance.image, this.squareBrushX, this.squareBrushY, 100, 100);
+                    this.backgroundCtx.fill();
+                } else if (Math.random()>0.999995) {
+                    let cardInstance = new DeathCard(this.squareBrushX, this.squareBrushY, this);
                     cardInstance.getImage();
                     this.cardInstances.push(cardInstance);
                     this.backgroundCtx.drawImage(cardInstance.image, this.squareBrushX, this.squareBrushY, 100, 100);

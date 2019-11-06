@@ -132,6 +132,10 @@ Bombard.prototype.cardCollision = function() {
         if(bombard.identifier == this.identifier) {
             this.game.cardInstances.forEach(card=>{
                 if(bombard.didCollide(card)) {
+                    if(card.type == "invulnerabilityCard"){
+                        card.effect(this);
+                        card.used = true
+                    }
                     card.effect(this)
                     card.deleteYourself();
 

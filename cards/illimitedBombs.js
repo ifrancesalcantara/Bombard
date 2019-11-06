@@ -22,7 +22,11 @@ IllimitedBombs.prototype.draw = function() {
 
 IllimitedBombs.prototype.effect = function(player) {
     player.hasIllimitedBombs = true;
+    var effect = setInterval(()=>{
+        player.canPlaceBomb = true;
+    }, 500)
     setTimeout(()=>{
+        clearInterval(effect)
         player.hasIllimitedBombs = false;
     }, 10000)
 }
