@@ -21,6 +21,10 @@ function Bombard(canvas, game, playerNumber, name, lives = 1) {
     this.canPlaceBomb = true;
     this.bombPlaceAllowanceTicker = 1500;
     this.hasIllimitedBombs = false;
+    this.imageRightNormal;
+    this.imageLeftNormal;
+    this.imageRightInvulnerable;
+    this.imageLeftInvulnerable;
 }
 
 
@@ -61,37 +65,41 @@ Bombard.prototype.placeBombTicker = function () {
     }   
 }
 
+Bombard.prototype.getImage = function() {
+    const imageRightNormal = new Image()
+    imageRightNormal.src='./img/player/Bombard_transparent_with_lute.png'
+    this.imageRightNormal = imageRightNormal;
 
+    const imageLeftNormal = new Image()
+    imageLeftNormal.src='img/player/Bombard_trans_looking_left.png'
+    this.imageLeftNormal = imageLeftNormal;
+
+    const imageRightInvulnerable = new Image()
+    imageRightInvulnerable.src='img/player/Bombard_invulnerable_right.png'
+    this.imageRightInvulnerable = imageRightInvulnerable;
+
+    const imageLeftInvulnerable = new Image()
+    imageLeftInvulnerable.src='img/player/Bombard_invulnerable_left.png'
+    this.imageLeftInvulnerable = imageLeftInvulnerable;
+}
 
 Bombard.prototype.draw = function() {
     if(this.lookingRight) {
         if(!this.isInInvincibilityFrames) {
-            const bombard = new Image()
-            bombard.src='img/player/Bombard_transparent_with_lute.png'
-            bombard.onload = function() {
-                this.ctx.drawImage(bombard, this.x, this.y, this.size, this.size);
-            }.bind(this)
+            this.ctx.drawImage(this.imageRightNormal, this.x, this.y, this.size, this.size);
+            this.ctx.fill()
         } else {
-            const bombard = new Image()
-            bombard.src='img/player/Bombard_invulnerable_right.png'
-            bombard.onload = function() {
-                this.ctx.drawImage(bombard, this.x, this.y, this.size, this.size);
-            }.bind(this)
+            this.ctx.drawImage(this.imageRightInvulnerable, this.x, this.y, this.size, this.size);
+            this.ctx.fill()
 
         }
     } else {
         if(!this.isInInvincibilityFrames) {
-            const bombard = new Image()
-            bombard.src='img/player/Bombard_trans_looking_left.png'
-            bombard.onload = function() {
-                this.ctx.drawImage(bombard, this.x, this.y, this.size, this.size);
-            }.bind(this)
+            this.ctx.drawImage(this.imageLeftNormal, this.x, this.y, this.size, this.size);
+            this.ctx.fill()
         } else {
-            const bombard = new Image()
-            bombard.src='img/player/Bombard_invulnerable_left.png'
-            bombard.onload = function() {
-                this.ctx.drawImage(bombard, this.x, this.y, this.size, this.size);
-            }.bind(this)
+            this.ctx.drawImage(this.imageLeftInvulnerable, this.x, this.y, this.size, this.size);
+            this.ctx.fill();
         }
     }
     this.placeBombTicker()
@@ -106,8 +114,7 @@ Bombard.prototype.changeLookingDirection = function() {
     }
 }
 
-Bombard.prototype.move = function(direction) {
-
+Bombard.prototype.move = function(direction) {              
     if(direction=="moveUp") {
         this.y -= this.size;
     } else if(direction=="moveRight") {
@@ -148,7 +155,7 @@ Bombard.prototype.handleScreenCollision = function() {
     else if (this.x + this.size < screenLeft) {this.x += this.size}
 };
 
-Bombard.prototype.handleBrickWallCollision = function() {
+Bombard.prototype.handleBrickWallCollision = function() {       // !!!!    Handle other player collision???
     this.game.bombards.forEach(bombard=>{
         if(bombard.identifier == this.identifier) {
             this.game.brickWallInstances.forEach(brickwall=>{
@@ -245,6 +252,7 @@ Bombard.prototype.placeNoteBomb = function(canvas) {
             if(this.canPlaceBomb){
                 var noteBomb = new NoteBomb(canvas, this.x, this.y, this);
                 this.game.noteBombs.push(noteBomb);
+                noteBomb.getImage()
                 noteBomb.getTheGameYouNeed(this.game);
                 noteBomb.draw();
                 this.canPlaceBomb = false;
@@ -303,6 +311,7 @@ Bombard.prototype.placeNoteBomb = function(canvas) {
         } else {
             var noteBomb = new NoteBomb(canvas, this.x, this.y, this);
             this.game.noteBombs.push(noteBomb);
+            noteBomb.getImage()
             noteBomb.getTheGameYouNeed(this.game);
             noteBomb.draw();
             this.canPlaceBomb = false;

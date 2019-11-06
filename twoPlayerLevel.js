@@ -33,6 +33,8 @@ TwoPlayerLevel.prototype.start = function() {
     this.bombard2 = new Bombard(this.backgroundCanvas, this, 2, "Player 2", 2)
     this.bombards.push(this.bombard2)
 
+    this.bombard1.getImage();
+    this.bombard2.getImage();
     this.bombard1.getName("Player 1");
     this.bombard2.getName("Player 2");
     this.bombard1.getEnemyName();
@@ -71,7 +73,7 @@ TwoPlayerLevel.prototype.start = function() {
             this.bombard2.isMovingDown = true;
             this.bombard2.move("moveDown")  
         } else if (e.keyCode === 39) {
-            this.bombard2.isMovingLeft = true;
+            this.bombard2.isMovingRight = true;
             if(!this.bombard2.lookingRight){
                 this.bombard2.changeLookingDirection();
             }
@@ -129,6 +131,12 @@ TwoPlayerLevel.prototype.placeCards = function () {
                     this.backgroundCtx.fill();
                 } else if (Math.random()>0.9997) {
                     let cardInstance = new IllimitedBombs(this.squareBrushX, this.squareBrushY, this);
+                    cardInstance.getImage();
+                    this.cardInstances.push(cardInstance);
+                    this.backgroundCtx.drawImage(cardInstance.image, this.squareBrushX, this.squareBrushY, 100, 100);
+                    this.backgroundCtx.fill();
+                } else if (Math.random()>0.9997) {
+                    let cardInstance = new InvulnerabilityCard(this.squareBrushX, this.squareBrushY, this);
                     cardInstance.getImage();
                     this.cardInstances.push(cardInstance);
                     this.backgroundCtx.drawImage(cardInstance.image, this.squareBrushX, this.squareBrushY, 100, 100);
@@ -205,9 +213,8 @@ TwoPlayerLevel.prototype.checkDraw = function (arrayOfBombards) {
 
 
 TwoPlayerLevel.prototype.startLoop = function() {
-    // setInterval(()=>{
-    var loop =  function(){
-        window.requestAnimationFrame(loop);
+    setInterval(()=>{
+    // var loop =  function(){
 
          if(!this.gameIsOver) {
             this.clearBackgroundCanvas();
@@ -217,18 +224,23 @@ TwoPlayerLevel.prototype.startLoop = function() {
             this.placeWalls();
 
             this.bombards.forEach(bombard=>{
-                bombard.draw();
-        
+                
                 bombard.handleScreenCollision();
 
                 bombard.handleBrickWallCollision();
 
-                bombard.cardCollision();
-
                 bombard.handleBlockWallCollision();
+
+                bombard.draw();
+
+                bombard.cardCollision();
 
                 bombard.resetDirection();
             })
+
+            // this.placeBrickWalls();
+
+            // this.placeWalls();
 
             this.placeCards();
     
@@ -243,9 +255,13 @@ TwoPlayerLevel.prototype.startLoop = function() {
             this.updateStats();
     
         }
-    }.bind(this)
-    // }, 200)
-    window.requestAnimationFrame(loop);
+
+    //     window.requestAnimationFrame(loop)
+    // }.bind(this)
+    }, 200)
+
+
+    // loop();
 }
 
 

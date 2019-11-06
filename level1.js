@@ -40,8 +40,9 @@ Level1.prototype.start = function() {
     this.bombard = new Bombard(this.backgroundCanvas, this, 1, "Player1", 1);
     this.bombards.push(this.bombard)
 
+    this.bombard.getImage()
     this.bombard.getPosition();
-    this.bombard.getName("Manolito");
+    this.bombard.getName("Player 1");
     this.bombard.draw();
 
     this.placeDogs()
@@ -194,13 +195,13 @@ Level1.prototype.startLoop = function() {
 
             this.bombards.forEach(bombard=>{
 
-                bombard.draw();
-    
                 bombard.handleScreenCollision();
 
                 bombard.handleBrickWallCollision();
 
                 bombard.handleBlockWallCollision();
+
+                bombard.draw();
 
                 bombard.handleDogBite();
 

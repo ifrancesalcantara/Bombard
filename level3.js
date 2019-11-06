@@ -41,6 +41,7 @@ Level3.prototype.start = function() {
     this.bombards.push(this.bombard)
 
     this.bombard.getPosition();
+    this.bombard.getImage()
     this.bombard.getName("Manolito");
     this.bombard.draw();
 
@@ -193,14 +194,14 @@ Level3.prototype.startLoop = function() {
 
 
             this.bombards.forEach(bombard=>{
-
-                bombard.draw();
     
                 bombard.handleScreenCollision();
 
                 bombard.handleBrickWallCollision();
 
                 bombard.handleBlockWallCollision();
+
+                bombard.draw();
 
                 bombard.handleDogBite();
 

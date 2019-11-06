@@ -17,22 +17,37 @@ function NoteBomb(canvas, x, y, bombard) {
     this.correctAreaOfEffectX;
     this.areaofEffectX = {x: this.x-200, y: this.y, sizeX: this.x+300, sizeY: this.y+100, isX:true, sizeXForPrint: 500, sizeYForPrint: 100};
     this.areaofEffectY = {x: this.x, y: this.y-200, sizeX: this.x+100, sizeY: this.y+300, isX:false, sizeXForPrint: 100, sizeYForPrint: 500};
+    this.image;
 }
 
 
 NoteBomb.prototype.draw = function() {
     var existentialism = setInterval(()=>{
-        if(this.stillTicking){
-            var noteBomPic = new Image();
-            noteBomPic.src="img/bomb/music-note-icon.svg"
-            noteBomPic.onload = function() {
-                this.ctx.drawImage(noteBomPic, this.x, this.y, this.size, this.size)
-            }.bind(this)
+        if(this.stillTicking) {
+            this.ctx.drawImage(this.image, this.x, this.y, this.size, this.size);
+            this.ctx.fill();
             this.ticker();
         } else {
             clearInterval(existentialism)
         }
     }, 100)
+}
+
+NoteBomb.prototype.getImage = function() {
+    let bombImage = new Image();
+    let fireX = new Image();
+    let fireY = new Image();
+    let firecenter = new Image();
+    
+    bombImage.src= "img/bomb/music-note-icon.svg";
+    fireX.src = "/img/bomb/Fire_tile_X.png";
+    fireY.src = "/img/bomb/Fire_tile_Y.png";
+    firecenter.src="/img/bomb/fire_center.png"
+    
+    this.image = bombImage;
+    this.fireXImage= fireX;
+    this.fireYImage = fireY;
+    this.fireCenterImage = firecenter;
 }
 
 
@@ -180,30 +195,23 @@ NoteBomb.prototype.explode = function() {
                 //DRAW according to the correct size
 
                 if(this.game.inGame) {
-                    let fireX = new Image();
-                    let fireY = new Image();
-                    let firecenter = new Image();
-
-                    fireX.src = "/img/bomb/Fire_tile_X.png";
-                    fireY.src = "/img/bomb/Fire_tile_Y.png";
-                    firecenter.src="/img/bomb/fire_center.png"
-
+                    this.game.cardInstances.forEach(card=>{
+                        card.draw()
+                    })
                     // this.ctx.drawImage(fireX, this.x-200, this.y, this.size+400, this.size)
 
-                    this.ctx.drawImage(fireX, this.areaofEffectX.x, this.areaofEffectX.y, this.areaofEffectX.sizeXForPrint, this.areaofEffectX.sizeYForPrint)
+                    this.ctx.drawImage(this.fireXImage, this.areaofEffectX.x, this.areaofEffectX.y, this.areaofEffectX.sizeXForPrint, this.areaofEffectX.sizeYForPrint)
                     this.ctx.fill();
-                    this.ctx.drawImage(fireY, this.areaofEffectY.x, this.areaofEffectY.y, this.areaofEffectY.sizeXForPrint, this.areaofEffectY.sizeYForPrint)
+                    this.ctx.drawImage(this.fireYImage, this.areaofEffectY.x, this.areaofEffectY.y, this.areaofEffectY.sizeXForPrint, this.areaofEffectY.sizeYForPrint)
                     this.ctx.fill();
-                    this.ctx.drawImage(firecenter, this.x, this.y, this.size, this.size)
+                    this.ctx.drawImage(this.fireCenterImage, this.x, this.y, this.size, this.size)
                     this.ctx.fill();
 
                     this.firetimer();
                 }
             } else {
                 clearInterval(explosiestalism)
-
-                this.ctx.clearRect(this.x-200, this.y, this.size+400, this.size);
-                this.ctx.clearRect(this.x, this.y-200, this.size, this.size+400);
+                this.clearFire()
                 this.bombard.game.noteBombs.forEach((bomb, i)=>{
                     if(bomb.identifier == this.identifier) {
                         this.bombard.game.noteBombs.splice(i, i+1)
@@ -352,4 +360,9 @@ NoteBomb.prototype.getBlockX = function(num) {
     } else {
         return numCorrected/100
     }
+}
+
+NoteBomb.prototype.clearFire = function() {
+    this.ctx.clearRect(this.x-200, this.y, this.size+400, this.size);
+    this.ctx.clearRect(this.x, this.y-200, this.size, this.size+400);
 }
