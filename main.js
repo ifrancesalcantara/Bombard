@@ -24,7 +24,7 @@ function main(){
         <main class="splash-screen">
             <h1 class="bombard-title"><span class="title-a">A</span><br><span class="title-song">Song</span><br><span class="title-of">of</span><br><span class="title-bombard">Bombard</span></h1>
             <div class="player-number-select">
-                <button class="btn-start-one-player">Play<img></button>
+                <button class="btn-start-one-player">One Player<img></button>
                 <button class="btn-start-two-players">Two Players <img></button>
             </div>
         </main>

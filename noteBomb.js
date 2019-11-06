@@ -125,8 +125,10 @@ NoteBomb.prototype.explode = function() {
                             }
                         }
                     } else if(this.didCollide(this.areaofEffectY, noteBomb)) {
-                        if(!noteBomb.stillExploding){
-                            noteBomb.explode();
+                        if(noteBomb.identifier != this.identifier) {
+                            if(!noteBomb.stillExploding){
+                                noteBomb.chronometer = 0;
+                            }
                         }
                     }
                 })
