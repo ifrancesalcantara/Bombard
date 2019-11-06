@@ -5,12 +5,13 @@ function Heart(x, y, game){
     this.game = game
     this.size = 100
     this.identifier=Math.random();
+    this.type = "heart"
 }
 
 
 Heart.prototype.getImage = function() {
     let image = new Image();
-    image.src ="/img/PinClipart.com_perfect-clipart_163602.png"
+    image.src ="/img/cards/heartCard.png"
     this.image = image;
 }
 

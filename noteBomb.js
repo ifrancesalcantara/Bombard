@@ -134,10 +134,29 @@ NoteBomb.prototype.explode = function() {
                 })
 
                 this.game.cardInstances.forEach(card=>{
-                    if(this.didCollide(this.areaofEffectX, card)) {
-                        this.game.cardInstances.splice(this.game.cardInstances.indexOf(card), 1)
-                    } else if(this.didCollide(this.areaofEffectY, card)) {
-                        this.game.cardInstances.splice(this.game.cardInstances.indexOf(card), 1)
+                    if(card.type!="deathCard") {
+                        if(this.didCollide(this.areaofEffectX, card)) {
+                            if(card.type!="heart") {
+                                this.game.cardInstances.splice(this.game.cardInstances.indexOf(card), 1);
+                            } else {
+                                this.game.cardInstances.splice(this.game.cardInstances.indexOf(card), 1);
+                                let deathCard = new DeathCard(card.x, card.y, this.game);
+                                this.game.cardInstances.push(deathCard);
+                                deathCard.getImage();
+                            }
+                        } else if(this.didCollide(this.areaofEffectY, card)) {
+                            if(card.type!="heart") {
+                                this.game.cardInstances.splice(this.game.cardInstances.indexOf(card), 1);
+                            } else {
+                                this.game.cardInstances.splice(this.game.cardInstances.indexOf(card), 1);
+                                let deathCard = new DeathCard(card.x, card.y, this.game);
+                                deathCard.getImage();
+                                this.game.cardInstances.push(deathCard);
+    
+                            }
+                        }
+                    } else {
+                        
                     }
                 })
 

@@ -6,7 +6,7 @@ function TwoPlayerLevel() {
     this.brickWalls = null;
     this.blockWalls = [[0,0,0,0,0,0,0,0,0],[0,1,0,1,0,1,0,1,0],[0,0,0,0,0,0,0,0,0],[0,1,0,1,0,1,0,1,0],[0,0,0,0,0,0,0,0,0],[0,1,0,1,0,1,0,1,0],[0,0,0,0,0,0,0,0,0],[0,1,0,1,0,1,0,1,0],[0,0,0,0,0,0,0,0,0]];
     this.blockWallInstances = [];
-    this.brickWalls = [[0,1,0,1,0,1,0,0,0],[1,0,1,0,1,0,1,0,0],[0,1,0,1,0,1,0,1,0],[1,0,1,0,1,0,1,0,1],[0,1,0,1,0,1,0,1,0],[1,0,1,0,1,0,1,0,1],[0,1,0,1,0,1,0,1,0],[0,0,1,0,1,0,1,0,1],[0,0,0,1,0,1,0,1,0]];
+    this.brickWalls = [[1,1,1,1,1,1,0,0,0],[1,0,1,0,1,0,0,0,1],[1,1,0,0,0,0,0,1,1],[1,0,0,0,0,0,0,0,1],[1,1,0,0,0,0,0,1,1],[1,0,0,0,0,0,0,0,1],[1,1,0,0,0,0,0,1,1],[1,0,0,0,1,0,1,0,1],[0,0,0,1,1,1,1,1,1]];
     this.brickWallInstances = [];
     this.cardInstances = [];
     this.gameScreen = null;
@@ -127,7 +127,7 @@ TwoPlayerLevel.prototype.placeCards = function () {
                     this.cardInstances.push(cardInstance);
                     this.backgroundCtx.drawImage(cardInstance.image, this.squareBrushX, this.squareBrushY, 100, 100);
                     this.backgroundCtx.fill();
-                } else if (Math.random()>0.99968) {
+                } else if (Math.random()>0.9997) {
                     let cardInstance = new IllimitedBombs(this.squareBrushX, this.squareBrushY, this);
                     cardInstance.getImage();
                     this.cardInstances.push(cardInstance);
@@ -205,8 +205,11 @@ TwoPlayerLevel.prototype.checkDraw = function (arrayOfBombards) {
 
 
 TwoPlayerLevel.prototype.startLoop = function() {
-    setInterval(()=>{
-        if(!this.gameIsOver) {
+    // setInterval(()=>{
+    var loop =  function(){
+        window.requestAnimationFrame(loop);
+
+         if(!this.gameIsOver) {
             this.clearBackgroundCanvas();
             
             this.placeBrickWalls();
@@ -240,8 +243,9 @@ TwoPlayerLevel.prototype.startLoop = function() {
             this.updateStats();
     
         }
-    }, 200)
-    // window.requestAnimationFrame(loop);
+    }.bind(this)
+    // }, 200)
+    window.requestAnimationFrame(loop);
 }
 
 
