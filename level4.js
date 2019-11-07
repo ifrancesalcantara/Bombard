@@ -174,7 +174,7 @@ Level4.prototype.updateStats = function(){
         this.gameIsOver = true;
         this.gameOver(this.bombard.name);
 
-        var music = document.querySelector(".lvl4-music");
+        var music = document.querySelector(".lvl4-and-multiplayer-music");
         music.pause();
     }
 }

@@ -100,6 +100,7 @@ function main(){
 
         var music = document.querySelector(".main-and-level-select");
         music.pause();
+        
         var music2 = document.querySelector(".lvl2-music");
         console.log(music2);
         music2.play();
@@ -133,7 +134,7 @@ function main(){
 
         var music = document.querySelector(".main-and-level-select");
         music.pause();
-        var music2 = document.querySelector(".lvl2-music");
+        var music2 = document.querySelector(".lvl3-music");
         music2.play();
     }
 
