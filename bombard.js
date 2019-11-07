@@ -68,35 +68,35 @@ Bombard.prototype.placeBombTicker = function () {
 Bombard.prototype.getImage = function() {
     if(this.playerNumber == 1){
         const imageRightNormal = new Image()
-        imageRightNormal.src='/img/player/Bombard_transparent_with_lute.png'
+        imageRightNormal.src='./img/player/Bombard_transparent_with_lute.png'
         this.imageRightNormal = imageRightNormal;
         
         const imageLeftNormal = new Image()
-        imageLeftNormal.src='img/player/Bombard_trans_looking_left.png'
+        imageLeftNormal.src='.img/player/Bombard_trans_looking_left.png'
         this.imageLeftNormal = imageLeftNormal;
         
         const imageRightInvulnerable = new Image()
-        imageRightInvulnerable.src='img/player/Bombard_invulnerable_right.png'
+        imageRightInvulnerable.src='./img/player/Bombard_invulnerable_right.png'
         this.imageRightInvulnerable = imageRightInvulnerable;
         
         const imageLeftInvulnerable = new Image()
-        imageLeftInvulnerable.src='img/player/Bombard_invulnerable_left.png'
+        imageLeftInvulnerable.src='./img/player/Bombard_invulnerable_left.png'
         this.imageLeftInvulnerable = imageLeftInvulnerable;
     } else {
         const imageRightNormal = new Image()
-        imageRightNormal.src='/img/player/NewBardRightNormal.png'
+        imageRightNormal.src='.//img/player/NewBardRightNormal.png'
         this.imageRightNormal = imageRightNormal;
         
         const imageLeftNormal = new Image()
-        imageLeftNormal.src='img/player/NewBardLeftNormal.png'
+        imageLeftNormal.src='./img/player/NewBardLeftNormal.png'
         this.imageLeftNormal = imageLeftNormal;
         
         const imageRightInvulnerable = new Image()
-        imageRightInvulnerable.src='img/player/NewBardRightInvul.png'
+        imageRightInvulnerable.src='./img/player/NewBardRightInvul.png'
         this.imageRightInvulnerable = imageRightInvulnerable;
         
         const imageLeftInvulnerable = new Image()
-        imageLeftInvulnerable.src='img/player/NewBardLeftInvul.png'
+        imageLeftInvulnerable.src='./img/player/NewBardLeftInvul.png'
         this.imageLeftInvulnerable = imageLeftInvulnerable;
     }
         

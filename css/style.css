@@ -263,7 +263,7 @@ body {
 
 .btn-start-level-four {
     border: 5px solid black;
-    background-image: url("-/../img/background/lvl4-noplayer-img.jpg");
+    background-image: url("./../img/background/lvl4-noplayer-img.jpg");
     background-size: 410px;
     background-position: center;
     background-repeat: no-repeat
