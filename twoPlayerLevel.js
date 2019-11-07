@@ -312,12 +312,18 @@ TwoPlayerLevel.prototype.passOverDrawCallback = function(callback){
 }
 
 
-TwoPlayerLevel.prototype.gameOver = function(winner){
+TwoPlayerLevel.prototype.gameOver = function(winner) {
+    var music = document.querySelector(".lvl4-and-multiplayer-music");
+    music.pause();
+
     this.gameIsOver = true;
     this.gameOverFunction(winner)
 }
 
-TwoPlayerLevel.prototype.drawScreen = function(){
+TwoPlayerLevel.prototype.drawScreen = function() {
+    var music = document.querySelector(".lvl4-and-multiplayer-music");
+    music.pause();
+
     this.gameIsOver = true;
     this.gameDrawFunction()
 }

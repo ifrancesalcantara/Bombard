@@ -36,6 +36,10 @@ function main(){
         var twoPlayersStartButton = splashScreen.querySelector(".btn-start-two-players")
         onePlayerStartButton.addEventListener("click", createLevelSelect)
         twoPlayersStartButton.addEventListener("click", startTwoPlayerLevel)
+
+
+        var music = document.querySelector(".main-and-level-select");
+        music.play();
     }
 
 
@@ -94,6 +98,8 @@ function main(){
         game.passOverVameOverWinCallback(gameOverWin)
         game.passOverAddCoinCallback(addCoin)
 
+        var music = document.querySelector(".main-and-level-select");
+        music.pause();
         var music = document.querySelector(".lvl1-music");
         music.play();
     }
@@ -107,6 +113,11 @@ function main(){
         game.start()
         game.passOverGameOverCallback(gameOver)
         game.passOverVameOverWinCallback(gameOverWin)
+
+        var music = document.querySelector(".main-and-level-select");
+        music.pause();
+        var music = document.querySelector(".lvl2-music");
+        music.play();
     }
 
     function startLevel3() {
@@ -118,6 +129,11 @@ function main(){
         game.start()
         game.passOverGameOverCallback(gameOver)
         game.passOverVameOverWinCallback(gameOverWin)
+
+        var music = document.querySelector(".main-and-level-select");
+        music.pause();
+        var music = document.querySelector(".lvl2-music");
+        music.play();
     }
 
     function startLevel4() {
@@ -130,7 +146,9 @@ function main(){
         game.passOverGameOverCallback(gameOver)
         game.passOverVameOverWinCallback(gameOverWin)
 
-        var music = document.querySelector(".lvl4-music");
+        var music = document.querySelector(".main-and-level-select");
+        music.pause();
+        var music = document.querySelector(".lvl4-and-multiplayer-music");
         music.play();
     }
 
@@ -142,6 +160,11 @@ function main(){
         game.start()
         game.passOverGameOverCallback(gameOver)
         game.passOverDrawCallback(draw)
+
+        var music = document.querySelector(".main-and-level-select");
+        music.pause();
+        var music = document.querySelector(".lvl4-and-multiplayer-music");
+        music.play();
     }
 
 
@@ -219,10 +242,9 @@ function main(){
             `);
             document.body.appendChild(gameOverScreen)
             
-            setTimeout(()=>{
-                var endSong = document.querySelector(".end-song");
-                endSong.play()
-            }, 600)
+            var endSong = document.querySelector(".end-song");
+            endSong.play()
+            
             var restartButton = gameOverScreen.querySelector(".restart-button")
             restartButton.addEventListener("click", ()=>{
                 removeGameOverScreen();

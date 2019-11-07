@@ -249,12 +249,20 @@ Level4.prototype.addCoin = function () {
 
 
 
-Level4.prototype.gameOver = function(){
+Level4.prototype.gameOver = function() {
+
+    var music = document.querySelector(".lvl4-and-multiplayer-music");
+    music.pause();
+
     this.gameIsOver = true;
     this.gameOverFunction()
 }
 
 Level4.prototype.gameOverWin = function() {
+
+    var music = document.querySelector(".lvl4-and-multiplayer-music");
+    music.pause();
+
     this.gameIsOver = true;
     this.gameOverWinFunction();
 }
