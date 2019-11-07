@@ -72,7 +72,7 @@ Bombard.prototype.getImage = function() {
         this.imageRightNormal = imageRightNormal;
         
         const imageLeftNormal = new Image()
-        imageLeftNormal.src='.img/player/Bombard_trans_looking_left.png'
+        imageLeftNormal.src='./img/player/Bombard_trans_looking_left.png'
         this.imageLeftNormal = imageLeftNormal;
         
         const imageRightInvulnerable = new Image()
@@ -84,7 +84,7 @@ Bombard.prototype.getImage = function() {
         this.imageLeftInvulnerable = imageLeftInvulnerable;
     } else {
         const imageRightNormal = new Image()
-        imageRightNormal.src='.//img/player/NewBardRightNormal.png'
+        imageRightNormal.src='./img/player/NewBardRightNormal.png'
         this.imageRightNormal = imageRightNormal;
         
         const imageLeftNormal = new Image()
