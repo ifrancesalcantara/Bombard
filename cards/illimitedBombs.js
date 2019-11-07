@@ -11,7 +11,7 @@ function IllimitedBombs(x, y, game){
 
 IllimitedBombs.prototype.getImage = function() {
     let image = new Image();
-    image.src ="./../img/cards/unlimitedBombsTrue.png"
+    image.src ="../img/cards/unlimitedBombsTrue.png"
     this.image = image;
 }
 

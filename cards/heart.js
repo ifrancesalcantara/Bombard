@@ -11,7 +11,7 @@ function Heart(x, y, game){
 
 Heart.prototype.getImage = function() {
     let image = new Image();
-    image.src ="./../img/cards/heartCardTrue.png"
+    image.src ="../img/cards/heartCardTrue.png"
     this.image = image;
 }
 
