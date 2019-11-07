@@ -22,7 +22,7 @@ function main(){
 
         splashScreen = buildDOM(`
         <main class="splash-screen">
-            <h1 class="bombard-title"><span class="title-a">A</span><br><span class="title-song">Song</span><br><span class="title-of">of</span><br><span class="title-bombard">Bombard</span></h1>
+            <img class="bombard-title" src="/img/title/A song of BOMBARD.png">
             <div class="player-number-select">
                 <button class="btn-start-one-player">One Player<img></button>
                 <button class="btn-start-two-players">Two Players <img></button>
@@ -93,6 +93,9 @@ function main(){
         game.passOverGameOverCallback(gameOver)
         game.passOverVameOverWinCallback(gameOverWin)
         game.passOverAddCoinCallback(addCoin)
+
+        var music = document.querySelector(".lvl1-music");
+        music.play();
     }
 
     function startLevel2() {
@@ -126,6 +129,9 @@ function main(){
         game.start()
         game.passOverGameOverCallback(gameOver)
         game.passOverVameOverWinCallback(gameOverWin)
+
+        var music = document.querySelector(".lvl4-music");
+        music.play();
     }
 
     function startTwoPlayerLevel() {

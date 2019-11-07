@@ -18,6 +18,7 @@ function TwoPlayerLevel() {
     this.gameOverFunction;
     this.gameDrawFunction;
     this.isPvP = true;
+    this.nukeTimer = 30000;
 };
 
 
@@ -28,9 +29,9 @@ TwoPlayerLevel.prototype.start = function() {
     this.backgroundCanvas.width= 900;
     this.backgroundCanvas.height= 900;
 
-    this.bombard1 = new Bombard(this.backgroundCanvas, this, 1, "Player 1", 2)
+    this.bombard1 = new Bombard(this.backgroundCanvas, this, 1, "Player 1", 3)
     this.bombards.push(this.bombard1)
-    this.bombard2 = new Bombard(this.backgroundCanvas, this, 2, "Player 2", 2)
+    this.bombard2 = new Bombard(this.backgroundCanvas, this, 2, "Player 2", 3)
     this.bombards.push(this.bombard2)
 
     this.bombard1.getImage();
@@ -216,6 +217,33 @@ TwoPlayerLevel.prototype.checkDraw = function (arrayOfBombards) {
     return resultArr[0] && resultArr[1]
 }
 
+TwoPlayerLevel.prototype.nukeTimerFunc = function() {
+    if(this.nukeTimer > 0){
+        this.nukeTimer -= 100;
+    } else {
+        this.blockWalls.forEach(blockwallrow => {
+            blockwallrow.forEach(blockwall =>{
+                if(!blockwall) {
+                    if(Math.random()>0.99) {
+                        let noteBomb = new NoteBomb(this.backgroundCanvas, this.squareBrushX, this.squareBrushY);
+                        noteBomb.getImage();
+                        noteBomb.getTheGameYouNeed(this);
+                        noteBomb.draw()
+                        this.noteBombs.push(noteBomb);
+                        this.backgroundCtx.drawImage(noteBomb.image, this.squareBrushX, this.squareBrushY, 100, 100);
+                        this.backgroundCtx.fill();
+                    }
+                }
+                this.squareBrushX += 100
+            })
+            this.squareBrushY += 100
+            this.squareBrushX = 0
+        })
+        this.squareBrushY = 0
+    }
+    
+}
+
 
 
 TwoPlayerLevel.prototype.startLoop = function() {
@@ -224,29 +252,32 @@ TwoPlayerLevel.prototype.startLoop = function() {
 
          if(!this.gameIsOver) {
             this.clearBackgroundCanvas();
+
             
             this.placeBrickWalls();
-
+            
             this.placeWalls();
-
+            
             this.bombards.forEach(bombard=>{
                 
                 bombard.handleScreenCollision();
-
+                
                 bombard.handleBrickWallCollision();
 
                 bombard.handleBlockWallCollision();
 
+                //bombard.handleNoteBombCollision();       // Chains with other handle functions and puts bomber within walls
+
+                // bombard.handleOtherPlayerCollision();    // Other player is not defined when some bombard moves
+                
                 bombard.draw();
-
+                
                 bombard.cardCollision();
-
+                
                 bombard.resetDirection();
             })
 
-            // this.placeBrickWalls();
-
-            // this.placeWalls();
+            this.nukeTimerFunc();
 
             this.placeCards();
     

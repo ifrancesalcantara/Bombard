@@ -11,7 +11,7 @@ function IllimitedBombs(x, y, game){
 
 IllimitedBombs.prototype.getImage = function() {
     let image = new Image();
-    image.src ="/img/cards/illimitedBombsCardTrue.png"
+    image.src ="/img/cards/unlimitedBombsTrue.png"
     this.image = image;
 }
 
@@ -28,7 +28,7 @@ IllimitedBombs.prototype.effect = function(player) {
     setTimeout(()=>{
         clearInterval(effect)
         player.hasIllimitedBombs = false;
-    }, 10000)
+    }, 8000)
 }
 
 IllimitedBombs.prototype.deleteYourself = function() {

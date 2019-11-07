@@ -57,14 +57,16 @@ NoteBomb.prototype.ticker = function() {
             this.chronometer -= 100
         }, 100)
     } else {
-        this.stillTicking = false;
-        clearInterval(tickerCountdown);
-        this.stillExploding = true;
+        if(!this.game.gameIsOver){
+            this.stillTicking = false;
+            clearInterval(tickerCountdown);
+            this.stillExploding = true;
+    
+            var explosionSound = document.querySelector(".explosion");
+            explosionSound.play();
 
-        var explosionSound = document.querySelector(".explosion")
-        explosionSound.play();
-
-        this.explode()
+            this.explode()
+        }
     }
 }
 
@@ -76,6 +78,9 @@ NoteBomb.prototype.firetimer = function() {
     } else {
         this.stillExploding = false;
         clearInterval(fireTickerCountdown);
+
+        var explosionSound = document.querySelector(".explosion");
+        explosionSound.pause();
     }
 }
 
