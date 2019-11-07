@@ -252,11 +252,17 @@ Level1.prototype.addCoin = function () {
 
 
 Level1.prototype.gameOver = function(winner){
+    var music = document.querySelector(".lvl1-music");
+    music.pause();
+    
     this.gameIsOver = true;
     this.gameOverFunction(winner)
 }
 
 Level1.prototype.gameOverWin = function() {
+    var music = document.querySelector(".lvl1-music");
+    music.pause();
+
     this.gameIsOver = true;
     this.gameOverWinFunction();
 }
