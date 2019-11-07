@@ -206,13 +206,13 @@ Level2.prototype.startLoop = function() {
 
             this.bombards.forEach(bombard=>{
     
+                bombard.handleDogBite();
+
                 bombard.handleScreenCollision();
 
                 bombard.handleBrickWallCollision();
 
                 bombard.handleBlockWallCollision();
-
-                bombard.handleDogBite();
 
                 bombard.draw();
                 
