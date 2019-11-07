@@ -140,11 +140,11 @@ Dog.prototype.move = function() {
 Dog.prototype.getImage = function() {
     if(this.lookingRight) {
         const dog = new Image()
-        dog.src='img/enemies/dog/Enemy dog looking right.png'
+        dog.src='./img/enemies/dog/Enemy dog looking right.png'
         this.image = dog
     } else {
         const dog = new Image()
-        dog.src='img/enemies/dog/Enemy_dog_looking_left.png'
+        dog.src='./img/enemies/dog/Enemy_dog_looking_left.png'
         this.image = dog
     }
 }
