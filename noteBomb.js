@@ -39,10 +39,10 @@ NoteBomb.prototype.getImage = function() {
     let fireY = new Image();
     let firecenter = new Image();
     
-    bombImage.src= "img/bomb/music-note-icon.svg";
-    fireX.src = "/img/bomb/Fire_tile_X.png";
-    fireY.src = "/img/bomb/Fire_tile_Y.png";
-    firecenter.src="/img/bomb/fire_center.png"
+    bombImage.src= "./img/bomb/music-note-icon.svg";
+    fireX.src = "./img/bomb/Fire_tile_X.png";
+    fireY.src = "./img/bomb/Fire_tile_Y.png";
+    firecenter.src="./img/bomb/fire_center.png"
     
     this.image = bombImage;
     this.fireXImage= fireX;

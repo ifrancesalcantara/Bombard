@@ -11,7 +11,7 @@ function BrickWall(x, y, game) {
 BrickWall.prototype.draw = function() {
 
     let brickWall = new Image();
-    brickWall.src = "img/Obstacles/brickWall.JPG"
+    brickWall.src = "./img/Obstacles/brickWall.JPG"
 
     brickWall.onload = function() {
         this.backgroundCtx.drawImage(brickWall, this.x, this.y, 100, 100);
@@ -22,7 +22,7 @@ BrickWall.prototype.draw = function() {
 
 BrickWall.prototype.getImage = function() {
     let image = new Image();
-    image.src = "img/Obstacles/brickWall.JPG";
+    image.src = "./img/Obstacles/brickWall.JPG";
     this.image = image;
 }
 

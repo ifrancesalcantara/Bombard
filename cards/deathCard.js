@@ -11,7 +11,7 @@ function DeathCard(x, y, game){
 
 DeathCard.prototype.getImage = function() {
     let image = new Image();
-    image.src ="/img/cards/deathCard.png"
+    image.src ="./img/cards/deathCard.png"
     this.image = image;
 }
 

@@ -19,6 +19,6 @@ BlockWall.prototype.draw = function() {
 
 BlockWall.prototype.getImage = function() {
     let image = new Image();
-    image.src = "img/Obstacles/blockWall.JPG";
+    image.src = "./img/Obstacles/blockWall.JPG";
     this.image = image;
 }

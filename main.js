@@ -22,7 +22,7 @@ function main(){
 
         splashScreen = buildDOM(`
         <main class="splash-screen">
-            <img class="bombard-title" src="/img/title/A song of BOMBARD.png">
+            <img class="bombard-title" src="./img/title/A song of BOMBARD.png">
             <div class="player-number-select">
                 <button class="btn-start-one-player">One Player<img></button>
                 <button class="btn-start-two-players">Two Players <img></button>
@@ -53,7 +53,7 @@ function main(){
         <main class="level-select-screen">
             <!-- <div class="shop-div">
                 <span class="number-of-total-coins">${coins}</span>
-                <img class="spinning-total-coins" src="img/croppedCoin.gif">
+                <img class="spinning-total-coins" src="./img/croppedCoin.gif">
                 <button class="btn-shop">Shop</button> -->
             </div>
             <h1 class="level-select-title">Select a Level</h1>
@@ -155,7 +155,7 @@ function main(){
                         <div class="one-player-lives-and-coins">
                             <!-- <div class="coins-div">
                                 <p class="number-of-coins">0</p>
-                                <img src="/img/croppedCoin.gif" class="level-coins-icon">
+                                <img src="./img/croppedCoin.gif" class="level-coins-icon">
                             </div> -->
                             <div>
                                 <p class="number-of-lives">0</p>
@@ -237,7 +237,7 @@ function main(){
             gameOverScreen = buildDOM(`
                 <main class="game-over-lose-wrapper">
                     <h1 class="game-over-title"><span class="name-for-PvP"></span><br>WINS🤘!</h1>
-                    <img class="finn-luter" src="/img/ezgif.com-crop.gif">
+                    <img class="finn-luter" src="./img/ezgif.com-crop.gif">
                     <button class="restart-button">Play Again</button>
                 </main>
             `);
