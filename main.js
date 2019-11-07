@@ -100,8 +100,9 @@ function main(){
 
         var music = document.querySelector(".main-and-level-select");
         music.pause();
-        var music = document.querySelector(".lvl1-music");
-        music.play();
+        var music2 = document.querySelector(".lvl1-music");
+        console.log(music2);
+        music2.play();
     }
 
     function startLevel2() {
@@ -116,8 +117,8 @@ function main(){
 
         var music = document.querySelector(".main-and-level-select");
         music.pause();
-        var music = document.querySelector(".lvl2-music");
-        music.play();
+        var music2 = document.querySelector(".lvl2-music");
+        music2.play();
     }
 
     function startLevel3() {
@@ -132,8 +133,8 @@ function main(){
 
         var music = document.querySelector(".main-and-level-select");
         music.pause();
-        var music = document.querySelector(".lvl2-music");
-        music.play();
+        var music2 = document.querySelector(".lvl2-music");
+        music2.play();
     }
 
     function startLevel4() {
@@ -148,8 +149,8 @@ function main(){
 
         var music = document.querySelector(".main-and-level-select");
         music.pause();
-        var music = document.querySelector(".lvl4-and-multiplayer-music");
-        music.play();
+        var music2 = document.querySelector(".lvl4-and-multiplayer-music");
+        music2.play();
     }
 
     function startTwoPlayerLevel() {
@@ -163,8 +164,8 @@ function main(){
 
         var music = document.querySelector(".main-and-level-select");
         music.pause();
-        var music = document.querySelector(".lvl4-and-multiplayer-music");
-        music.play();
+        var music2 = document.querySelector(".lvl4-and-multiplayer-music");
+        music2.play();
     }
 
 
