@@ -39,6 +39,7 @@ function main(){
 
 
         var music = document.querySelector(".main-and-level-select");
+        console.log(music);
         music.play();
     }
 
