@@ -224,7 +224,7 @@ TwoPlayerLevel.prototype.nukeTimerFunc = function() {
         this.blockWalls.forEach(blockwallrow => {
             blockwallrow.forEach(blockwall =>{
                 if(!blockwall) {
-                    if(Math.random()>0.99) {
+                    if(Math.random()>0.997) {
                         let noteBomb = new NoteBomb(this.backgroundCanvas, this.squareBrushX, this.squareBrushY);
                         noteBomb.getImage();
                         noteBomb.getTheGameYouNeed(this);
