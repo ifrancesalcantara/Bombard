@@ -6,7 +6,7 @@ function NoteBomb(canvas, x, y, bombard) {
     this.canvas = canvas;
     this.ctx = this.canvas.getContext("2d")
     this.stillTicking = true;
-    this.chronometer = 2200;
+    this.chronometer = 1000;
     this.stillExploding = false;
     this.fireChronometer = 1500;
     this.explosionXAxis = null;
@@ -98,6 +98,7 @@ NoteBomb.prototype.explode = function() {
                                 if(this.x/100-i > -1) {
                                     this.game.brickWalls[this.getBlockY(brickwall.y)][this.x/100-i] = 0;
                                 }
+                                this.game.brickWalls[this.getBlockY(brickwall.y)][this.x/100] = 0;
                             }
                             for(i=1; i <3; i++) {
                                 if(this.x/100+i < 9){
