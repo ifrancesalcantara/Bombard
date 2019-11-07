@@ -58,7 +58,7 @@ function main(){
             </div>
             <h1 class="level-select-title">Select a Level</h1>
             <div class="level-display">
-                <span class="btn-start-level-one"><img></span>
+                <button class="btn-start-level-one"><img></button>
                 <button class="btn-start-level-two"><img></button>
                 <button class="btn-start-level-three"><img></button>
                 <button class="btn-start-level-four"><img></button>
