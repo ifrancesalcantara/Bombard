@@ -6,7 +6,7 @@ function Level1() {
     this.brickWalls = null;
     this.blockWalls = [[0,0,0,0,0,0,0,0,0],[0,1,0,1,0,1,0,1,0],[0,0,0,0,0,0,0,0,0],[0,1,0,1,0,1,0,1,0],[0,0,0,0,0,0,0,0,0],[0,1,0,1,0,1,0,1,0],[0,0,0,0,0,0,0,0,0],[0,1,0,1,0,1,0,1,0],[0,0,0,0,0,0,0,0,0]];
     this.blockWallInstances = [];
-    this.brickWalls = [[1,0,1,0,1,0,1,0,0],[0,0,0,0,0,0,0,0,0],[1,0,1,0,1,0,1,0,1],[0,0,0,0,0,0,0,0,0],[1,0,1,0,1,0,1,0,1],[0,0,0,0,0,0,0,0,0],[1,0,1,0,1,0,1,0,1],[0,0,0,0,0,0,0,0,0],[0,0,1,0,1,0,1,0,1]];
+    this.brickWalls = [[0,0,0,1,1,1,0,0,0],[0,0,0,0,1,0,0,0,0],[1,0,0,1,1,1,0,0,1],[1,0,0,0,1,0,0,0,1],[1,1,0,0,1,0,0,1,1],[1,0,0,0,1,0,0,0,1],[1,0,0,1,1,1,0,0,1],[0,0,0,0,1,0,0,0,0],[0,0,0,1,1,1,0,0,0]];
     this.brickWallInstances = [];
     this.gameScreen = null;
     this.bombards = [];
@@ -174,6 +174,9 @@ Level1.prototype.updateStats = function(){
         if(this.bombard.lives <= 0) {
             this.gameIsOver = true;
             this.gameOver(this.bombard.name);
+
+            var music = document.querySelector(".lvl1-music");
+            music.pause();
         }
     }
 }
@@ -201,9 +204,9 @@ Level1.prototype.startLoop = function() {
 
                 bombard.handleBlockWallCollision();
 
-                bombard.draw();
-
                 bombard.handleDogBite();
+
+                bombard.draw();
 
                 bombard.handleArrivingToGoal();
 

@@ -173,6 +173,9 @@ Level4.prototype.updateStats = function(){
     if(this.bombard.lives <= 0) {
         this.gameIsOver = true;
         this.gameOver(this.bombard.name);
+
+        var music = document.querySelector(".lvl4-music");
+        music.pause();
     }
 }
 
@@ -199,9 +202,9 @@ Level4.prototype.startLoop = function() {
 
                 bombard.handleBlockWallCollision();
 
-                bombard.draw();
-
                 bombard.handleDogBite();
+
+                bombard.draw();
 
                 bombard.handleArrivingToGoal();
 
@@ -246,9 +249,9 @@ Level4.prototype.addCoin = function () {
 
 
 
-Level4.prototype.gameOver = function(winner){
+Level4.prototype.gameOver = function(){
     this.gameIsOver = true;
-    this.gameOverFunction(winner)
+    this.gameOverFunction()
 }
 
 Level4.prototype.gameOverWin = function() {

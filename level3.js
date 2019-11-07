@@ -201,9 +201,9 @@ Level3.prototype.startLoop = function() {
 
                 bombard.handleBlockWallCollision();
 
-                bombard.draw();
-
                 bombard.handleDogBite();
+
+                bombard.draw();
 
                 bombard.handleArrivingToGoal();
 

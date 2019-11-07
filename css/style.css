@@ -104,8 +104,7 @@ body {
 }
 
 .bombard-title {
-    font-family: "McLaren";
-    text-align: center;
+    height: 40%;
     margin-bottom: 10%;
 }
 
@@ -127,6 +126,7 @@ body {
 .player-number-select {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 7%
 }
 
 .btn-start-one-player{
@@ -202,7 +202,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-image: url("/img/background/splashScreen/Under_tree_filter.jpg");
+    background-image: url("./../img/background/splashScreen/Under_tree_filter.jpg");
     width: 1920px;
     height: 1080px;
     background-repeat: no-repeat;
@@ -235,7 +235,7 @@ body {
 
 .btn-start-level-one {
     border: 5px solid black;
-    background-image: url("/img/background/lvl1-noplayer-img.jpg");
+    background-image: url("./../img/background/lvl1true-noplayer.jpg");
     background-size: 410px;
     background-position: center;
     background-repeat: no-repeat;
@@ -245,7 +245,7 @@ body {
 
 .btn-start-level-two {
     border: 5px solid black;
-    background-image: url("/img/background/lvl2-noplayer-img.jpg");
+    background-image: url("./../img/background/lvl2-noplayer-img.jpg");
     background-size: 410px;
     background-position: center;
     background-repeat: no-repeat;
@@ -255,7 +255,7 @@ body {
 
 .btn-start-level-three {
     border: 5px solid black;
-    background-image: url("/img/background/lvl3-noplayer-img.jpg");
+    background-image: url("./../img/background/lvl3-noplayer-img.jpg");
     background-size: 410px;
     background-position: center;
     background-repeat: no-repeat

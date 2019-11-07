@@ -66,21 +66,40 @@ Bombard.prototype.placeBombTicker = function () {
 }
 
 Bombard.prototype.getImage = function() {
-    const imageRightNormal = new Image()
-    imageRightNormal.src='./img/player/Bombard_transparent_with_lute.png'
-    this.imageRightNormal = imageRightNormal;
-
-    const imageLeftNormal = new Image()
-    imageLeftNormal.src='img/player/Bombard_trans_looking_left.png'
-    this.imageLeftNormal = imageLeftNormal;
-
-    const imageRightInvulnerable = new Image()
-    imageRightInvulnerable.src='img/player/Bombard_invulnerable_right.png'
-    this.imageRightInvulnerable = imageRightInvulnerable;
-
-    const imageLeftInvulnerable = new Image()
-    imageLeftInvulnerable.src='img/player/Bombard_invulnerable_left.png'
-    this.imageLeftInvulnerable = imageLeftInvulnerable;
+    if(this.playerNumber == 1){
+        const imageRightNormal = new Image()
+        imageRightNormal.src='/img/player/Bombard_transparent_with_lute.png'
+        this.imageRightNormal = imageRightNormal;
+        
+        const imageLeftNormal = new Image()
+        imageLeftNormal.src='img/player/Bombard_trans_looking_left.png'
+        this.imageLeftNormal = imageLeftNormal;
+        
+        const imageRightInvulnerable = new Image()
+        imageRightInvulnerable.src='img/player/Bombard_invulnerable_right.png'
+        this.imageRightInvulnerable = imageRightInvulnerable;
+        
+        const imageLeftInvulnerable = new Image()
+        imageLeftInvulnerable.src='img/player/Bombard_invulnerable_left.png'
+        this.imageLeftInvulnerable = imageLeftInvulnerable;
+    } else {
+        const imageRightNormal = new Image()
+        imageRightNormal.src='/img/player/NewBardRightNormal.png'
+        this.imageRightNormal = imageRightNormal;
+        
+        const imageLeftNormal = new Image()
+        imageLeftNormal.src='img/player/NewBardLeftNormal.png'
+        this.imageLeftNormal = imageLeftNormal;
+        
+        const imageRightInvulnerable = new Image()
+        imageRightInvulnerable.src='img/player/NewBardRightInvul.png'
+        this.imageRightInvulnerable = imageRightInvulnerable;
+        
+        const imageLeftInvulnerable = new Image()
+        imageLeftInvulnerable.src='img/player/NewBardLeftInvul.png'
+        this.imageLeftInvulnerable = imageLeftInvulnerable;
+    }
+        
 }
 
 Bombard.prototype.draw = function() {
@@ -166,18 +185,22 @@ Bombard.prototype.handleBrickWallCollision = function() {       // !!!!    Handl
                 if(bombard.isMovingUp) {
                     if(bombard.didCollide(brickwall)) {
                         this.y += this.size;
+                        return true
                     }
                 } else if (bombard.isMovingRight) {
                     if(bombard.didCollide(brickwall)) {
-                    this.x -= this.size;
+                        this.x -= this.size;
+                        return true
                     }
                 } else if (bombard.isMovingDown) {
                     if(bombard.didCollide(brickwall)) {
-                    this.y -= this.size;
+                        this.y -= this.size;
+                        return true 
                     }
                 } else if (bombard.isMovingLeft) {
                     if(bombard.didCollide(brickwall)) {
-                    this.x += this.size;
+                        this.x += this.size;
+                        return true
                     }
                 }
 
@@ -193,22 +216,89 @@ Bombard.prototype.handleBlockWallCollision = function() {
                 if(bombard.isMovingUp) {
                     if(bombard.didCollide(blockwall)) {
                         this.y += this.size;
+                        return true;
                     }
                 } else if (bombard.isMovingRight) {
                     if(bombard.didCollide(blockwall)) {
-                    this.x -= this.size;
+                        this.x -= this.size;
+                        return true;
                     }
                 } else if (bombard.isMovingDown) {
                     if(bombard.didCollide(blockwall)) {
-                    this.y -= this.size;
+                        this.y -= this.size;
+                        return true;
                     }
                 } else if (bombard.isMovingLeft) {
                     if(bombard.didCollide(blockwall)) {
-                    this.x += this.size;
+                        this.x += this.size;
+                        return true;
                     }
                 }
 
             })
+        }
+    })
+}
+
+
+Bombard.prototype.handleOtherPlayerCollision = function() {
+    this.game.bombards.forEach(bombard=>{
+        if(bombard.identifier != this.identifier) {
+            var otherBombard = bombard
+        }
+        if(bombard.identifier == this.identifier) {
+                if(bombard.isMovingUp) {
+                    if(bombard.didCollide(otherBombard)) {
+                        this.y += this.size;
+                        return true;
+                    }
+                } else if (bombard.isMovingRight) {
+                    if(bombard.didCollide(otherBombard)) {
+                        this.x -= this.size;
+                        return true;
+                    }
+                } else if (bombard.isMovingDown) {
+                    if(bombard.didCollide(otherBombard)) {
+                        this.y -= this.size;
+                        return true;
+                    }
+                } else if (bombard.isMovingLeft) {
+                    if(bombard.didCollide(otherBombard)) {
+                        this.x += this.size;
+                        return true;
+                    }
+                }
+        }
+    })
+}
+
+
+Bombard.prototype.handleNoteBombCollision = function() {        //Not implemented
+    this.game.bombards.forEach(bombard=>{
+        if(bombard.identifier == this.identifier) {
+            if(!bombard.handleBrickWallCollision() && !bombard.handleBlockWallCollision()){
+                this.game.noteBombs.forEach(noteBomb=>{
+                    if(noteBomb.stillTicking) {
+                        if(bombard.isMovingUp) {
+                            if(bombard.didCollide(noteBomb)) {
+                                this.y += this.size;
+                            }
+                        } else if (bombard.isMovingRight) {
+                            if(bombard.didCollide(noteBomb)) {
+                            this.x -= this.size;
+                            }
+                        } else if (bombard.isMovingDown) {
+                            if(bombard.didCollide(noteBomb)) {
+                            this.y -= this.size;
+                            }
+                        } else if (bombard.isMovingLeft) {
+                            if(bombard.didCollide(noteBomb)) {
+                            this.x += this.size;
+                            }
+                        }
+                    }
+                })
+            }
         }
     })
 }
@@ -224,6 +314,8 @@ Bombard.prototype.handleDogBite = function() {
                             bombard.isInInvincibilityFrames = false;
                         }, 2000)
                         bombard.lives -= 1;
+                        var music = document.querySelector(".damage-sound");
+                        music.play();
                     }
                 }
             })
@@ -265,49 +357,49 @@ Bombard.prototype.placeNoteBomb = function(canvas) {
                 if(noteDecider == 1){
                     let sound = document.querySelector(".note-1")
                     sound.play()
-                } else if(noteDecider == 3){
+                } else if(noteDecider == 2){
                     let sound = document.querySelector(".note-2")
                     sound.play()
-                } else if(noteDecider == 4){
+                } else if(noteDecider == 3){
                     let sound = document.querySelector(".note-3")
                     sound.play()
-                } else if(noteDecider == 5){
+                } else if(noteDecider == 4){
                     let sound = document.querySelector(".note-4")
                     sound.play()
-                } else if(noteDecider == 6){
+                } else if(noteDecider == 5){
                     let sound = document.querySelector(".note-5")
                     sound.play()
-                } else if(noteDecider == 7){
+                } else if(noteDecider == 6){
                     let sound = document.querySelector(".note-6")
                     sound.play()
-                } else if(noteDecider == 8){
+                } else if(noteDecider == 7){
                     let sound = document.querySelector(".note-7")
                     sound.play()
-                } else if(noteDecider == 9){
+                } else if(noteDecider == 8){
                     let sound = document.querySelector(".note-8")
                     sound.play()
-                } else if(noteDecider == 10){
+                } else if(noteDecider == 9){
                     let sound = document.querySelector(".note-9")
                     sound.play()
-                } else if(noteDecider == 11){
+                } else if(noteDecider == 10){
                     let sound = document.querySelector(".note-10")
                     sound.play()
-                } else if(noteDecider == 12){
+                } else if(noteDecider == 11){
                     let sound = document.querySelector(".note-11")
                     sound.play()
-                } else if(noteDecider == 13){
+                } else if(noteDecider == 12){
                     let sound = document.querySelector(".note-12")
                     sound.play()
-                } else if(noteDecider == 14){
+                } else if(noteDecider == 13){
                     let sound = document.querySelector(".note-13")
                     sound.play()
-                } else if(noteDecider == 15){
+                } else if(noteDecider == 14){
                     let sound = document.querySelector(".note-14")
                     sound.play()
-                } else if(noteDecider == 16){
+                } else if(noteDecider == 15){
                     let sound = document.querySelector(".note-15")
                     sound.play()
-                } else if(noteDecider == 17){
+                } else if(noteDecider == 16){
                     let sound = document.querySelector(".note-16")
                     sound.play()
                 }

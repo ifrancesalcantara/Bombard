@@ -27,7 +27,7 @@ Heart.prototype.effect = function(player) {
 Heart.prototype.deleteYourself = function() {
     this.game.cardInstances.forEach(card=>{
         if(card.identifier==this.identifier){
-            this.game.cardInstances.splice(this.game.cardInstances.indexOf(card), this.game.cardInstances.indexOf(card)+1)
+            this.game.cardInstances.splice(this.game.cardInstances.indexOf(card), 1)
         }
     })
 }
