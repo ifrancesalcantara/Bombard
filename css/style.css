@@ -96,7 +96,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-image: url("/img/background/splashScreen/Under_tree_filter.jpg");
+    background-image: url("./../img/background/splashScreen/Under_tree_filter.jpg");
     width: 1920px;
     height: 1080px;
     background-repeat: no-repeat;
@@ -263,7 +263,7 @@ body {
 
 .btn-start-level-four {
     border: 5px solid black;
-    background-image: url("/img/background/lvl4-noplayer-img.jpg");
+    background-image: url("-/../img/background/lvl4-noplayer-img.jpg");
     background-size: 410px;
     background-position: center;
     background-repeat: no-repeat
@@ -375,7 +375,7 @@ body {
 }
 
 .one-player-game-container {
-    background-image: url("/img/background/1Player_with_exit.jpg");
+    background-image: url("./../img/background/1Player_with_exit.jpg");
     width: 1920px;
     height: 1080px;
     background-repeat: no-repeat;
@@ -383,7 +383,7 @@ body {
 }
 
 .two-players-game-container {
-    background-image: url("/img/background/2Player_background.jpg");
+    background-image: url("./../img/background/2Player_background.jpg");
     width: 1920px;
     height: 1080px;
     background-repeat: no-repeat;
@@ -419,7 +419,7 @@ body {
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    background-image: url("/img/background/splashScreen/Under_tree_filter.jpg");
+    background-image: url("./../img/background/splashScreen/Under_tree_filter.jpg");
     width: 1920px;
     height: 1080px;
     background-repeat: no-repeat;
@@ -431,7 +431,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-image: url("/img/background/splashScreen/Under_tree_filter.jpg");
+    background-image: url("./../img/background/splashScreen/Under_tree_filter.jpg");
     width: 1920px;
     height: 1080px;
     background-repeat: no-repeat;
