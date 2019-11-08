@@ -325,7 +325,7 @@ TwoPlayerLevel.prototype.gameOver = function(winner) {
 TwoPlayerLevel.prototype.drawScreen = function() {
     var music = document.querySelector(".lvl4-and-multiplayer-music");
     music.pause();
-    var music2 = document.querySelector(".win-music");
+    var music2 = document.querySelector(".win-song");
     music2.play();
 
     this.gameIsOver = true;
