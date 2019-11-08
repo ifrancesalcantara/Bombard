@@ -265,7 +265,7 @@ function main(){
             
             gameOverScreen = buildDOM(`
                 <main class="game-over-lose-wrapper">
-                    <h1 class="game-over-title"><span class="name-for-PvP"></span><br>WINS🤘!</h1>
+                    <h1 class="game-over-title"><span class="name-for-PvP"></span><br>WINS!</h1>
                     <img class="finn-luter" src="./img/ezgif.com-crop.gif">
                     <button class="restart-button">Play Again</button>
                 </main>
