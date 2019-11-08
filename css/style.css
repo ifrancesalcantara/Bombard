@@ -105,7 +105,7 @@ body {
 
 .bombard-title {
     height: 40%;
-    margin-bottom: 10%;
+    margin-bottom: 0%;
 }
 
 .title-a {
@@ -160,6 +160,16 @@ body {
 .btn-start-two-players:focus {
     background-color: darkred;
     border: 10px solid red;
+}
+.player-instructions1 {
+    width: 400px;
+    height: 300px;
+    margin-right: 150px;
+}
+.player-instructions2 {
+    width: 400px;
+    height: 300px;
+    margin-left: 150px;
 }
 
 

@@ -23,6 +23,10 @@ function main(){
         splashScreen = buildDOM(`
         <main class="splash-screen">
             <img class="bombard-title" src="./img/title/A song of BOMBARD.png">
+            <div class="">
+                <img class="player-instructions1" src="./img/player1-instructions.png">
+                <img class="player-instructions2" src="./img/player2-instructions.png">
+            </div>
             <div class="player-number-select">
                 <button class="btn-start-one-player">One Player<img></button>
                 <button class="btn-start-two-players">Two Players <img></button>
