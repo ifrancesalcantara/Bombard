@@ -262,6 +262,8 @@ Level4.prototype.gameOverWin = function() {
 
     var music = document.querySelector(".lvl4-and-multiplayer-music");
     music.pause();
+    var music2 = document.querySelector(".win-song");
+    music2.play();
 
     this.gameIsOver = true;
     this.gameOverWinFunction();

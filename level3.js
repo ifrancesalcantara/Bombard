@@ -259,6 +259,8 @@ Level3.prototype.gameOver = function(winner) {
 Level3.prototype.gameOverWin = function() {
     var music = document.querySelector(".lvl3-music");
     music.pause();
+    var music2 = document.querySelector(".win-song");
+    music2.play();
 
     this.gameIsOver = true;
     this.gameOverWinFunction();
