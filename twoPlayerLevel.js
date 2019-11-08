@@ -29,9 +29,9 @@ TwoPlayerLevel.prototype.start = function() {
     this.backgroundCanvas.width= 900;
     this.backgroundCanvas.height= 900;
 
-    this.bombard1 = new Bombard(this.backgroundCanvas, this, 1, "Player 1", 3)
+    this.bombard1 = new Bombard(this.backgroundCanvas, this, 1, "Player 1", 2)
     this.bombards.push(this.bombard1)
-    this.bombard2 = new Bombard(this.backgroundCanvas, this, 2, "Player 2", 3)
+    this.bombard2 = new Bombard(this.backgroundCanvas, this, 2, "Player 2", 2)
     this.bombards.push(this.bombard2)
 
     this.bombard1.getImage();
